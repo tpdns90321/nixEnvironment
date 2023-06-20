@@ -30,6 +30,7 @@ let
     "alfred"
     "adguard"
     "google-chrome"
+    "notion"
     "iterm2"
 
     # react-native android development in macos

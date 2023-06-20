@@ -22,6 +22,13 @@
         ];
         inputs = { inherit darwin home-manager nixpkgs; };
       };
+      "gangse-un-ui-Macmini" = darwin.lib.darwinSystem {
+        system = "aarch64-darwin";
+        modules = [
+          ./hosts/gangse-un-ui-Macmini.nix
+        ];
+        inputs = { inherit darwin home-manager nixpkgs; };
+      };
     };
   };
 }
