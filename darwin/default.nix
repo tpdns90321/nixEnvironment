@@ -1,10 +1,14 @@
-{ config, pkgs, nixpkgs, ... }:
+{ config, pkgs, nixpkgs, user, additionalCasks, ... }:
 
-let user = "kang"; in
+
+let homeManagerConfig = (import ./home-manager.nix {config = config; pkgs = pkgs; nixpkgs = nixpkgs; user = user; additionalCasks = additionalCasks; }); in
+with homeManagerConfig;
 {
   imports = [
-    ./home-manager.nix
+    ../common
+    homeManagerConfig
   ];
+
   services.nix-daemon.enable = true;
 
   nix = {
@@ -23,5 +27,5 @@ let user = "kang"; in
     };
   };
 
-  environment.systemPackages = with pkgs; let sharedPkgs = import ../common/packages.nix { pkgs = pkgs; }; in sharedPkgs;
+  environment.systemPackages = import ../common/packages.nix { pkgs = pkgs; };
 }

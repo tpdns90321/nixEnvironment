@@ -1,20 +1,24 @@
 { pkgs }:
 
 with pkgs; [
-  gcc
+  git
   gh
   home-manager
   jq
   neofetch
-  neovim
+  tmux
+  wget
+  zsh
+
+  # js development
   nodePackages.npm
   nodePackages.pnpm
   nodePackages.yarn
   nodejs
-  poetry
+
+  # react-native development
+  # jdk11 in linux
+
+  # python development
   python311
-  sqlite
-  tmux
-  wget
-  zip
 ]

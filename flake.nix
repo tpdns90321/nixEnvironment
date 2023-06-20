@@ -15,10 +15,10 @@
 
   outputs = { self, flake-utils, darwin, home-manager, nixpkgs, ... }@inputs: {
     darwinConfigurations = {
-      "gangse-un-ui-Macmini" = darwin.lib.darwinSystem {
+      "uniones-MacBook-Pro" = darwin.lib.darwinSystem {
         system = "aarch64-darwin";
         modules = [
-          ./darwin
+          ./hosts/uniones-MacBook-Pro.nix
         ];
         inputs = { inherit darwin home-manager nixpkgs; };
       };
