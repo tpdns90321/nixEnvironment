@@ -37,6 +37,58 @@ let userName = "tpdns90321"; userEmail = "tpdns9032100@gmail.com"; in {
     enable = true;
     viAlias = true;
     vimAlias = true;
+
+    plugins = with pkgs.vimPlugins; [
+      lsp-zero-nvim
+      nvim-lspconfig
+      nvim-cmp
+      cmp-buffer
+      cmp-path
+      cmp_luasnip
+      cmp-nvim-lsp
+    ];
+
+    extraConfig = ''
+      " white space
+      set tabstop=2
+      set shiftwidth=2
+      set smartindent
+      set expandtab
+
+      " line
+      set number
+
+      " filetype
+      syntax on
+      filetype plugin indent on
+      autocmd FileType python setlocal tabstop=4
+    '';
+
+    extraLuaConfig = ''
+      -- lsp setup
+      local lsp = require('lsp-zero').preset({
+        manage_nvim_cmp = {
+          set_sources = 'recommended'
+        }
+      })
+
+      lsp.on_attach(function(client, bufnr)
+        lsp.default_keymaps({buffer = bufnr})
+      end)
+
+      -- language servers
+      require('lspconfig').rnix.setup({})
+
+      require('lspconfig').tsserver.setup({})
+
+      require('lspconfig').eslint.setup({
+        single_file_support = false,
+      })
+
+      require('lspconfig').pyright.setup({})
+
+      lsp.setup()
+    '';
   };
 
   git = {

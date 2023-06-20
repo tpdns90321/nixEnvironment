@@ -21,4 +21,10 @@ with pkgs; [
 
   # python development
   python311
+
+  # lspconfig
+  rnix-lsp
+  nodePackages.vscode-langservers-extracted
+  nodePackages.typescript-language-server
+  nodePackages.pyright
 ]
