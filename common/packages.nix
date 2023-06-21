@@ -6,7 +6,9 @@ with pkgs; [
   home-manager
   jq
   neofetch
+  postman
   tmux
+  vscodium
   wget
   zsh
 

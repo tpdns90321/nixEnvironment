@@ -6,6 +6,8 @@ with homeManagerConfig;
 {
   imports = [
     ../common
+    # alfred or spotlight support. import from https://github.com/landakram/nix-config/ , thanks @landakram
+    ./link-apps
     homeManagerConfig
   ];
 
@@ -28,6 +30,17 @@ with homeManagerConfig;
   };
 
   environment.systemPackages = import ../common/packages.nix { pkgs = pkgs; };
+  system.build.application = pkgs.lib.mkForce (pkgs.buildEnv {
+    name = "applications";
+    paths = config.environment.systemPackages ++ config.home-manager.users.${user}.home.packages;
+    pathsToLink = "/Applications/";
+  });
+
+  services.link-apps = {
+    enable = true;
+    userName = "${user}";
+    userHome = "/Users/${user}";
+  };
 
   system = {
     stateVersion = 4;
