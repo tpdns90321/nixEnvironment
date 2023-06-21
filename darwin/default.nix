@@ -28,4 +28,18 @@ with homeManagerConfig;
   };
 
   environment.systemPackages = import ../common/packages.nix { pkgs = pkgs; };
+
+  system = {
+    stateVersion = 4;
+
+    defaults = {
+      dock = {
+        autohide = true;
+        show-recents = false;
+        launchanim = true;
+        orientation = "bottom";
+        tilesize = 48;
+      };
+    };
+  };
 }

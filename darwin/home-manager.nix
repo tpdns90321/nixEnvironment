@@ -5,6 +5,8 @@ let
 {
   imports = [
     <home-manager/nix-darwin>
+    # import from https://github.com/dustinlyons/nixos-config/ . thanks @dustinlyons
+    ./dock
   ];
 
   users.users.${user} = {
@@ -13,6 +15,22 @@ let
     isHidden = false;
     shell = pkgs.zsh;
   };
+
+  local.dock.enable = true;
+  local.dock.entries = [
+    { path = "/System/Cryptexes/App/System/Applications/Safari.app/"; }
+    { path = "/Applications/iTerm.app/"; }
+    { path = "/System/Applications/Mail.app/"; }
+    { path = "/System/Applications/Calendar.app/"; }
+    { path = "/System/Applications/Notes.app/"; }
+    { path = "/System/Applications/Freeform.app/"; }
+    { path = "/Applications/Keka.app/"; }
+    {
+      path = "${config.users.users.${user}.home}/Downloads";
+      section = "others";
+      options = "--sort dateadded --view fan --display stack";
+    }
+  ];
 
   homebrew.enable = true;
   homebrew.onActivation = {
