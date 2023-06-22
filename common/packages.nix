@@ -12,6 +12,10 @@ with pkgs; [
   wget
   zsh
 
+  # podman(docker alternative)
+  podman
+  podman-tui
+
   # js development
   nodePackages.npm
   nodePackages.pnpm
