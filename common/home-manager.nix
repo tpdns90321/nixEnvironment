@@ -49,6 +49,7 @@ let
       nvim-cmp
       cmp-buffer
       cmp-path
+      luasnip
       cmp_luasnip
       cmp-nvim-lsp
 
@@ -101,6 +102,22 @@ let
       require('lspconfig').tailwindcss.setup({})
 
       require('lspconfig').pyright.setup({})
+
+      local cmp = require('cmp')
+      local cmp_action = require('lsp-zero').cmp_action()
+
+      require('luasnip.loaders.from_vscode').lazy_load()
+
+      cmp.setup({
+        sources = {
+          {name = 'nvim_lsp'},
+          {name = 'luasnip'},
+        },
+        mapping = {
+          ['<C-f>'] = cmp_action.luasnip_jump_forward(),
+          ['<C-b>'] = cmp_action.luasnip_jump_backward(),
+        },
+      })
 
       lsp.setup()
     '';
