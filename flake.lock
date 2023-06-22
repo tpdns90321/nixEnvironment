@@ -7,11 +7,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1687110393,
-        "narHash": "sha256-SnkdWeZ8PZd3Dc74iFF8xiE7qDp5+z3Yps2mE79tsM0=",
+        "lastModified": 1687385522,
+        "narHash": "sha256-GR8mqsqYcdZ67dCcII5SWcwHqPAJRWXPmqsuMl7+KA4=",
         "owner": "LnL7",
         "repo": "nix-darwin",
-        "rev": "8a5af0da9d8dab8a188436750489e304ac682085",
+        "rev": "bc346a67d34a336ca3c507570875cc88038e6120",
         "type": "github"
       },
       "original": {
@@ -94,7 +94,8 @@
         "darwin": "darwin",
         "flake-utils": "flake-utils",
         "home-manager": "home-manager",
-        "nixpkgs": "nixpkgs_2"
+        "nixpkgs": "nixpkgs_2",
+        "vim-astro": "vim-astro"
       }
     },
     "systems": {
@@ -109,6 +110,22 @@
       "original": {
         "owner": "nix-systems",
         "repo": "default",
+        "type": "github"
+      }
+    },
+    "vim-astro": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1661391168,
+        "narHash": "sha256-HyQ4i/T1uQmGurBqCpo8+ESVSVPsTrLQBxLe2OEYjcY=",
+        "owner": "wuelnerdotexe",
+        "repo": "vim-astro",
+        "rev": "34732be5e9a5c28c2409f4490edf92d46d8b55a9",
+        "type": "github"
+      },
+      "original": {
+        "owner": "wuelnerdotexe",
+        "repo": "vim-astro",
         "type": "github"
       }
     }

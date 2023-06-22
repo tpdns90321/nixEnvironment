@@ -1,4 +1,4 @@
-{ config, pkgs, user, additionalCasks, ... }:
+user: additionalCasks: { config, pkgs,  ... }:
 
 let
   common-programs = import ../common/home-manager.nix { config = config; pkgs = pkgs; }; in

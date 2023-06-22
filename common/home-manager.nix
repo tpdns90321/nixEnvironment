@@ -1,6 +1,10 @@
 { config, pkgs, ... }:
 
-let userName = "tpdns90321"; userEmail = "tpdns9032100@gmail.com"; in {
+let
+  userName = "tpdns90321";
+  userEmail = "tpdns9032100@gmail.com";
+  vimPlugins = pkgs.vimPlugins // pkgs.callPackage ./customVimPlugins.nix {};
+  in {
   zsh.enable = true;
   zsh.oh-my-zsh = {
     enable = true;
@@ -10,6 +14,7 @@ let userName = "tpdns90321"; userEmail = "tpdns9032100@gmail.com"; in {
   zsh.initExtraFirst = ''
     # editor
     export EDITOR=nvim
+    export PATH=$PATH:${pkgs.nodePackages."@astrojs/language-server".outPath}/bin
 
     # react-native android
     export ANDROID_HOME=$HOME/Library/Android/sdk
@@ -38,7 +43,7 @@ let userName = "tpdns90321"; userEmail = "tpdns9032100@gmail.com"; in {
     viAlias = true;
     vimAlias = true;
 
-    plugins = with pkgs.vimPlugins; [
+    plugins = with vimPlugins; [
       lsp-zero-nvim
       nvim-lspconfig
       nvim-cmp
@@ -46,6 +51,9 @@ let userName = "tpdns90321"; userEmail = "tpdns9032100@gmail.com"; in {
       cmp-path
       cmp_luasnip
       cmp-nvim-lsp
+
+      # custom vim plugins
+      vim-astro
     ];
 
     extraConfig = ''
@@ -62,6 +70,9 @@ let userName = "tpdns90321"; userEmail = "tpdns9032100@gmail.com"; in {
       syntax on
       filetype plugin indent on
       autocmd FileType python setlocal tabstop=4
+
+      " astro
+      let g:astro_typescript = 'enable'
     '';
 
     extraLuaConfig = ''
@@ -84,6 +95,10 @@ let userName = "tpdns90321"; userEmail = "tpdns9032100@gmail.com"; in {
       require('lspconfig').eslint.setup({
         single_file_support = false,
       })
+
+      require('lspconfig').astro.setup({})
+
+      require('lspconfig').tailwindcss.setup({})
 
       require('lspconfig').pyright.setup({})
 

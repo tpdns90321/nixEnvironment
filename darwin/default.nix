@@ -1,14 +1,12 @@
-{ config, pkgs, nixpkgs, user, additionalCasks, ... }:
+user: additionalCasks: { config, pkgs, nixpkgs, ... }:
 
 
-let homeManagerConfig = (import ./home-manager.nix {config = config; pkgs = pkgs; nixpkgs = nixpkgs; user = user; additionalCasks = additionalCasks; }); in
-with homeManagerConfig;
 {
   imports = [
     ../common
     # alfred or spotlight support. import from https://github.com/landakram/nix-config/ , thanks @landakram
     ./link-apps
-    homeManagerConfig
+    (import ./home-manager.nix user additionalCasks)
   ];
 
   services.nix-daemon.enable = true;
