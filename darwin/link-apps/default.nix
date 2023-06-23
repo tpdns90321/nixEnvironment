@@ -60,6 +60,9 @@ in
   config = mkIf cfg.enable {
     system.activationScripts.postActivation.text = ''
       echo "Aliasing Apps to ${cfg.dest}"
+      if [ -d "${cfg.dest}" ]; then
+        rm ${cfg.dest}/*.app
+      fi
       mkdir -p ${cfg.dest}
       chown ${cfg.userName} ${cfg.dest}
       find ${config.system.build.applications}/Applications -maxdepth 1 -type l | while read f; do

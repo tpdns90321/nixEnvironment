@@ -14,7 +14,6 @@ with pkgs; [
 
   # podman(docker alternative)
   podman
-  podman-tui
 
   # js development
   nodePackages.npm

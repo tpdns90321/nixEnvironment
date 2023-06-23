@@ -50,6 +50,7 @@ let
     "google-chrome"
     "notion"
     "iterm2"
+    "wireshark"
 
     # react-native android development in macos
     "android-studio"
