@@ -34,5 +34,16 @@
         inputs = { inherit darwin home-manager nixpkgs; };
       };
     };
+    nixosConfigurations = {
+      "kang-usb-nixos" = nixpkgs.lib.nixosSystem {
+        system = "x86_64-linux";
+        modules = [
+          ./hosts/kang-usb-nixos
+        ];
+        specialArgs = {
+          inherit inputs;
+        };
+      };
+    };
   };
 }

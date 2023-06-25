@@ -11,28 +11,20 @@ user: additionalCasks: { config, pkgs, nixpkgs, ... }:
 
   services.nix-daemon.enable = true;
 
-  nix = {
-    package = pkgs.nix;
-    extraOptions = ''
-      experimental-features = nix-command flakes
-    '';
-
-    settings.trusted-users = [ "@admin" "${user}" ];
-
-    gc = {
-      user = "root";
-      automatic = true;
-      interval = { Weekday = 0; Hour = 2; Minute = 0; };
-      options = "--delete-older-than 30d";
-    };
-  };
-
   environment.systemPackages = import ../common/packages.nix { pkgs = pkgs; };
   system.build.application = pkgs.lib.mkForce (pkgs.buildEnv {
     name = "applications";
     paths = config.environment.systemPackages ++ config.home-manager.users.${user}.home.packages;
     pathsToLink = "/Applications/";
   });
+
+  nix.settings.trusted-users = [ "@admin" "${user}" ];
+  nix.gc = {
+    user = "root";
+    automatic = true;
+    interval = { Weekday = 0; Hour = 2; Minute = 0; };
+    options = "--delete-older-than 30d";
+  };
 
   services.link-apps = {
     enable = true;
