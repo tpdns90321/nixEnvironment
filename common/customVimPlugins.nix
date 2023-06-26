@@ -11,6 +11,6 @@ let lock = builtins.fromJSON (builtins.readFile ../flake.lock); in
         sha256 = package.narHash;
       };
     }; in
-{
-  "vim-astro" = buildVimPluginFromFlake "vim-astro";
-}
+[
+  (buildVimPluginFromFlake "vim-astro")
+]

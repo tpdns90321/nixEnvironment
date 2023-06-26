@@ -1,4 +1,4 @@
-user: additionalCasks: { config, pkgs,  ... }:
+user: additionalCasks: { config, pkgs, inputs, ... }:
 
 let
   common-programs = import ../common/home-manager.nix { config = config; pkgs = pkgs; }; in
@@ -70,7 +70,7 @@ let
     useGlobalPkgs = true;
     users.${user} = {
       home.enableNixpkgsReleaseCheck = true;
-      home.packages = pkgs.callPackage ./packages.nix { };
+      home.packages = pkgs.callPackage (import ./packages.nix inputs) { };
       programs = common-programs // {};
 
       home.stateVersion = "23.05";

@@ -1,4 +1,4 @@
-user: additionalCasks: { config, pkgs, nixpkgs, ... }:
+user: additionalCasks: { config, pkgs, nixpkgs, inputs, ... }:
 
 
 {
@@ -27,7 +27,7 @@ user: additionalCasks: { config, pkgs, nixpkgs, ... }:
     };
   };
 
-  environment.systemPackages = import ../common/packages.nix { pkgs = pkgs; };
+  environment.systemPackages = import ../common/packages.nix { pkgs = pkgs; inputs = inputs; };
   system.build.application = pkgs.lib.mkForce (pkgs.buildEnv {
     name = "applications";
     paths = config.environment.systemPackages ++ config.home-manager.users.${user}.home.packages;

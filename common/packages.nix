@@ -1,6 +1,6 @@
-{ pkgs }:
+{ pkgs, inputs, ... }:
 
-with pkgs; [
+(with pkgs; [
   git
   gh
   home-manager
@@ -34,4 +34,4 @@ with pkgs; [
   nodePackages."@astrojs/language-server"
   nodePackages."@tailwindcss/language-server"
   nodePackages.pyright
-]
+]) ++ [ inputs.llama_cpp.packages.${pkgs.system}.default ]
