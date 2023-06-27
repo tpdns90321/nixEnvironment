@@ -1,5 +1,21 @@
 {
   "nodes": {
+    "copilot-vim": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1687491029,
+        "narHash": "sha256-Vfh50CVF5emZYLlp9keo+qBSe5Rvt0o1yJXdoBY3o/I=",
+        "owner": "github",
+        "repo": "copilot.vim",
+        "rev": "98c293994f1bbebd5bade5d5840ead3b2feb5074",
+        "type": "github"
+      },
+      "original": {
+        "owner": "github",
+        "repo": "copilot.vim",
+        "type": "github"
+      }
+    },
     "darwin": {
       "inputs": {
         "nixpkgs": [
@@ -114,6 +130,7 @@
     },
     "root": {
       "inputs": {
+        "copilot-vim": "copilot-vim",
         "darwin": "darwin",
         "flake-utils": "flake-utils",
         "home-manager": "home-manager",

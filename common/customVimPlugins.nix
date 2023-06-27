@@ -13,4 +13,5 @@ let lock = builtins.fromJSON (builtins.readFile ../flake.lock); in
     }; in
 [
   (buildVimPluginFromFlake "vim-astro")
+  (buildVimPluginFromFlake "copilot-vim")
 ]

@@ -18,6 +18,7 @@ let
 
   local.dock.enable = true;
   local.dock.entries = [
+    { path = "/System/Applications/Launchpad.app/"; }
     { path = "/System/Cryptexes/App/System/Applications/Safari.app/"; }
     { path = "/Applications/iTerm.app/"; }
     { path = "/System/Applications/Mail.app/"; }

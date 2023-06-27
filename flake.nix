@@ -15,6 +15,10 @@
       url = "github:wuelnerdotexe/vim-astro";
       flake = false;
     };
+    copilot-vim = {
+      url = "github:github/copilot.vim";
+      flake = false;
+    };
     llama_cpp = {
       url = "github:ggerganov/llama.cpp";
       inputs.nixpkgs.follows = "nixpkgs";
