@@ -24,6 +24,14 @@
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.flake-utils.follows = "flake-utils";
     };
+    llama-cpp-python = {
+      url = "git+https://github.com/abetlen/llama-cpp-python.git?submodules=1";
+      flake = false;
+    };
+    diskcache = {
+      url = "github:grantjenks/python-diskcache";
+      flake = false;
+    };
   };
 
   outputs = { self, flake-utils, darwin, home-manager, nixpkgs, ... }@inputs: {

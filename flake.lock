@@ -37,6 +37,22 @@
         "type": "github"
       }
     },
+    "diskcache": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1681796842,
+        "narHash": "sha256-AtqPwN3Yhmvgeq++W0bi17n6kE6/UYpkF6ImYTKfebc=",
+        "owner": "grantjenks",
+        "repo": "python-diskcache",
+        "rev": "4d3068625a3edcd2f5a1f6f104ef621f1f7ea395",
+        "type": "github"
+      },
+      "original": {
+        "owner": "grantjenks",
+        "repo": "python-diskcache",
+        "type": "github"
+      }
+    },
     "flake-utils": {
       "inputs": {
         "systems": "systems"
@@ -71,6 +87,24 @@
         "ref": "release-23.05",
         "repo": "home-manager",
         "type": "github"
+      }
+    },
+    "llama-cpp-python": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1687837248,
+        "narHash": "sha256-GftkA3J9vYv4pX7sNsSwZ2XoEPikfRIInGEe6lWatbc=",
+        "ref": "refs/heads/main",
+        "rev": "e2a251352c8f8478c5adb3535a48023cf1ad84bd",
+        "revCount": 718,
+        "submodules": true,
+        "type": "git",
+        "url": "https://github.com/abetlen/llama-cpp-python.git"
+      },
+      "original": {
+        "submodules": true,
+        "type": "git",
+        "url": "https://github.com/abetlen/llama-cpp-python.git"
       }
     },
     "llama_cpp": {
@@ -132,8 +166,10 @@
       "inputs": {
         "copilot-vim": "copilot-vim",
         "darwin": "darwin",
+        "diskcache": "diskcache",
         "flake-utils": "flake-utils",
         "home-manager": "home-manager",
+        "llama-cpp-python": "llama-cpp-python",
         "llama_cpp": "llama_cpp",
         "nixpkgs": "nixpkgs_2",
         "vim-astro": "vim-astro"

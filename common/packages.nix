@@ -25,7 +25,7 @@
   # jdk11 in linux
 
   # python development
-  python311
+  (python311.withPackages (ps :( (pkgs.callPackage (import ./customPython311Packages.nix inputs ps) {}))))
 
   # lspconfig
   rnix-lsp
