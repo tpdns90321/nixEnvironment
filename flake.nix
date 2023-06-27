@@ -15,6 +15,11 @@
       url = "github:wuelnerdotexe/vim-astro";
       flake = false;
     };
+    llama_cpp = {
+      url = "github:ggerganov/llama.cpp";
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.flake-utils.follows = "flake-utils";
+    };
   };
 
   outputs = { self, flake-utils, darwin, home-manager, nixpkgs, ... }@inputs: {
@@ -25,6 +30,7 @@
           ./hosts/uniones-MacBook-Pro.nix
         ];
         inputs = { inherit darwin home-manager nixpkgs; };
+        specialArgs = { inherit inputs; };
       };
       "Mac-mini" = darwin.lib.darwinSystem {
         system = "aarch64-darwin";
@@ -32,6 +38,7 @@
           ./hosts/Mac-mini.nix
         ];
         inputs = { inherit darwin home-manager nixpkgs; };
+        specialArgs = { inherit inputs; };
       };
     };
   };

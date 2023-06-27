@@ -3,7 +3,6 @@
 let
   userName = "tpdns90321";
   userEmail = "tpdns9032100@gmail.com";
-  vimPlugins = pkgs.vimPlugins // pkgs.callPackage ./customVimPlugins.nix {};
   in {
   zsh.enable = true;
   zsh.oh-my-zsh = {
@@ -46,7 +45,7 @@ let
     viAlias = true;
     vimAlias = true;
 
-    plugins = with vimPlugins; [
+    plugins = (with pkgs.vimPlugins; [
       lsp-zero-nvim
       nvim-lspconfig
       nvim-cmp
@@ -55,10 +54,7 @@ let
       luasnip
       cmp_luasnip
       cmp-nvim-lsp
-
-      # custom vim plugins
-      vim-astro
-    ];
+    ]) ++ (pkgs.callPackage ./customVimPlugins.nix {});
 
     extraConfig = ''
       " white space
@@ -123,6 +119,10 @@ let
       })
 
       lsp.setup()
+
+      vim.diagnostic.config({
+        virtual_text = true,
+      })
     '';
   };
 
