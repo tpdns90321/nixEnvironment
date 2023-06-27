@@ -36,10 +36,10 @@
         inputs = { inherit darwin home-manager nixpkgs; };
         specialArgs = { inherit inputs; };
       };
-      "Mac-mini" = darwin.lib.darwinSystem {
+      "kang-mac-mini" = darwin.lib.darwinSystem {
         system = "aarch64-darwin";
         modules = [
-          ./hosts/Mac-mini.nix
+          ./hosts/kang-mac-mini.nix
         ];
         inputs = { inherit darwin home-manager nixpkgs; };
         specialArgs = { inherit inputs; };
