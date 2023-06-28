@@ -1,7 +1,7 @@
 user: additionalCasks: { config, pkgs, inputs, ... }:
 
 let
-  common-programs = import ../common/home-manager.nix { config = config; pkgs = pkgs; }; in
+  common-programs = import ../common/home-manager.nix { config = config; pkgs = pkgs; inputs = inputs; }; in
 {
   imports = [
     <home-manager/nix-darwin>

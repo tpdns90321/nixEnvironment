@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, pkgs, inputs, ... }:
 
 let
   userName = "tpdns90321";
@@ -54,7 +54,7 @@ let
       luasnip
       cmp_luasnip
       cmp-nvim-lsp
-    ]) ++ (pkgs.callPackage ./customVimPlugins.nix {});
+    ]) ++ (pkgs.callPackage (import ./customVimPlugins.nix inputs) {});
 
     extraConfig = ''
       " white space
