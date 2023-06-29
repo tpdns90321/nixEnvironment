@@ -29,27 +29,28 @@ let
   (buildPythonPackageFromFlake {
     name="llama-cpp-python";
     format="other";
-    nativeBuildInputs=[ pkgs.cmake ps.numpy ps.pip ps.scikit-build ps.setuptools ];
-    buildInputs=([
-      (buildPythonPackageFromFlake {
-        name="diskcache";
-        doCheck=false;
-      })] ++ llamaCppPythonOsSpecific);
-    preShellHook=if isDarwin && isAarch64 then ''
-      export CMAKE_ARGS="-DLLAMA_METAL=on"
-      export FORCE_CMAKE=1
-    '' else "";
-    dontUsePip=true;
+    nativeBuildInputs=[ pkgs.cmake ps.pip ps.scikit-build ps.setuptools ];
+    buildInputs = llamaCppPythonOsSpecific;
     phases=[
       "unpackPhase"
       "installPhase"
       "fixupPhase"
     ];
-    installPhase=''
-    export SITE_PACKAGES=$out/lib/python3.11/site-packages
-    mkdir -p $SITE_PACKAGES
-    python3 setup.py install --root $out
-    echo "$(ls -alh $out)"
+    installPhase=(if isDarwin && isAarch64 then ''
+      export CMAKE_ARGS="-DLLAMA_METAL=on"
+      export FORCE_CMAKE=1
+    '' else "") + ''
+    mkdir -p $out/lib/python3.11/site-packages/
+    mkdir ./dist
+    python3 -m pip install . --prefix ./dist
+    printf "$(ls -alh ./dist)"
+    cp -r ./dist/lib/python3.11/site-packages/llama_cpp $out/lib/python3.11/site-packages/
     '';
-  }) 
+  })
+  (buildPythonPackageFromFlake {
+    name="diskcache";
+    doCheck=false;
+  })
+  ps.numpy
+  ps.typing-extensions
 ]
