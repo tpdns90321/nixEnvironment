@@ -77,11 +77,7 @@ let
 
     extraLuaConfig = ''
       -- lsp setup
-      local lsp = require('lsp-zero').preset({
-        manage_nvim_cmp = {
-          set_sources = 'recommended'
-        }
-      })
+      local lsp = require('lsp-zero').preset({})
 
       lsp.on_attach(function(client, bufnr)
         lsp.default_keymaps({buffer = bufnr})
@@ -113,6 +109,10 @@ let
           {name = 'luasnip'},
         },
         mapping = {
+          ['<CR>'] = cmp.mapping.confirm({
+            behavior = cmp.ConfirmBehavior.Replace,
+            select = true,
+          }),
           ['<C-f>'] = cmp_action.luasnip_jump_forward(),
           ['<C-b>'] = cmp_action.luasnip_jump_backward(),
         },
