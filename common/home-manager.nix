@@ -98,30 +98,65 @@ let
 
       require('lspconfig').pyright.setup({})
 
-      local cmp = require('cmp')
-      local cmp_action = require('lsp-zero').cmp_action()
-
-      require('luasnip.loaders.from_vscode').lazy_load()
-
-      cmp.setup({
-        sources = {
-          {name = 'nvim_lsp'},
-          {name = 'luasnip'},
-        },
-        mapping = {
-          ['<CR>'] = cmp.mapping.confirm({
-            behavior = cmp.ConfirmBehavior.Replace,
-            select = true,
-          }),
-          ['<C-f>'] = cmp_action.luasnip_jump_forward(),
-          ['<C-b>'] = cmp_action.luasnip_jump_backward(),
-        },
-      })
-
       lsp.setup()
 
       vim.diagnostic.config({
         virtual_text = true,
+      })
+
+      local cmp = require('cmp')
+      local cmp_action = require('lsp-zero').cmp_action()
+
+      cmp.setup({
+        sources = {
+          { name = 'nvim_lsp' },
+          { name = 'luasnip' },
+          { name = 'buffer' },
+          { name = 'path' },
+        },
+        mapping = {
+          ['<C-p>'] = cmp.mapping(function()
+            if cmp.visible() then
+              cmp.select_prev_item(cmp_select_opts)
+            else
+              cmp.complete()
+            end
+          end),
+          ['<C-n>'] = cmp.mapping(function()
+            if cmp.visible() then
+              cmp.select_next_item(cmp_select_opts)
+            else
+              cmp.complete()
+            end
+          end),
+          ['<CR>'] = cmp.mapping.confirm({
+            behavior = cmp.ConfirmBehavior.Replace,
+            select = true,
+          }),
+        },
+        snippet = {
+          expand = function(args)
+            require('luasnip').lsp_expand(args.body)
+          end,
+        },
+        window = {
+          documentation = cmp.config.window.bordered(),
+          completion = cmp.config.window.bordered(),
+        },
+        formatting = {
+          fields = {'abbr', 'menu', 'kind'},
+          format = function(entry, item)
+            local short_name = {
+              nvim_lsp = 'LSP',
+              nvim_lua = 'nvim'
+            }
+
+            local menu_name = short_name[entry.source.name] or entry.source.name
+
+            item.menu = string.format('[%s]', menu_name)
+            return item
+          end,
+        },
       })
     '';
   };
