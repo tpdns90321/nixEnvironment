@@ -54,6 +54,38 @@
         "type": "indirect"
       }
     },
+    "gptcache": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1688458772,
+        "narHash": "sha256-gV+/34pQlu2QveGT5eflJzctjvf28m85L8UD6aqlg4k=",
+        "owner": "zilliztech",
+        "repo": "GPTCache",
+        "rev": "24bb5a1afabe166fa21ea0000a220e17207ab0c7",
+        "type": "github"
+      },
+      "original": {
+        "owner": "zilliztech",
+        "repo": "GPTCache",
+        "type": "github"
+      }
+    },
+    "guidance": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1687305486,
+        "narHash": "sha256-tQpDJprxctKI88F+CZ9aSJbVo7tjmI4+VrI+WO4QlxE=",
+        "owner": "microsoft",
+        "repo": "guidance",
+        "rev": "e3c6fe93fa00cb86efc130bbce22aa29100936d4",
+        "type": "github"
+      },
+      "original": {
+        "owner": "microsoft",
+        "repo": "guidance",
+        "type": "github"
+      }
+    },
     "home-manager": {
       "inputs": {
         "nixpkgs": "nixpkgs"
@@ -128,15 +160,51 @@
         "type": "github"
       }
     },
+    "openai": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1686934417,
+        "narHash": "sha256-HUlASPryK8QGZk2PIC0UkQ08Df1YVrbkO6prptLIQa8=",
+        "owner": "openai",
+        "repo": "openai-python",
+        "rev": "041bf5a8ec54da19aad0169671793c2078bd6173",
+        "type": "github"
+      },
+      "original": {
+        "owner": "openai",
+        "repo": "openai-python",
+        "type": "github"
+      }
+    },
     "root": {
       "inputs": {
         "copilot-vim": "copilot-vim",
         "darwin": "darwin",
         "flake-utils": "flake-utils",
+        "gptcache": "gptcache",
+        "guidance": "guidance",
         "home-manager": "home-manager",
         "llama_cpp": "llama_cpp",
         "nixpkgs": "nixpkgs_2",
+        "openai": "openai",
+        "selective_context": "selective_context",
         "vim-astro": "vim-astro"
+      }
+    },
+    "selective_context": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1685896350,
+        "narHash": "sha256-twnCbgC9kt7uGRfs3TrnOHZxKbM3uTpXnymO+HGkT7w=",
+        "owner": "liyucheng09",
+        "repo": "Selective_Context",
+        "rev": "1e5d9133fe38f2c5f0520e2dac2e25854681c879",
+        "type": "github"
+      },
+      "original": {
+        "owner": "liyucheng09",
+        "repo": "Selective_Context",
+        "type": "github"
       }
     },
     "systems": {

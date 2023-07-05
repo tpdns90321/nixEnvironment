@@ -24,6 +24,22 @@
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.flake-utils.follows = "flake-utils";
     };
+    guidance = {
+      url = "github:microsoft/guidance";
+      flake = false;
+    };
+    gptcache = {
+      url = "github:zilliztech/GPTCache";
+      flake = false;
+    };
+    selective_context = {
+      url = "github:liyucheng09/Selective_Context";
+      flake = false;
+    };
+    openai = {
+      url = "github:openai/openai-python";
+      flake = false;
+    };
   };
 
   outputs = { self, flake-utils, darwin, home-manager, nixpkgs, ... }@inputs: {

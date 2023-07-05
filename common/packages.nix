@@ -1,4 +1,4 @@
-{ pkgs, inputs, ... }:
+{ pkgs, inputs, lib, ... }:
 
 (with pkgs; [
   git
@@ -25,7 +25,8 @@
   # jdk11 in linux
 
   # python development
-  python311
+  (python310.withPackages (ps: ((with ps; [
+  ]) ++ (import ./customPythonPackages.nix { ps = ps; inputs = inputs; lib = lib; }))))
 
   # lspconfig
   rnix-lsp
