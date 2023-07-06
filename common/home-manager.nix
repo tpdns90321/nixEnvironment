@@ -46,6 +46,7 @@ let
     vimAlias = true;
 
     plugins = (with pkgs.vimPlugins; [
+      ale
       lsp-zero-nvim
       nvim-lspconfig
       nvim-cmp
@@ -73,6 +74,26 @@ let
 
       " astro
       let g:astro_typescript = 'enable'
+
+      " linting
+      let g:ale_fixers = {
+\        'javascript': [
+\          'eslint',
+\          'prettier',
+\        ],
+\        'typescript': [
+\          'eslint',
+\          'prettier',
+\        ],
+\        'javascriptreact': [
+\          'eslint',
+\          'prettier',
+\        ],
+\        'typescriptreact': [
+\          'eslint',
+\          'prettier',
+\        ],
+\      }
     '';
 
     extraLuaConfig = ''
