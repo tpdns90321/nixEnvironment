@@ -66,10 +66,10 @@ in
       mkdir -p ${cfg.dest}
       chown ${cfg.userName} ${cfg.dest}
       find ${config.system.build.applications}/Applications -maxdepth 1 -type l | while read f; do
-        src="$(/usr/bin/stat -f%Y $f)"
-        appname="$(basename $src)"
+        src=$(/usr/bin/stat -f%Y "$f")
+        appname=$(basename "$src")
         dest=${cfg.dest}/$appname
-        [ -f $dest ] && rm $dest
+        [ -f "$dest" ] && rm "$dest"
         ${createMacOSAlias} "''${src}" "''${dest}"
       done
     '';

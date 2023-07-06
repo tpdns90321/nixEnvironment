@@ -12,6 +12,9 @@
   wget
   zsh
 
+  # work
+  gimp
+
   # podman(docker alternative)
   podman
 
