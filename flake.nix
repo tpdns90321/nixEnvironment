@@ -48,6 +48,7 @@
       "uniones-MacBook-Pro" = darwin.lib.darwinSystem {
         system = "aarch64-darwin";
         modules = [
+          home-manager.darwinModules.home-manager
           ./hosts/uniones-MacBook-Pro.nix
         ];
         inputs = { inherit darwin home-manager nixpkgs; };
