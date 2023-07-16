@@ -1,10 +1,9 @@
-user: additionalCasks: { config, pkgs, inputs, ... }:
+user: additionalCasks: { config, pkgs, inputs, home-manager, ... }:
 
 let
   common-programs = import ../common/home-manager.nix { config = config; pkgs = pkgs; inputs = inputs; }; in
 {
   imports = [
-    <home-manager/nix-darwin>
     # import from https://github.com/dustinlyons/nixos-config/ . thanks @dustinlyons
     ./dock
   ];

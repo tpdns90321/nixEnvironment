@@ -3,11 +3,11 @@
     "copilot-vim": {
       "flake": false,
       "locked": {
-        "lastModified": 1687491029,
-        "narHash": "sha256-Vfh50CVF5emZYLlp9keo+qBSe5Rvt0o1yJXdoBY3o/I=",
+        "lastModified": 1688161333,
+        "narHash": "sha256-+HtuP1r5IS/rfWP7TtF+KrOydHHfepe0yjB3c35skPk=",
         "owner": "github",
         "repo": "copilot.vim",
-        "rev": "98c293994f1bbebd5bade5d5840ead3b2feb5074",
+        "rev": "a4a6d6b3f9e284e7f5c849619e06cd228cad8abd",
         "type": "github"
       },
       "original": {
@@ -23,11 +23,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1687691275,
-        "narHash": "sha256-VVywT8ubStvDPF5TscDBokT3T0l3zsOzCW056noh5zc=",
+        "lastModified": 1689281837,
+        "narHash": "sha256-msgwgot2/hxXzlpYltIZ7boAqBkN8XejNOhBJ07q3FY=",
         "owner": "LnL7",
         "repo": "nix-darwin",
-        "rev": "25ae710ba3cd448c5d5678788d37f3d149378bc0",
+        "rev": "c806a73609e77f0c446fdad5d3ea6ca3b7ae6e5f",
         "type": "github"
       },
       "original": {
@@ -42,11 +42,11 @@
         "systems": "systems"
       },
       "locked": {
-        "lastModified": 1687709756,
-        "narHash": "sha256-Y5wKlQSkgEK2weWdOu4J3riRd+kV/VCgHsqLNTTWQ/0=",
+        "lastModified": 1689068808,
+        "narHash": "sha256-6ixXo3wt24N/melDWjq70UuHQLxGV8jZvooRanIHXw0=",
         "owner": "numtide",
         "repo": "flake-utils",
-        "rev": "dbabf0ca0c0c4bce6ea5eaf65af5cb694d2082c7",
+        "rev": "919d646de7be200f3bf08cb76ae1f09402b6f9b4",
         "type": "github"
       },
       "original": {
@@ -57,11 +57,11 @@
     "gptcache": {
       "flake": false,
       "locked": {
-        "lastModified": 1688458772,
-        "narHash": "sha256-gV+/34pQlu2QveGT5eflJzctjvf28m85L8UD6aqlg4k=",
+        "lastModified": 1689346731,
+        "narHash": "sha256-H0KCHqcZ4PJjJ5M42lKFXAFgSdP6OxoyGRjaHcuzlco=",
         "owner": "zilliztech",
         "repo": "GPTCache",
-        "rev": "24bb5a1afabe166fa21ea0000a220e17207ab0c7",
+        "rev": "bd152a7bd3e547d2d62935420b427623d90fb45b",
         "type": "github"
       },
       "original": {
@@ -88,7 +88,9 @@
     },
     "home-manager": {
       "inputs": {
-        "nixpkgs": "nixpkgs"
+        "nixpkgs": [
+          "nixpkgs"
+        ]
       },
       "locked": {
         "lastModified": 1687871164,
@@ -115,11 +117,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1687885593,
-        "narHash": "sha256-ekKvE9sr/EtlpNKtBgRE6rXHm3BSGVWPiljQj1j4etE=",
+        "lastModified": 1689417256,
+        "narHash": "sha256-TNcR/daopBcquSsigOZ9xn6Qo+0xJy1r/nybxi+XI6E=",
         "owner": "ggerganov",
         "repo": "llama.cpp",
-        "rev": "9d23589d638dc74577d5ff880e6d4248b795f12e",
+        "rev": "6e7cca404748dd4b1a3affd0d1296e37f4ac0a6f",
         "type": "github"
       },
       "original": {
@@ -129,22 +131,6 @@
       }
     },
     "nixpkgs": {
-      "locked": {
-        "lastModified": 1687466461,
-        "narHash": "sha256-oupXI7g7RPzlpGUfAu1xG4KBK53GrZH8/xeKgKDB4+Q=",
-        "owner": "nixos",
-        "repo": "nixpkgs",
-        "rev": "ecb441f22067ba1d6312f4932a7c64efa8d19a7b",
-        "type": "github"
-      },
-      "original": {
-        "owner": "nixos",
-        "ref": "nixos-23.05",
-        "repo": "nixpkgs",
-        "type": "github"
-      }
-    },
-    "nixpkgs_2": {
       "locked": {
         "lastModified": 1685566663,
         "narHash": "sha256-btHN1czJ6rzteeCuE/PNrdssqYD2nIA4w48miQAFloM=",
@@ -163,11 +149,11 @@
     "openai": {
       "flake": false,
       "locked": {
-        "lastModified": 1686934417,
-        "narHash": "sha256-HUlASPryK8QGZk2PIC0UkQ08Df1YVrbkO6prptLIQa8=",
+        "lastModified": 1689028689,
+        "narHash": "sha256-XDbJZemayBAtrbvKhMXD8XMHYkEIG+E1J9v1O8jk4wc=",
         "owner": "openai",
         "repo": "openai-python",
-        "rev": "041bf5a8ec54da19aad0169671793c2078bd6173",
+        "rev": "b82a3f7e4c462a8a10fa445193301a3cefef9a4a",
         "type": "github"
       },
       "original": {
@@ -185,7 +171,7 @@
         "guidance": "guidance",
         "home-manager": "home-manager",
         "llama_cpp": "llama_cpp",
-        "nixpkgs": "nixpkgs_2",
+        "nixpkgs": "nixpkgs",
         "openai": "openai",
         "selective_context": "selective_context",
         "vim-astro": "vim-astro"

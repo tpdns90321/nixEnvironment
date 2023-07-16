@@ -6,6 +6,7 @@
     };
     home-manager = {
       url = "github:nix-community/home-manager/release-23.05";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
     darwin = {
       url = "github:LnL7/nix-darwin/master";
@@ -60,6 +61,12 @@
         inputs = { inherit darwin home-manager nixpkgs; };
         specialArgs = { inherit inputs; };
       };
+    };
+
+    homeConfigurations.kang = home-manager.lib.homeManagerConfiguration {
+      pkgs = nixpkgs.legacyPackages.x86_64-linux;
+
+      modules = [ (import ./standalone inputs) ];
     };
   };
 }
