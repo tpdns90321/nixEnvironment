@@ -56,6 +56,7 @@
       "kang-mac-mini" = darwin.lib.darwinSystem {
         system = "aarch64-darwin";
         modules = [
+          home-manager.darwinModules.home-manager
           ./hosts/kang-mac-mini.nix
         ];
         inputs = { inherit darwin home-manager nixpkgs; };
