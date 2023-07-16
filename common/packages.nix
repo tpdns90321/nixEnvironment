@@ -6,14 +6,14 @@
   home-manager
   jq
   neofetch
-  postman
   tmux
-  vscodium
   wget
   zsh
 
-  # work
+  # GUI Application for work
   gimp
+  postman
+  vscodium
 
   # podman(docker alternative)
   podman
