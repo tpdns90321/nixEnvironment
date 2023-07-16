@@ -9,12 +9,6 @@ inputs: { config, pkgs, nixpkgs, lib, ... }:
     '';
   };
 
-  nixpkgs.config.allowUnfree = true;
-
-  users.users.kang = {
-    shell = "zsh";
-  };
-
   imports = [
     ../common
     (import ./home-manager.nix inputs) 

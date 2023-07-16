@@ -11,6 +11,9 @@ let
   };
 
   zsh.initExtraFirst = ''
+    # nix
+    export NIXPKGS_ALLOW_UNFREE=1
+
     # editor
     export EDITOR=nvim
     export PATH=$PATH:${pkgs.nodePackages."@astrojs/language-server".outPath}/bin
