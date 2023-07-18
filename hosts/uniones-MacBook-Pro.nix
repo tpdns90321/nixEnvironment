@@ -1,5 +1,5 @@
 { config, pkgs, nixpkgs, lib, ... }:
 
-let darwin = import ../darwin  "unione" ["cyberduck"]; in {
-  imports = [darwin];
+{
+  imports = [(import ../darwin { user = "unione"; additionalCasks = ["cyberduck"]; })];
 }

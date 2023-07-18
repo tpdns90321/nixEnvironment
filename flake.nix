@@ -51,7 +51,7 @@
           home-manager.darwinModules.home-manager
           ./hosts/uniones-MacBook-Pro.nix
         ];
-        inputs = { inherit darwin home-manager nixpkgs; };
+        inputs = { inherit darwin home-manager; };
         specialArgs = { inherit inputs; };
       };
       "kang-mac-mini" = darwin.lib.darwinSystem {
@@ -60,15 +60,16 @@
           home-manager.darwinModules.home-manager
           ./hosts/kang-mac-mini.nix
         ];
-        inputs = { inherit darwin home-manager nixpkgs; };
+        inputs = { inherit darwin home-manager; };
         specialArgs = { inherit inputs; };
       };
     };
 
     homeConfigurations.kang = home-manager.lib.homeManagerConfiguration {
-      pkgs = nixpkgs.legacyPackages.x86_64-linux;
+      pkgs = import nixpkgs {};
 
-      modules = [ (import ./standalone inputs) ];
+      modules = [ ./standalone ];
+      extraSpecialArgs = { inputs = inputs; };
     };
   };
 }

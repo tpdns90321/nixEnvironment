@@ -1,4 +1,4 @@
-user: additionalCasks: { config, pkgs, nixpkgs, inputs, lib, ... }:
+{ user, additionalCasks ? [] }: { config, pkgs, inputs, lib, ... }:
 
 
 {
