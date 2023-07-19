@@ -5,7 +5,7 @@ let buildPythonPackageFromFlake = { name, ... }@attrs:
   lib.trivial.mergeAttrs {
     pname = name;
     src = inputs.${name}.outPath;
-  }  attrs); in [
+  } attrs); in [
     (buildPythonPackageFromFlake {
       name = "guidance";
       doCheck = false;

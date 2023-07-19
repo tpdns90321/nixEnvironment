@@ -51,7 +51,7 @@
           home-manager.darwinModules.home-manager
           ./hosts/uniones-MacBook-Pro.nix
         ];
-        inputs = { inherit darwin home-manager; };
+        inputs = { inherit darwin; };
         specialArgs = { inherit inputs; };
       };
       "kang-mac-mini" = darwin.lib.darwinSystem {
@@ -60,7 +60,7 @@
           home-manager.darwinModules.home-manager
           ./hosts/kang-mac-mini.nix
         ];
-        inputs = { inherit darwin home-manager; };
+        inputs = { inherit darwin; };
         specialArgs = { inherit inputs; };
       };
     };
