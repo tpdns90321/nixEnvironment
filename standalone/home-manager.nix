@@ -1,4 +1,4 @@
-inputs: { config, pkgs, ... }:
+{ config, pkgs, inputs, ... }:
 
 let
   common-programs = import ../common/home-manager.nix { config = config; pkgs = pkgs; inputs = inputs; }; in

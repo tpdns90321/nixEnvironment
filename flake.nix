@@ -65,8 +65,21 @@
       };
     };
 
+    # use in wsl
     homeConfigurations.kang = home-manager.lib.homeManagerConfiguration {
-      pkgs = import nixpkgs {};
+      pkgs = import nixpkgs {
+        system = "x86_64-linux";
+      };
+
+      modules = [ ./standalone ];
+      extraSpecialArgs = { inputs = inputs; };
+    };
+
+    # use in raspberry pi 4
+    homeConfigurations.unione = home-manager.lib.homeManagerConfiguration {
+      pkgs = import nixpkgs {
+        system = "aarch64-linux";
+      };
 
       modules = [ ./standalone ];
       extraSpecialArgs = { inputs = inputs; };
