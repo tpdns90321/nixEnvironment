@@ -72,17 +72,17 @@
       };
 
       modules = [ ./standalone ];
-      extraSpecialArgs = { inputs = inputs; };
+      extraSpecialArgs = { inputs = inputs; user = "kang"; };
     };
 
     # use in raspberry pi 4
-    homeConfigurations.unione = home-manager.lib.homeManagerConfiguration {
+    homeConfigurations.pi = home-manager.lib.homeManagerConfiguration {
       pkgs = import nixpkgs {
         system = "aarch64-linux";
       };
 
       modules = [ ./standalone ];
-      extraSpecialArgs = { inputs = inputs; };
+      extraSpecialArgs = { inputs = inputs; user = "pi"; isDesktop = true; };
     };
   };
 }

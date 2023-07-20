@@ -1,4 +1,4 @@
-{ pkgs, inputs, lib, ... }:
+{ pkgs, inputs, lib }:
 
 (with pkgs; [
   git
@@ -9,11 +9,6 @@
   tmux
   wget
   zsh
-
-  # GUI Application for work
-  gimp
-  postman
-  vscodium
 
   # podman(docker alternative)
   podman

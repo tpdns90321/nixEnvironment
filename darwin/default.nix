@@ -27,7 +27,7 @@
     };
   };
 
-  environment.systemPackages = import ../common/packages.nix { pkgs = pkgs; inputs = inputs; lib = lib; };
+  environment.systemPackages = import ../common/packages_desktop.nix { pkgs = pkgs; inputs = inputs; lib = lib; };
   system.build.application = pkgs.lib.mkForce (pkgs.buildEnv {
     name = "applications";
     paths = config.environment.systemPackages ++ config.home-manager.users.${user}.home.packages;
