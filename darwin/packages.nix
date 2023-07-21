@@ -1,4 +1,4 @@
-{ pkgs, lib, inputs, ... }:
+inputs: { pkgs, lib, ... }:
 
 with pkgs;
 let common_pkgs = import ../common/packages_desktop.nix { pkgs = pkgs; inputs = inputs; lib = lib; }; in common_pkgs ++ [

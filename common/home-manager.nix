@@ -199,4 +199,12 @@ let
       pull.rebase = true;
     };
   };
+
+  gh = {
+    enable = true;
+
+    settings = {
+      editor = "nvim";
+    };
+  };
 }
