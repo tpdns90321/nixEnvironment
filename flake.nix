@@ -49,19 +49,27 @@
         system = "aarch64-darwin";
         modules = [
           home-manager.darwinModules.home-manager
-          ./hosts/uniones-MacBook-Pro.nix
+          ./darwin
         ];
         inputs = { inherit darwin; };
-        specialArgs = { inherit inputs; };
+        specialArgs = {
+          inherit inputs;
+          user = "unione";
+          additionalCasks = ["cyberduck"];
+        };
       };
       "kang-mac-mini" = darwin.lib.darwinSystem {
         system = "aarch64-darwin";
         modules = [
           home-manager.darwinModules.home-manager
-          ./hosts/kang-mac-mini.nix
+          ./darwin
         ];
         inputs = { inherit darwin; };
-        specialArgs = { inherit inputs; };
+        specialArgs = {
+          inherit inputs;
+          user = "kang";
+          additionalCasks = ["steam" "parallels"];
+        };
       };
     };
 
@@ -81,7 +89,10 @@
         system = "aarch64-linux";
       };
 
-      modules = [ ./standalone ];
+      modules = [
+        ./standalone
+        ./hosts/rpi4
+      ];
       extraSpecialArgs = { inputs = inputs; user = "pi"; isDesktop = true; };
     };
   };
