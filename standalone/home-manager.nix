@@ -11,4 +11,7 @@ let
 
   home.stateVersion = "23.05";
 
+  home.file."/home/${user}/.config/containers" = {
+    source = ../containers;
+  };
 }
