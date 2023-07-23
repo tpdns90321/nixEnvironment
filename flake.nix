@@ -56,6 +56,7 @@
           inherit inputs;
           user = "unione";
           additionalCasks = ["cyberduck"];
+          additionalAppStore = {};
         };
       };
       "kang-mac-mini" = darwin.lib.darwinSystem {
