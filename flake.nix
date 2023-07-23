@@ -69,6 +69,9 @@
           inherit inputs;
           user = "kang";
           additionalCasks = ["steam" "parallels"];
+          additionalAppStore = {
+            "KakaoTalk" = 869223134;
+          };
         };
       };
     };

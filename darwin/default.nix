@@ -6,7 +6,7 @@
     ../common
     # alfred or spotlight support. import from https://github.com/landakram/nix-config/ , thanks @landakram
     ./link-apps
-    (import ./home-manager.nix user additionalCasks)
+    ./home-manager.nix
   ];
 
   services.nix-daemon.enable = true;

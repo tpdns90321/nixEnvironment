@@ -1,4 +1,4 @@
-user: additionalCasks: { config, pkgs, inputs, home-manager, ... }:
+{ config, pkgs, inputs, home-manager, lib, user, additionalCasks, additionalAppStore ? {}, ... }:
 
 let
   common-programs = import ../common/home-manager.nix { config = config; pkgs = pkgs; inputs = inputs; }; in
@@ -64,7 +64,7 @@ let
     "Polaris Office" = 1098211970;
     "Keka" = 470158793;
     "BetterSnapTool" = 417375580;
-  };
+  } // additionalAppStore;
 
   home-manager = {
     useGlobalPkgs = true;
