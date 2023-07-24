@@ -10,6 +10,11 @@
   wget
   zsh
 
+  # secrets management
+  age
+  ssh-to-age
+  sops
+
   # podman(docker alternative)
   podman
 

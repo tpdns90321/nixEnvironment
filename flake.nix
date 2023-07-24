@@ -12,6 +12,11 @@
       url = "github:LnL7/nix-darwin/master";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    llama_cpp = {
+      url = "github:ggerganov/llama.cpp";
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.flake-utils.follows = "flake-utils";
+    };
     vim-astro = {
       url = "github:wuelnerdotexe/vim-astro";
       flake = false;
@@ -19,11 +24,6 @@
     copilot-vim = {
       url = "github:github/copilot.vim";
       flake = false;
-    };
-    llama_cpp = {
-      url = "github:ggerganov/llama.cpp";
-      inputs.nixpkgs.follows = "nixpkgs";
-      inputs.flake-utils.follows = "flake-utils";
     };
     guidance = {
       url = "github:microsoft/guidance";
@@ -41,9 +41,14 @@
       url = "github:openai/openai-python";
       flake = false;
     };
+    sops-nix = {
+      url = "github:Mic92/sops-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.nixpkgs-stable.follows = "nixpkgs";
+    };
   };
 
-  outputs = { self, flake-utils, darwin, home-manager, nixpkgs, ... }@inputs: {
+  outputs = { self, flake-utils, darwin, home-manager, nixpkgs, sops-nix, ... }@inputs: {
     darwinConfigurations = {
       "uniones-MacBook-Pro" = darwin.lib.darwinSystem {
         system = "aarch64-darwin";
@@ -94,6 +99,7 @@
       };
 
       modules = [
+        sops-nix.homeManagerModules.sops
         ./standalone
         ./hosts/rpi4
       ];
