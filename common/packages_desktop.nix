@@ -4,6 +4,17 @@
   # GUI Application for work
   gimp
   postman
-  vscodium
+  (
+    vscode-with-extensions.override {
+      vscodeExtensions = pkgs.vscode-utils.extensionsFromVscodeMarketplace [
+        {
+          name = "copilot";
+          publisher = "Github";
+          version = "1.98.275";
+          sha256 = "sha256-scsuOhzjTxUqq9UfCxeqWR5Dbc2gQoadxLtAD7C0rns=";
+        }
+      ];
+    }
+  )
 ])
 
