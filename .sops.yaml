@@ -1,6 +1,7 @@
 keys:
   - &stay_mac age1j96268thuepkcgmxcnhaeedfamdwum7lcjx0x62u84uqjw9099ysqqphw0
   - &stay_raspberrypi age1xf07v5cv2zdrevmv5mfwen8jhg8nu2gkl7sr0j04gdkyfqlr2fcqk9qwze
+  - &unioneinc_macbook age1z5qm2r360la9nw6w0elqymzjds9c07aevwd7d2eylt9usldw55ysa3nt6r
 creation_rules:
   - path_regex: secrets/[^/]+\.(yaml|json|env|ini)$
     key_groups:
