@@ -1,10 +1,10 @@
 { pkgs, user }:
 
-{ name, options, description ? "" }:
+{ name, options, description ? "", after ? [], }:
 {
   Unit = {
     Description = description;
-    After = [ "network.target" ];
+    After = [ "network.target" ] ++ after;
   };
 
   Install = {
