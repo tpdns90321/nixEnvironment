@@ -8,3 +8,8 @@ creation_rules:
       - age:
         - *stay_mac
         - *stay_raspberrypi
+  - path_regex: example.yaml$
+    key_groups:
+      - age:
+        - *stay_mac
+        - *stay_raspberrypi

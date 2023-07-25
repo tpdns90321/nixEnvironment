@@ -1,11 +1,10 @@
 { config, pkgs, user, ... }: let buildService = import ../../containers/buildService.nix { pkgs = pkgs; user = user; }; in {
   sops = {
-    age.keyFile = "/home/{user}/.config/sops/age/keys.txt";
+    age.keyFile = "/home/${user}/.config/sops/age/keys.txt";
     defaultSopsFile = ../../stay_secrets.yaml;
-
-    secrets.smbConfig = {
+    secrets.smb_config = {
       format = "yaml";
-      sopsFile = ../../stay_secrets.yaml;
+      path = "/home/${user}/.config/smb_config.yaml";
     };
   };
 
@@ -19,6 +18,6 @@
     name = "samba";
     description = "Samba";
     after = [ "sops.service" ];
-    options = "-p 6445:445/tcp --volume ${config.sops.secrets.smbConfig.path}:/data/config.yml --volume /data:/samba ghcr.io/crazy-max/samba";
+    options = "-p 6445:445/tcp --volume /home/${user}/.config/smb_config.yaml:/data/config.yml --volume /data:/samba ghcr.io/crazy-max/samba";
   });
 }
