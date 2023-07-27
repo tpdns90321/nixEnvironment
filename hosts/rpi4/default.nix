@@ -18,6 +18,6 @@
     name = "samba";
     description = "Samba";
     after = [ "sops.service" ];
-    options = "--userns='' -p 6445:445/tcp --volume /home/${user}/.config/smb_config.yaml:/data/config.yml --volume /home/${user}/data:/samba ghcr.io/crazy-max/samba";
+    options = "--userns=auto -p 6445:445/tcp --volume /home/${user}/.config/smb_config.yaml:/data/config.yml --volume /home/${user}/data:/samba ghcr.io/crazy-max/samba";
   });
 }
