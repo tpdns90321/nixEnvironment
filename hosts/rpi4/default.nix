@@ -4,6 +4,7 @@
     defaultSopsFile = ../../stay_secrets.yaml;
     secrets.smb_config = {
       format = "yaml";
+      mode = "0444";
       path = "/home/${user}/.config/smb_config.yaml";
     };
   };
