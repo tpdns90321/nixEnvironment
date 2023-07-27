@@ -1,4 +1,4 @@
-{ config, pkgs, inputs, home-manager, lib, user, additionalCasks, additionalAppStore ? {}, ... }:
+{ config, pkgs, inputs, home-manager, lib, sops-nix, user, additionalCasks, additionalAppStore ? {}, ... }:
 
 let
   common-programs = import ../common/home-manager.nix { config = config; pkgs = pkgs; inputs = inputs; }; in
@@ -48,8 +48,10 @@ let
     "alfred"
     "adguard"
     "google-chrome"
+    "firefox"
     "notion"
     "iterm2"
+    "tunnelblick"
     "wireshark"
 
     # react-native android development in macos
@@ -66,9 +68,19 @@ let
     "BetterSnapTool" = 417375580;
   } // additionalAppStore;
 
+
   home-manager = {
+    sharedModules = [ sops-nix ];
     useGlobalPkgs = true;
     users.${user} = {
+      sops = {
+        age.keyFile = "/Users/${user}/Library/Application Support/sops/age/keys.txt";
+        secrets.openvpn = {
+          sopsFile = ../client.ovpn;
+          format = "binary";
+          path = "${config.users.users.${user}.home}/Library/Application Support/TunnelBlick/Configurations/home.ovpn";
+        };
+      };
       home.enableNixpkgsReleaseCheck = true;
       home.packages = pkgs.callPackage (import ./packages.nix inputs) { };
       programs = common-programs // {};

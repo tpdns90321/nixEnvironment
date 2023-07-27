@@ -62,6 +62,7 @@
           user = "unione";
           additionalCasks = ["cyberduck"];
           additionalAppStore = {};
+          sops-nix = sops-nix.homeManagerModules.sops;
         };
       };
       "kang-mac-mini" = darwin.lib.darwinSystem {
@@ -78,6 +79,7 @@
           additionalAppStore = {
             "KakaoTalk" = 869223134;
           };
+          sops-nix = sops-nix.homeManagerModules.sops;
         };
       };
     };
