@@ -10,7 +10,7 @@
   };
 
   home.file.".config/Caddyfile".text = ''
-192.168.*.* {
+http://192.168.*.* {
   reverse_proxy http://adguardhome
 }
   '';
