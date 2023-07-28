@@ -12,6 +12,10 @@ let
   home.stateVersion = "23.05";
 
   home.file."/home/${user}/.config/containers" = {
-    source = ../containers;
+    source = ../containers/containers;
+  };
+
+  home.file."/home/${user}/.local/share/containers/storage/networks/podman.json" = {
+    source = ../containers/podman.json;
   };
 }
