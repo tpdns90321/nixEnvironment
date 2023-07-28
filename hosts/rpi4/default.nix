@@ -13,10 +13,6 @@
 192.168.*.* {
   reverse_proxy http://adguardhome
 }
-
-{
-  respond "404" "Not Found"
-}
   '';
 
   systemd.user.services."adguardhome" = (buildService {
