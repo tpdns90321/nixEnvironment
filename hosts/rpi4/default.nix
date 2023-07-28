@@ -24,7 +24,7 @@ http://192.168.*.* {
   systemd.user.services."caddy" = (buildService {
     name = "caddy";
     description = "Caddy";
-    options = "--network podman -p 6080:80/tcp -p 6443:443/tcp -p 6443:443/udp -p 2019:8019/tcp --volume /home/${user}/.config/Caddyfile:/etc/caddy/Caddyfile docker.io/caddy:2.7";
+    options = "--network podman -p 6080:80/tcp -p 6443:443/tcp -p 6443:443/udp -p 2019:8019/tcp --volume /home/${user}/.config/Caddyfile:/etc/caddy/Caddyfile --volume /home/${user}/.config/caddy_data:/data docker.io/caddy:2.7";
   });
 
   systemd.user.services."samba" = (buildService {
