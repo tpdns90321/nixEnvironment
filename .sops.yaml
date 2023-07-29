@@ -13,3 +13,4 @@ creation_rules:
       - age:
         - *stay_mac
         - *unioneinc_macbook
+        - *stay_raspberrypi
