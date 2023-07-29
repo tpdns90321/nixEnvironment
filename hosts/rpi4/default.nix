@@ -7,13 +7,29 @@
       mode = "0444";
       path = "/home/${user}/.config/smb_config.yaml";
     };
+    secrets.renew_duckdns = {
+      sopsFile = ./renew_duckdns.sh;
+      format = "binary";
+      mode = "111";
+      path = "/home/${user}/.config/renew_duckdns.sh";
+    };
   };
 
   home.file.".config/Caddyfile".text = ''
 http://192.168.*.* {
   reverse_proxy http://adguardhome
 }
+
+tpdns.asuscomm.com {
+  respond "Hello From Tpdns!"
+}
+
+tpdns.duckdns.org {
+  respond "Hello From Tpdns!"
+}
   '';
+
+  home.file.".config/crontab".source = ./crontab;
 
   systemd.user.services."adguardhome" = (buildService {
     name = "adguardhome";
@@ -32,5 +48,12 @@ http://192.168.*.* {
     description = "Samba";
     after = [ "sops.service" ];
     options = "-p 6445:445/tcp --volume /home/${user}/.config/smb_config.yaml:/data/config.yml --volume /home/${user}/data:/samba ghcr.io/crazy-max/samba";
+  });
+
+  systemd.user.services."crontab" = (buildService {
+    name = "crontab";
+    description = "Crontab";
+    after = [ "sops.service" ];
+    options = "--volume /home/${user}/.config/crontab:/var/spool/cron/crontabs/root --volume /home/${user}/.config/renew_duckdns.sh:/renew_duckdns.sh docker.io/library/busybox crond -f";
   });
 }

@@ -14,8 +14,7 @@ for PORT in $PORTS; do
   OUT=${PARSED[1]}
   TYPE=${PARSED[2]}
   sudo ufw allow ${IN}/${TYPE}
-  echo "-A PREROUTING -p ${TYPE} --dport ${OUT} -j REDIRECT --to-port ${IN} -s 192.168.50.0/24" | sudo tee -a /etc/ufw/before.rules
-  echo "-A PREROUTING -p ${TYPE} --dport ${OUT} -j REDIRECT --to-port ${IN} -s 10.8.0.0/24" | sudo tee -a /etc/ufw/before.rules
+  echo "-A PREROUTING -p ${TYPE} --dport ${OUT} -j REDIRECT --to-port ${IN}" | sudo tee -a /etc/ufw/before.rules
 done
 
 echo 'COMMIT' | sudo tee -a /etc/ufw/before.rules

@@ -14,3 +14,8 @@ creation_rules:
         - *stay_mac
         - *unioneinc_macbook
         - *stay_raspberrypi
+  - path_regex: hosts/rpi4/renew_duckdns.sh$
+    key_groups:
+      - age:
+        - *stay_mac
+        - *stay_raspberrypi
