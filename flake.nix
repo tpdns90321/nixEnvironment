@@ -91,7 +91,7 @@
       };
 
       modules = [ ./standalone ];
-      extraSpecialArgs = { inputs = inputs; user = "kang"; };
+      extraSpecialArgs = { inputs = inputs; user = "kang"; isDesktop = true; };
     };
 
     # use in raspberry pi 4
