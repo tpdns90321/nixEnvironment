@@ -85,27 +85,23 @@
     };
 
     # use in wsl
-    homeConfigurations.kang = home-manager.lib.homeManagerConfiguration {
-      pkgs = import nixpkgs {
-        system = "x86_64-linux";
-      };
+    homeConfigurations.kang = let pkgs = import nixpkgs { system = "x86_64-linux"; }; in home-manager.lib.homeManagerConfiguration {
+      pkgs = pkgs;
 
       modules = [ ./standalone ];
-      extraSpecialArgs = { inputs = inputs; user = "kang"; isDesktop = true; };
+      extraSpecialArgs = { inputs = inputs; user = "kang"; isDesktop = true; additionalPackages = []; };
     };
 
     # use in raspberry pi 4
-    homeConfigurations.pi = home-manager.lib.homeManagerConfiguration {
-      pkgs = import nixpkgs {
-        system = "aarch64-linux";
-      };
+    homeConfigurations.pi = let pkgs = import nixpkgs { system = "aarch64-linux"; }; in home-manager.lib.homeManagerConfiguration {
+      pkgs = pkgs;
 
       modules = [
         sops-nix.homeManagerModules.sops
         ./standalone
         ./hosts/rpi4
       ];
-      extraSpecialArgs = { inputs = inputs; user = "pi"; isDesktop = true; };
+      extraSpecialArgs = { inputs = inputs; user = "pi"; isDesktop = true; additionalPackages = with pkgs; [ caddy xcaddy ];};
     };
   };
 }

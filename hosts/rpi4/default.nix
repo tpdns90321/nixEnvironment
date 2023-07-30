@@ -10,50 +10,64 @@
     secrets.renew_duckdns = {
       sopsFile = ./renew_duckdns.sh;
       format = "binary";
-      mode = "111";
+      mode = "0555";
       path = "/home/${user}/.config/renew_duckdns.sh";
+    };
+    secrets.Caddyfile = {
+      sopsFile = ./Caddyfile;
+      format = "binary";
+      mode = "0444";
+      path = "/home/${user}/.config/Caddyfile";
     };
   };
 
-  home.file.".config/Caddyfile".text = ''
-http://192.168.*.* {
-  reverse_proxy http://adguardhome
-}
-
-tpdns.asuscomm.com {
-  respond "Hello From Tpdns!"
-}
-
-tpdns.duckdns.org {
-  respond "Hello From Tpdns!"
-}
-  '';
-
-  home.file.".config/crontab".source = ./crontab;
+  home.file.".config/duckdns_crontab".source = ./crontab;
 
   systemd.user.services."adguardhome" = (buildService {
     name = "adguardhome";
     description = "AdGuard Home";
-    options = "--network podman -p 6053:53/tcp -p 6053:53/udp -p 9000:3000/tcp -p 6853:853/tcp -p 6784:784/udp -p 6853:853/udp -p 14853:8853/udp -p 11443:5443/tcp --volume /home/${user}/.config/adguardhome/work:/opt/adguardhome/work --volume /home/${user}/.config/adguardhome/conf:/opt/adguardhome/conf docker.io/adguard/adguardhome:latest";
+    options = "--network podman -p 7080:80/tcp -p 6053:53/tcp -p 6053:53/udp -p 9000:3000/tcp -p 6853:853/tcp -p 6784:784/udp -p 6853:853/udp -p 14853:8853/udp -p 11443:5443/tcp --volume /home/${user}/.config/adguardhome/work:/opt/adguardhome/work --volume /home/${user}/.config/adguardhome/conf:/opt/adguardhome/conf docker.io/adguard/adguardhome:latest";
   });
 
-  systemd.user.services."caddy" = (buildService {
-    name = "caddy";
-    description = "Caddy";
-    options = "--network podman -p 6080:80/tcp -p 6443:443/tcp -p 6443:443/udp -p 2019:8019/tcp --volume /home/${user}/.config/Caddyfile:/etc/caddy/Caddyfile --volume /home/${user}/.config/caddy_data:/data docker.io/caddy:2.7";
-  });
+  systemd.user.services."caddy" = {
+    Unit = {
+      Description = "Caddy Web Server";
+      After = [ "network.target" "sops-nix.service" ];
+    };
+
+    Install = {
+      WantedBy = [ "default.target" ];
+    };
+
+    Service = {
+      Type = "simple";
+      ExecStart = "${pkgs.caddy}/bin/caddy run --config /home/${user}/.config/Caddyfile --adapter caddyfile";
+      Restart = "on-failure";
+      RestartSec = 2;
+      Environment = ''
+      XDG_CONFIG_HOME=/home/${user}/.config
+      XDG_DATA_HOME=/home/${user}/.local/share
+      '';
+    };
+  };
 
   systemd.user.services."samba" = (buildService {
     name = "samba";
     description = "Samba";
-    after = [ "sops.service" ];
+    after = [ "sops-nix.service" ];
     options = "-p 6445:445/tcp --volume /home/${user}/.config/smb_config.yaml:/data/config.yml --volume /home/${user}/data:/samba ghcr.io/crazy-max/samba";
   });
 
-  systemd.user.services."crontab" = (buildService {
-    name = "crontab";
+  systemd.user.services."duckdns" = (buildService {
+    name = "duckdns";
     description = "Crontab";
-    after = [ "sops.service" ];
-    options = "--volume /home/${user}/.config/crontab:/var/spool/cron/crontabs/root --volume /home/${user}/.config/renew_duckdns.sh:/renew_duckdns.sh docker.io/library/busybox crond -f";
+    after = [ "sops-nix.service" ];
+    options = "--volume /home/${user}/.config/duckdns_crontab:/var/spool/cron/crontabs/root --volume /home/${user}/.config/renew_duckdns.sh:/renew_duckdns.sh docker.io/curlimages/curl crond -f";
+  });
+
+  systemd.user.services."vaultwarden" = (buildService {
+    name = "vaultwarden";
+    description = "Vaultwarden";
+    options = "-p 9080:80/tcp --volume /home/${user}/.config/vaultwarden/data:/data docker.io/vaultwarden/server:latest";
   });
 }

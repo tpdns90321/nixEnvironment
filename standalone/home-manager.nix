@@ -1,4 +1,4 @@
-{ config, pkgs, inputs, user, isDesktop ? false, ... }:
+{ config, pkgs, inputs, user, isDesktop ? false, additionalPackages ? [], ... }:
 
 let
   common-programs = import ../common/home-manager.nix { config = config; pkgs = pkgs; inputs = inputs; }; in
@@ -6,7 +6,7 @@ let
   home.username = user;
   home.homeDirectory = "/home/${user}";
   home.enableNixpkgsReleaseCheck = true;
-  home.packages = (pkgs.callPackage (import ./packages.nix inputs isDesktop) {});
+  home.packages = (pkgs.callPackage (import ./packages.nix inputs isDesktop additionalPackages) {});
   programs = common-programs // {};
 
   home.stateVersion = "23.05";

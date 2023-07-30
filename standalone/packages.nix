@@ -1,4 +1,4 @@
-inputs: isDesktop: { pkgs, lib, ... }:
+inputs: isDesktop: additionalPackages: { pkgs, lib, ... }:
 
 with pkgs;
 let
@@ -9,4 +9,4 @@ let
   in common_pkgs ++ [
     # react-native android development in linux
     jdk11
-  ]
+  ] ++ additionalPackages
