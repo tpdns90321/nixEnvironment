@@ -66,6 +66,7 @@ let
     "Polaris Office" = 1098211970;
     "Keka" = 470158793;
     "BetterSnapTool" = 417375580;
+    "Bitwarden" = 1352778147;
   } // additionalAppStore;
 
 

@@ -1,6 +1,9 @@
 { pkgs, inputs, lib }:
 
 (import ./packages.nix { pkgs = pkgs; inputs = inputs; lib = lib; }) ++ (with pkgs; [
+  # CUI Application for work
+  bitwarden-cli
+
   # GUI Application for work
   gimp
   postman
