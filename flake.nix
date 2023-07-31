@@ -101,7 +101,7 @@
         ./standalone
         ./hosts/rpi4
       ];
-      extraSpecialArgs = { inputs = inputs; user = "pi"; isDesktop = true; additionalPackages = with pkgs; [ caddy xcaddy ];};
+      extraSpecialArgs = { inputs = inputs; user = "pi"; isDesktop = true; additionalPackages = with pkgs; [ (pkgs.callPackage ./hosts/rpi4/customCaddy.nix { plugins = [ "github.com/caddy-dns/duckdns" ]; }) ];};
     };
   };
 }
