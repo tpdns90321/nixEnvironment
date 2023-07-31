@@ -1,4 +1,4 @@
-{ lib, plugins, vendorSha256 ? "" }:
+{ lib, plugins, ... }:
 
 final: prev:
 let imports = lib.concatMapStringsSep "\n" (plugin: "\t\t\t_ \"${plugin}\"\n") plugins;
@@ -18,21 +18,21 @@ ${imports}
   '';
 in {
   caddy = prev.caddy.overrideAttrs (oldAttrs: {
-    inherit vendorSha256;
-
-    overrideModAttrs = (_: {
-      preBuild = "echo '${main}' > cmd/caddy/main.go";
-      postInstall = "cp go.mod go.sum $out/ && ls $out/";
-    });
-
-    postPatch = ''
-      echo '${main}' > cmd/caddy/main.go
-      cat cmd/caddy/main.go
-    '';
-
-    postConfigure = ''
-      cp vendor/go.sum ./
-      cp vendor/go.mod ./
-    '';
+    go-module = lib.buildGoModule {
+      overrideModAttrs = (_: {
+        preBuild = "echo '${main}' > cmd/caddy/main.go";
+        postInstall = "cp go.mod go.sum $out/ && ls $out/";
+      });
+  
+      postPatch = ''
+        echo '${main}' > cmd/caddy/main.go
+        cat cmd/caddy/main.go
+      '';
+  
+      postConfigure = ''
+        cp vendor/go.sum ./
+        cp vendor/go.mod ./
+      '';
+    }.go-module;
   });
 }
