@@ -1,4 +1,4 @@
-{ prev, lib, plugins, ... }:
+{ prev, lib, buildGoModule, installShellFiles, plugins, vendorSha256 ? "", ... }:
 
 let imports = lib.concatMapStringsSep "\n" (plugin: "\t\t\t_ \"${plugin}\"\n") plugins;
   main = ''
@@ -15,13 +15,13 @@ ${imports}
       caddycmd.Main()
     }
   '';
-in {
-  caddy = prev.caddy.overrideAttrs (oldAttrs: {
-    go-module = lib.buildGoModule {
-      name = oldAttrs.name;
+  oldAttrs = prev.caddy;
+  dist = oldAttrs.src; in
+    buildGoModule rec {
+      pname = oldAttrs.pname;
       version = oldAttrs.version;
       src = oldAttrs.src;
-      vendorHash = oldAttrs.vendorHash;
+      inherit vendorSha256;
 
       overrideModAttrs = (_: {
         preBuild = "echo '${main}' > cmd/caddy/main.go && go mod tidy";
@@ -37,6 +37,15 @@ in {
         cp vendor/go.sum ./
         cp vendor/go.mod ./
       '';
-    }.go-module;
-  });
-}
+
+      subPackages = [ "cmd/caddy" ];
+    
+      nativeBuildInputs = [ installShellFiles ];
+    
+      meta = with lib; {
+        homepage = "https://caddyserver.com";
+        description = "Fast and extensible multi-platform HTTP/1-2-3 web server with automatic HTTPS";
+        license = licenses.asl20;
+        maintainers = with maintainers; [ Br1ght0ne emilylange techknowlogick ];
+      };
+    }
