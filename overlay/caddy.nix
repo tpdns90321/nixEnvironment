@@ -1,6 +1,5 @@
-{ lib, plugins, ... }:
+{ prev, lib, plugins, ... }:
 
-final: prev:
 let imports = lib.concatMapStringsSep "\n" (plugin: "\t\t\t_ \"${plugin}\"\n") plugins;
   main = ''
     package main
@@ -19,8 +18,13 @@ ${imports}
 in {
   caddy = prev.caddy.overrideAttrs (oldAttrs: {
     go-module = lib.buildGoModule {
+      name = oldAttrs.name;
+      version = oldAttrs.version;
+      src = oldAttrs.src;
+      vendorHash = oldAttrs.vendorHash;
+
       overrideModAttrs = (_: {
-        preBuild = "echo '${main}' > cmd/caddy/main.go";
+        preBuild = "echo '${main}' > cmd/caddy/main.go && go mod tidy";
         postInstall = "cp go.mod go.sum $out/ && ls $out/";
       });
   

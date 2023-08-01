@@ -93,7 +93,7 @@
     };
 
     # use in raspberry pi 4
-    homeConfigurations.pi = let pkgs = import nixpkgs { system = "aarch64-linux"; }; in home-manager.lib.homeManagerConfiguration {
+    homeConfigurations.pi = let pkgs = import nixpkgs { system = "aarch64-linux"; overlays = [ (import ./overlay) ]; }; in home-manager.lib.homeManagerConfiguration {
       pkgs = pkgs;
 
       modules = [
@@ -101,7 +101,7 @@
         ./standalone
         ./hosts/rpi4
       ];
-      extraSpecialArgs = { inputs = inputs; user = "pi"; isDesktop = true; additionalPackages = with pkgs; [ caddy ];};
+      extraSpecialArgs = { inputs = inputs; user = "pi"; isDesktop = true; additionalPackages = with pkgs; [ caddy-with-plugins ];};
     };
   };
 }
