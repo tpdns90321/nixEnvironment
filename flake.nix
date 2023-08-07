@@ -88,7 +88,10 @@
     homeConfigurations.kang = let pkgs = import nixpkgs { system = "x86_64-linux"; }; in home-manager.lib.homeManagerConfiguration {
       pkgs = pkgs;
 
-      modules = [ ./standalone ];
+      modules = [
+        ./standalone
+        ./hosts/wsl
+      ];
       extraSpecialArgs = { inputs = inputs; user = "kang"; isDesktop = true; additionalPackages = []; };
     };
 
