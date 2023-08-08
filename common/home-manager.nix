@@ -25,6 +25,8 @@ let
 
     # podman aliasing
     alias docker=podman
+
+    eval "$(direnv hook zsh)"
   '';
 
   tmux = {
@@ -58,6 +60,7 @@ let
       luasnip
       cmp_luasnip
       cmp-nvim-lsp
+      direnv-vim
     ]) ++ (pkgs.callPackage (import ./customVimPlugins.nix inputs) {});
 
     extraConfig = ''

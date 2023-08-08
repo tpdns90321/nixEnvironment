@@ -19,5 +19,8 @@
       ];
     }
   )
-])
+]) ++ [
+  # llamacpp
+  inputs.llama_cpp.packages.${pkgs.system}.default
+]
 

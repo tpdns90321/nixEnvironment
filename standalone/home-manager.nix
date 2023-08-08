@@ -18,4 +18,6 @@ let
   home.file."/home/${user}/.local/share/containers/storage/networks/podman.json" = {
     source = ../containers/podman.json;
   };
+
+  services.lorri.enable = true;
 }

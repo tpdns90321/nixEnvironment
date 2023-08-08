@@ -1,6 +1,7 @@
 { pkgs, inputs, lib }:
 
 (with pkgs; [
+  direnv
   git
   gh
   home-manager
@@ -28,8 +29,8 @@
   # jdk11 in linux
 
   # python development
-  (python310.withPackages (ps: ((with ps; [
-  ]) ++ (import ./customPythonPackages.nix { ps = ps; inputs = inputs; lib = lib; }))))
+  python310
+  poetry
 
   # lspconfig
   rnix-lsp
@@ -38,4 +39,4 @@
   nodePackages."@astrojs/language-server"
   nodePackages."@tailwindcss/language-server"
   nodePackages.pyright
-]) ++ [ inputs.llama_cpp.packages.${pkgs.system}.default ]
+])

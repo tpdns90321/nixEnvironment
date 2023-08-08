@@ -104,7 +104,7 @@
         ./standalone
         ./hosts/rpi4
       ];
-      extraSpecialArgs = { inputs = inputs; user = "pi"; isDesktop = true; additionalPackages = with pkgs; [ caddy xcaddy ];};
+      extraSpecialArgs = { inputs = inputs; user = "pi"; isDesktop = false; additionalPackages = with pkgs; [ caddy xcaddy ];};
     };
   };
 }
