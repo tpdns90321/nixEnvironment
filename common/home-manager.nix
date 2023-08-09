@@ -27,6 +27,11 @@ let
     alias docker=podman
 
     eval "$(direnv hook zsh)"
+
+    # if exist '.env' in home, export exists environment variable.
+    if [ -f $HOME/.env ]; then
+      export $(cat $HOME/.env | xargs)
+    fi
   '';
 
   tmux = {

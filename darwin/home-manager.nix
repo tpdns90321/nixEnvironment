@@ -74,14 +74,6 @@ let
     sharedModules = [ sops-nix ];
     useGlobalPkgs = true;
     users.${user} = {
-      sops = {
-        age.keyFile = "/Users/${user}/Library/Application Support/sops/age/keys.txt";
-        secrets.openvpn = {
-          sopsFile = ../client.ovpn;
-          format = "binary";
-          path = "${config.users.users.${user}.home}/Library/Application Support/TunnelBlick/Configurations/home.ovpn";
-        };
-      };
       home.enableNixpkgsReleaseCheck = true;
       home.packages = pkgs.callPackage (import ./packages.nix inputs) { };
       programs = common-programs // {};

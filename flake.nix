@@ -54,6 +54,7 @@
         system = "aarch64-darwin";
         modules = [
           home-manager.darwinModules.home-manager
+          ./hosts/unione_macbook
           ./darwin
         ];
         inputs = { inherit darwin; };
@@ -69,6 +70,7 @@
         system = "aarch64-darwin";
         modules = [
           home-manager.darwinModules.home-manager
+          ./hosts/stay_mac
           ./darwin
         ];
         inputs = { inherit darwin; };
