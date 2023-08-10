@@ -132,6 +132,8 @@ let
 
       require('lspconfig').pyright.setup({})
 
+      require('lspconfig').rust_analyzer.setup({})
+
       lsp.setup()
 
       vim.diagnostic.config({
