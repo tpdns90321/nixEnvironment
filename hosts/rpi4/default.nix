@@ -20,6 +20,7 @@
       path = "/home/${user}/.config/Caddyfile";
     };
     secrets.vaultwarden_env = {
+      sopsFile = ./vaultwarden_env;
       format = "binary";
       mode = "0400";
       path = "/home/${user}/.config/vaultwarden_env";
