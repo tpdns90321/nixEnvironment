@@ -24,6 +24,11 @@ creation_rules:
       - age:
         - *stay_mac
         - *stay_raspberrypi
+  - path_regex: hosts/rpi4/vaultwarden_env$
+    key_groups:
+      - age:
+        - *stay_mac
+        - *stay_raspberrypi
   - path_regex: env$
     key_groups:
       - age:

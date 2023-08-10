@@ -16,8 +16,13 @@
     secrets.Caddyfile = {
       sopsFile = ./Caddyfile;
       format = "binary";
-      mode = "0444";
+      mode = "0400";
       path = "/home/${user}/.config/Caddyfile";
+    };
+    secrets.vaultwarden_env = {
+      format = "binary";
+      mode = "0400";
+      path = "/home/${user}/.config/vaultwarden_env";
     };
   };
 
@@ -68,6 +73,6 @@
   systemd.user.services."vaultwarden" = (buildService {
     name = "vaultwarden";
     description = "Vaultwarden";
-    options = "-p 9080:80/tcp --volume /home/${user}/.config/vaultwarden/data:/data docker.io/vaultwarden/server:latest";
+    options = "-p 9080:80/tcp --env-file=/home/${user}/.config/vaultwarden_env --volume /home/${user}/.config/vaultwarden/data:/data docker.io/vaultwarden/server:latest";
   });
 }
