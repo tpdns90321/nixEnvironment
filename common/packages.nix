@@ -7,6 +7,7 @@
   home-manager
   jq
   neofetch
+  screen
   tmux
   wget
   zsh
