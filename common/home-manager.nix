@@ -29,8 +29,8 @@ let
     eval "$(direnv hook zsh)"
 
     # if exist '.env' in home, export exists environment variable.
-    if [ -f $HOME/.env ]; then
-      export $(cat $HOME/.env | xargs)
+    if [ -f ~/.env ]; then
+      export $(cat ~/.env | xargs)
     fi
   '';
 

@@ -6,5 +6,10 @@
       format = "binary";
       path = "/Users/${user}/Library/Application Support/TunnelBlick/Configurations/home.ovpn";
     };
+    secrets.env = {
+      sopsFile = ./env;
+      format = "binary";
+      path = "/Users/${user}/.env";
+    };
   };
 }

@@ -29,8 +29,12 @@ creation_rules:
       - age:
         - *stay_mac
         - *stay_raspberrypi
-  - path_regex: env$
+  - path_regex: hosts/stay_mac/env$
     key_groups:
       - age:
         - *stay_mac
         - *stay_raspberrypi
+  - path_regex: hosts/unione_macbook/env$
+    key_groups:
+      - age:
+        - *unioneinc_macbook
