@@ -47,6 +47,7 @@ let
   homebrew.casks = [
     "alfred"
     "adguard"
+    "arc"
     "google-chrome"
     "firefox"
     "notion"

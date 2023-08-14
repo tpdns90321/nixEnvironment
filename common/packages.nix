@@ -30,8 +30,7 @@
   # jdk11 in linux
 
   # python development
-  python310
-  poetry
+  python311
 
   # rust development
   cargo
