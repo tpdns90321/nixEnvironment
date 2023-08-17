@@ -38,3 +38,8 @@ creation_rules:
     key_groups:
       - age:
         - *unioneinc_macbook
+  - path_regex: hosts/rpi4/transmission_env$
+    key_groups:
+      - age:
+        - *stay_mac
+        - *stay_raspberrypi

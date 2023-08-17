@@ -25,6 +25,12 @@
       mode = "0400";
       path = "/home/${user}/.config/vaultwarden_env";
     };
+    secrets.transmission_env = {
+      sopsFile = ./transmission_env;
+      format = "binary";
+      mode = "0400";
+      path = "/home/${user}/.config/transmission_env";
+    };
   };
 
   home.file.".config/duckdns_crontab".source = ./crontab;
@@ -75,5 +81,11 @@
     name = "vaultwarden";
     description = "Vaultwarden";
     options = "-p 9080:80/tcp --env-file=/home/${user}/.config/vaultwarden_env --volume /home/${user}/.config/vaultwarden/data:/data docker.io/vaultwarden/server:latest";
+  });
+
+  systemd.user.services."transmission" = (buildService {
+    name = "transmission";
+    description = "Transmission";
+    options = "-p 9091:9091/tcp -p 51413:51413/tcp -p 51413:51413/udp --env-file=/home/${user}/.config/transmission_env --volume /home/${user}/.config/transmission:/config --volume /home/${user}/data/shared:/downloads --volume /home/${user}/data/shared:/watch docker.io/linuxserver/transmission:latest";
   });
 }
