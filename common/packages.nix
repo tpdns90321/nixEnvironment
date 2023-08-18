@@ -2,6 +2,7 @@
 
 (with pkgs; [
   direnv
+  fnm
   git
   gh
   home-manager

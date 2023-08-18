@@ -26,7 +26,11 @@ let
     # podman aliasing
     alias docker=podman
 
+    # direnv
     eval "$(direnv hook zsh)"
+
+    # fnm node version manager
+    eval "$(fnm env --use-on-cd)"
 
     # if exist '.env' in home, export exists environment variable.
     if [ -f ~/.env ]; then
