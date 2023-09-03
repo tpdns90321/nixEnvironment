@@ -108,5 +108,15 @@
       ];
       extraSpecialArgs = { inputs = inputs; user = "pi"; isDesktop = false; additionalPackages = with pkgs; [ caddy xcaddy ];};
     };
+
+    nixosConfigurations.kang-stay-nixos = nixpkgs.lib.nixosSystem {
+      system = "x86_64-linux";
+      specialArgs = { inputs = inputs; };
+      modules = [
+        home-manager.nixosModules.home-manager
+        ./nixos
+        ./hosts/stay_nixos
+      ];
+    };
   };
 }
