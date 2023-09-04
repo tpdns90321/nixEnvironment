@@ -20,6 +20,7 @@
 
   # podman(docker alternative)
   podman
+  podman-compose
 
   # js development
   nodePackages.npm

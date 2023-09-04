@@ -57,7 +57,7 @@ let
 
     # react-native android development in macos
     "android-studio"
-    "zulu-jdk11"
+    "zulu-jdk17"
   ] ++ additionalCasks;
   homebrew.masApps = {
     "Xcode" = 497799835;
