@@ -32,8 +32,8 @@
       keyFile = "/boot/keyfile.bin";
     };
   };
-  boot.kernelModules = [ "kvm-amd" ];
-  boot.extraModulePackages = [ ];
+  boot.kernelModules = [ "kvm-amd" "rtl8xxxu" ];
+  boot.extraModulePackages = with config.boot.kernelPackages; [ rtl8821cu ];
 
   fileSystems."/" =
     { device = "/dev/disk/by-uuid/c1394e2e-209c-4b7e-9c9d-6b72f8f167cc";

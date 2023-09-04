@@ -34,6 +34,9 @@
     LC_TELEPHONE = "ko_KR.UTF-8";
     LC_TIME = "ko_KR.UTF-8";
   };
+  i18n.inputMethod = {
+    enabled = "kime";
+  };
 
   # Configure keymap in X11
   services.xserver = {
@@ -65,7 +68,6 @@
     wayland
     swaylock
     swayidle
-    bemenu
     mako
     wdisplays
     xdg-utils
