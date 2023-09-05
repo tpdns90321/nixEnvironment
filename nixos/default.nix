@@ -64,14 +64,6 @@
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = (with pkgs; [
-    alacritty
-    wayland
-    swaylock
-    swayidle
-    mako
-    wdisplays
-    xdg-utils
-
     # browser
     firefox
     chromium
@@ -84,7 +76,32 @@
   };
 
   programs.sway = {
+    extraPackages = with pkgs; [
+      alacritty
+      wayland
+      swaylock
+      swayidle
+      mako
+      wdisplays
+      xdg-utils
+    ];
     enable = true;
+  };
+
+  fonts = {
+    fonts = with pkgs; [
+      noto-fonts
+      noto-fonts-cjk
+      noto-fonts-emoji
+      font-awesome
+      nanum
+      nanum-gothic-coding
+    ];
+
+    fontconfig.defaultFonts = {
+      serif = [ "NanumMyeongjo" "Noto Serif" ];
+      sansSerif = [ "NanumGothic" "Noto Sans" ];
+    };
   };
 
   programs.zsh.enable = true;
