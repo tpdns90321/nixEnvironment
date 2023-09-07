@@ -3,11 +3,11 @@
     "copilot-vim": {
       "flake": false,
       "locked": {
-        "lastModified": 1688161333,
-        "narHash": "sha256-+HtuP1r5IS/rfWP7TtF+KrOydHHfepe0yjB3c35skPk=",
+        "lastModified": 1693613036,
+        "narHash": "sha256-T6yDX+GGdRkuwiGbx6zMAb0duILwaPkx29UkQXy9UB8=",
         "owner": "github",
         "repo": "copilot.vim",
-        "rev": "a4a6d6b3f9e284e7f5c849619e06cd228cad8abd",
+        "rev": "719dd8d0beab993dbad47a9e86ecb0dbd4a99da5",
         "type": "github"
       },
       "original": {
@@ -23,11 +23,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1690247892,
-        "narHash": "sha256-WMGc1yq1cqRd+kzjWgbvHxckJIe8VQfiZ5RfR8tgABw=",
+        "lastModified": 1692248770,
+        "narHash": "sha256-tZeFpETKQGbgnaSIO1AGWD27IyTcBm4D+A9d7ulQ4NM=",
         "owner": "LnL7",
         "repo": "nix-darwin",
-        "rev": "efd35d99ce412335c478dff9da9a4256bbd39757",
+        "rev": "511177ffe8226c78c9cf6a92a7b5f2df3684956b",
         "type": "github"
       },
       "original": {
@@ -42,48 +42,16 @@
         "systems": "systems"
       },
       "locked": {
-        "lastModified": 1689068808,
-        "narHash": "sha256-6ixXo3wt24N/melDWjq70UuHQLxGV8jZvooRanIHXw0=",
+        "lastModified": 1692799911,
+        "narHash": "sha256-3eihraek4qL744EvQXsK1Ha6C3CR7nnT8X2qWap4RNk=",
         "owner": "numtide",
         "repo": "flake-utils",
-        "rev": "919d646de7be200f3bf08cb76ae1f09402b6f9b4",
+        "rev": "f9e7cf818399d17d347f847525c5a5a8032e4e44",
         "type": "github"
       },
       "original": {
         "id": "flake-utils",
         "type": "indirect"
-      }
-    },
-    "gptcache": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1690114050,
-        "narHash": "sha256-eQu3O6jPL1BRObA99XA2EOznn9NaArVRouqD1Ypz/4w=",
-        "owner": "zilliztech",
-        "repo": "GPTCache",
-        "rev": "a3328f2cf86e7d792a66875fc22697d97913e2bb",
-        "type": "github"
-      },
-      "original": {
-        "owner": "zilliztech",
-        "repo": "GPTCache",
-        "type": "github"
-      }
-    },
-    "guidance": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1689632466,
-        "narHash": "sha256-mX5ZsrVH+BNVa/Uy66zhLXSRHuvqSKGP0lVak8fNYYY=",
-        "owner": "microsoft",
-        "repo": "guidance",
-        "rev": "d2c5e3cbb730e337b9bee20520eb694bd43e5f38",
-        "type": "github"
-      },
-      "original": {
-        "owner": "microsoft",
-        "repo": "guidance",
-        "type": "github"
       }
     },
     "home-manager": {
@@ -93,11 +61,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1687871164,
-        "narHash": "sha256-bBFlPthuYX322xOlpJvkjUBz0C+MOBjZdDOOJJ+G2jU=",
+        "lastModified": 1693208669,
+        "narHash": "sha256-hHFaaUsZ860wvppPeiu7nJn/nXZjJfnqAQEu9SPFE9I=",
         "owner": "nix-community",
         "repo": "home-manager",
-        "rev": "07c347bb50994691d7b0095f45ebd8838cf6bc38",
+        "rev": "5bac4a1c06cd77cf8fc35a658ccb035a6c50cd2c",
         "type": "github"
       },
       "original": {
@@ -146,52 +114,16 @@
         "type": "github"
       }
     },
-    "openai": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1689028689,
-        "narHash": "sha256-XDbJZemayBAtrbvKhMXD8XMHYkEIG+E1J9v1O8jk4wc=",
-        "owner": "openai",
-        "repo": "openai-python",
-        "rev": "b82a3f7e4c462a8a10fa445193301a3cefef9a4a",
-        "type": "github"
-      },
-      "original": {
-        "owner": "openai",
-        "repo": "openai-python",
-        "type": "github"
-      }
-    },
     "root": {
       "inputs": {
         "copilot-vim": "copilot-vim",
         "darwin": "darwin",
         "flake-utils": "flake-utils",
-        "gptcache": "gptcache",
-        "guidance": "guidance",
         "home-manager": "home-manager",
         "llama_cpp": "llama_cpp",
         "nixpkgs": "nixpkgs",
-        "openai": "openai",
-        "selective_context": "selective_context",
         "sops-nix": "sops-nix",
         "vim-astro": "vim-astro"
-      }
-    },
-    "selective_context": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1685896350,
-        "narHash": "sha256-twnCbgC9kt7uGRfs3TrnOHZxKbM3uTpXnymO+HGkT7w=",
-        "owner": "liyucheng09",
-        "repo": "Selective_Context",
-        "rev": "1e5d9133fe38f2c5f0520e2dac2e25854681c879",
-        "type": "github"
-      },
-      "original": {
-        "owner": "liyucheng09",
-        "repo": "Selective_Context",
-        "type": "github"
       }
     },
     "sops-nix": {
@@ -204,11 +136,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1690199016,
-        "narHash": "sha256-yTLL72q6aqGmzHq+C3rDp3rIjno7EJZkFLof6Ika7cE=",
+        "lastModified": 1693898833,
+        "narHash": "sha256-OIrMAGNYNeLs6IvBynxcXub7aSW3GEUvWNsb7zx6zuU=",
         "owner": "Mic92",
         "repo": "sops-nix",
-        "rev": "c36df4fe4bf4bb87759b1891cab21e7a05219500",
+        "rev": "faf21ac162173c2deb54e5fdeed002a9bd6e8623",
         "type": "github"
       },
       "original": {
