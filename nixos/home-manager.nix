@@ -22,6 +22,22 @@ let common-programs = import ../common/home-manager.nix { config = config; pkgs 
               xkb_options = "ctrl:swapcaps";
             };
           };
+          bars = [
+            {
+              statusCommand = "${pkgs.i3status}/bin/i3status";
+              position = "top";
+              fonts = {
+                names = [ "NanumGhothic" ];
+                style = "Bold";
+                size = 11.0;
+              };
+            }
+          ];
+          fonts = {
+            names = [ "NanumGhothic" ];
+            style = "Bold Semi-Condensed";
+            size = 9.0;
+          };
         };
       };
 
