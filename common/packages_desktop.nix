@@ -5,6 +5,7 @@
   bitwarden-cli
 
   # GUI Application for work
+  alacritty
   gimp
   postman
   (

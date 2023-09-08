@@ -19,7 +19,7 @@ let
   local.dock.entries = [
     { path = "/System/Applications/Launchpad.app/"; }
     { path = "/Applications/Arc.app/"; }
-    { path = "/Applications/iTerm.app/"; }
+    { path = "${pkgs.alacritty}/Applications/Alacritty.app"; }
     { path = "/System/Applications/Mail.app/"; }
     { path = "/System/Applications/Calendar.app/"; }
     { path = "/System/Applications/Notes.app/"; }
@@ -51,7 +51,6 @@ let
     "google-chrome"
     "firefox"
     "notion"
-    "iterm2"
     "tunnelblick"
     "wireshark"
 
