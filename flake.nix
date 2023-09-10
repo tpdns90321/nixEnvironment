@@ -50,11 +50,11 @@
           sops-nix = sops-nix.homeManagerModules.sops;
         };
       };
-      "kang-mac-mini" = darwin.lib.darwinSystem {
+      "kang-macbook-air" = darwin.lib.darwinSystem {
         system = "aarch64-darwin";
         modules = [
           home-manager.darwinModules.home-manager
-          ./hosts/stay_mac
+          ./hosts/kang_macbook_air
           ./darwin
         ];
         inputs = { inherit darwin; };

@@ -1,38 +1,38 @@
 keys:
-  - &stay_mac age1j96268thuepkcgmxcnhaeedfamdwum7lcjx0x62u84uqjw9099ysqqphw0
+  - &kang_macbook_air age1j96268thuepkcgmxcnhaeedfamdwum7lcjx0x62u84uqjw9099ysqqphw0
   - &stay_raspberrypi age1xf07v5cv2zdrevmv5mfwen8jhg8nu2gkl7sr0j04gdkyfqlr2fcqk9qwze
   - &unioneinc_macbook age1z5qm2r360la9nw6w0elqymzjds9c07aevwd7d2eylt9usldw55ysa3nt6r
 creation_rules:
   - path_regex: stay_secrets.yaml$
     key_groups:
       - age:
-        - *stay_mac
+        - *kang_macbook_air
         - *stay_raspberrypi
   - path_regex: client.ovpn$
     key_groups:
       - age:
-        - *stay_mac
+        - *kang_macbook_air
         - *unioneinc_macbook
         - *stay_raspberrypi
   - path_regex: hosts/rpi4/renew_duckdns.sh$
     key_groups:
       - age:
-        - *stay_mac
+        - *kang_macbook_air
         - *stay_raspberrypi
   - path_regex: hosts/rpi4/Caddyfile$
     key_groups:
       - age:
-        - *stay_mac
+        - *kang_macbook_air
         - *stay_raspberrypi
   - path_regex: hosts/rpi4/vaultwarden_env$
     key_groups:
       - age:
-        - *stay_mac
+        - *kang_macbook_air
         - *stay_raspberrypi
-  - path_regex: hosts/stay_mac/env$
+  - path_regex: hosts/kang_macbook_air/env$
     key_groups:
       - age:
-        - *stay_mac
+        - *kang_macbook_air
         - *stay_raspberrypi
   - path_regex: hosts/unione_macbook/env$
     key_groups:
@@ -41,5 +41,5 @@ creation_rules:
   - path_regex: hosts/rpi4/transmission_env$
     key_groups:
       - age:
-        - *stay_mac
+        - *kang_macbook_air
         - *stay_raspberrypi
