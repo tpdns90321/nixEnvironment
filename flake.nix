@@ -61,7 +61,7 @@
         specialArgs = {
           inherit inputs;
           user = "kang";
-          additionalCasks = ["steam" "parallels"];
+          additionalCasks = ["steam" "parallels" "discord"];
           additionalAppStore = {
             "KakaoTalk" = 869223134;
           };
