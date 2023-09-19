@@ -5,7 +5,7 @@ let common_pkgs = import ../common/packages_desktop.nix { pkgs = pkgs; inputs = 
   # react-native ios development
   ruby
   watchman
-  cocoapods
+  rubyPackages.cocoapods
 
   # podman machin in darwin
   qemu
