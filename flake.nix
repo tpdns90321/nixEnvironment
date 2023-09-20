@@ -46,7 +46,9 @@
           inherit inputs;
           user = "unione";
           additionalCasks = ["cyberduck"];
-          additionalAppStore = {};
+          additionalAppStore = {
+            "Polaris Office" = 1098211970;
+          };
           sops-nix = sops-nix.homeManagerModules.sops;
         };
       };
@@ -64,6 +66,7 @@
           additionalCasks = ["steam" "parallels" "discord"];
           additionalAppStore = {
             "KakaoTalk" = 869223134;
+            "Blackmagic Disk Speed Test" = 425264550;
           };
           sops-nix = sops-nix.homeManagerModules.sops;
         };

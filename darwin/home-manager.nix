@@ -63,7 +63,6 @@ let
     "PiPifier" = 1160374471;
     "Vimari" = 1480933944;
     # "TestFlight" = 899247664; # currently TestFlight is well done in first run, when redo this package is trying redownload and fail.
-    "Polaris Office" = 1098211970;
     "Keka" = 470158793;
     "BetterSnapTool" = 417375580;
     "Bitwarden" = 1352778147;
