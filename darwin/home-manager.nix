@@ -51,6 +51,7 @@ let
     "google-chrome"
     "firefox"
     "notion"
+    "obsidian"
     "tunnelblick"
     "wireshark"
 
