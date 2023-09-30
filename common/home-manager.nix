@@ -72,6 +72,17 @@ let
       direnv-vim
     ]) ++ (pkgs.callPackage (import ./customVimPlugins.nix inputs) {});
 
+    extraPackages = with pkgs; [
+      # lspconfig
+      rnix-lsp
+      rust-analyzer
+      nodePackages.vscode-langservers-extracted
+      nodePackages.typescript-language-server
+      nodePackages."@astrojs/language-server"
+      nodePackages."@tailwindcss/language-server"
+      nodePackages.pyright
+    ];
+
     extraConfig = ''
       " white space
       set tabstop=2
@@ -136,7 +147,15 @@ let
 
       require('lspconfig').pyright.setup({})
 
-      require('lspconfig').rust_analyzer.setup({})
+      require('lspconfig').rust_analyzer.setup({
+        settings = {
+          ["rust-analyzer"] = {
+            files = {
+              excludeDirs = { ".direnv" },
+            },
+          }
+        }
+      })
 
       lsp.setup()
 

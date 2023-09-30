@@ -36,13 +36,4 @@
 
   # rust development
   cargo
-
-  # lspconfig
-  rnix-lsp
-  rust-analyzer
-  nodePackages.vscode-langservers-extracted
-  nodePackages.typescript-language-server
-  nodePackages."@astrojs/language-server"
-  nodePackages."@tailwindcss/language-server"
-  nodePackages.pyright
 ])
