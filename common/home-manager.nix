@@ -62,8 +62,11 @@ let
     plugins = (with pkgs.vimPlugins; [
       ale
       lsp-zero-nvim
-      nvim-lspconfig
       nvim-cmp
+      nvim-lspconfig
+      nvim-treesitter
+      nvim-treesitter-parsers.astro
+      nvim-treesitter-parsers.html
       cmp-buffer
       cmp-path
       luasnip
@@ -97,9 +100,7 @@ let
       syntax on
       filetype plugin indent on
       autocmd FileType python setlocal tabstop=4
-
-      " astro
-      let g:astro_typescript = 'enable'
+      autocmd BufRead,BufEnter *.astro set filetype=astro
 
       " linting
       let g:ale_fixers = {
@@ -125,6 +126,12 @@ let
     '';
 
     extraLuaConfig = ''
+      -- treesitter setup
+      require'nvim-treesitter.configs'.setup {
+        highlight = {
+          enable = true,
+        },
+      }
       -- lsp setup
       local lsp = require('lsp-zero').preset({})
 

@@ -6,6 +6,5 @@ let buildVimPluginFromFlake = name:
     src = inputs.${name}.outPath;
   }; in
 [
-  (buildVimPluginFromFlake "vim-astro")
   (buildVimPluginFromFlake "copilot-vim")
 ]
