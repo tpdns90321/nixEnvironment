@@ -48,6 +48,7 @@ let
     "alfred"
     "adguard"
     "arc"
+    "coconutbattery"
     "google-chrome"
     "firefox"
     "notion"
