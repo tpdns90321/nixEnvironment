@@ -8,6 +8,7 @@
   home-manager
   jq
   neofetch
+  mosh
   screen
   tmux
   wget
