@@ -3,11 +3,11 @@
     "copilot-vim": {
       "flake": false,
       "locked": {
-        "lastModified": 1693613036,
-        "narHash": "sha256-T6yDX+GGdRkuwiGbx6zMAb0duILwaPkx29UkQXy9UB8=",
+        "lastModified": 1698880619,
+        "narHash": "sha256-yuaG4kOSXSivFQCvc6iEZP230tlaFoXcZb0WxBjeWdA=",
         "owner": "github",
         "repo": "copilot.vim",
-        "rev": "719dd8d0beab993dbad47a9e86ecb0dbd4a99da5",
+        "rev": "309b3c803d1862d5e84c7c9c5749ae04010123b8",
         "type": "github"
       },
       "original": {
@@ -23,11 +23,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1695114819,
-        "narHash": "sha256-/aIfbZxP39QZ8m7qX2RzQTy5PWzz2e22cCcZ+AOO7lA=",
+        "lastModified": 1698429334,
+        "narHash": "sha256-Gq3+QabboczSu7RMpcy79RSLMSqnySO3wsnHQk4DfbE=",
         "owner": "LnL7",
         "repo": "nix-darwin",
-        "rev": "afeddc412b3a3b0e7c9ef7ea5fbdf2186781d102",
+        "rev": "afe83cbc2e673b1f08d32dd0f70df599678ff1e7",
         "type": "github"
       },
       "original": {
@@ -85,11 +85,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1695217702,
-        "narHash": "sha256-wIOMlLKlNbVMTjwwDgOLk0f0TaoffPN8LVrFmD8w9sQ=",
+        "lastModified": 1699039098,
+        "narHash": "sha256-TYklPkqwXLt+80FSHBDA2r3xTXlmgqB7sOt2mNnVNso=",
         "owner": "ggerganov",
         "repo": "llama.cpp",
-        "rev": "80834daecf4b9021770361a6d5e1b9c7a60e6854",
+        "rev": "d9b33fe95bd257b36c84ee5769cc048230067d6f",
         "type": "github"
       },
       "original": {
@@ -136,11 +136,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1695101768,
-        "narHash": "sha256-1/j5/348l2+yxQUfkJCUpA6cDefS3H7V94kawk9uuRc=",
+        "lastModified": 1699021419,
+        "narHash": "sha256-oy2j2OHXYcckifASMeZzpmbDLSvobMGt0V/RvoDotF4=",
         "owner": "Mic92",
         "repo": "sops-nix",
-        "rev": "4356a5a0c12c9dc1b6bdde0631c7600d9377ed8b",
+        "rev": "275b28593ef3a1b9d05b6eeda3ddce2f45f5c06f",
         "type": "github"
       },
       "original": {
@@ -167,11 +167,11 @@
     "vim-astro": {
       "flake": false,
       "locked": {
-        "lastModified": 1661391168,
-        "narHash": "sha256-HyQ4i/T1uQmGurBqCpo8+ESVSVPsTrLQBxLe2OEYjcY=",
+        "lastModified": 1697864536,
+        "narHash": "sha256-vwQ3hwSpJBCdUp5dlHuP6GPaW7EJ4Rb5kXOJ9qtrpf8=",
         "owner": "wuelnerdotexe",
         "repo": "vim-astro",
-        "rev": "34732be5e9a5c28c2409f4490edf92d46d8b55a9",
+        "rev": "9b4674ecfe1dd84b5fb9b4de1653975de6e8e2e1",
         "type": "github"
       },
       "original": {
