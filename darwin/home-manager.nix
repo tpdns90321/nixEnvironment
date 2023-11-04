@@ -51,7 +51,6 @@ let
     "coconutbattery"
     "google-chrome"
     "firefox"
-    "notion"
     "obsidian"
     "tunnelblick"
     "wireshark"
