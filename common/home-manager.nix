@@ -23,9 +23,6 @@ let
     export PATH=$PATH:$ANDROID_HOME/emulator
     export PATH=$PATH:$ANDROID_HOME/platform-tools
 
-    # podman aliasing
-    alias docker=podman
-
     # direnv
     eval "$(direnv hook zsh)"
 
@@ -36,6 +33,9 @@ let
     if [ -f ~/.env ]; then
       export $(cat ~/.env | xargs)
     fi
+
+    # connect nix-profile's mosh-server
+    alias nix-mosh="mosh --server='~/.nix-profile/bin/mosh-server'"
   '';
 
   tmux = {
