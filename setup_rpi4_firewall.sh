@@ -18,4 +18,6 @@ for PORT in $PORTS; do
   echo "-A PREROUTING -p ${TYPE} --dport ${OUT} -j REDIRECT --to-port ${IN}" | sudo tee -a /etc/ufw/before.rules
 done
 
+sudo ufw allow 60000:61000/udp
+
 echo 'COMMIT' | sudo tee -a /etc/ufw/before.rules
