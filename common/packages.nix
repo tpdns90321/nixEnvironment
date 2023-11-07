@@ -1,6 +1,7 @@
 { pkgs, inputs, lib }:
 
 (with pkgs; [
+  curlHTTP3
   direnv
   fnm
   git
