@@ -7,6 +7,5 @@ let
     else ../common/packages.nix;
   common_pkgs = import packages { pkgs = pkgs; inputs = inputs; lib = lib; };
   in common_pkgs ++ [
-    # react-native android development in linux
-    jdk11
+    fuse-overlayfs
   ] ++ additionalPackages

@@ -98,7 +98,6 @@
   });
 
   systemd.user.services."supabase" = (buildComposeService {
-    name = "supabase";
     description = "Supabase";
     src = ./supabase/docker;
     options = "--env-file=/home/${user}/.config/supabase_env";

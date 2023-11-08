@@ -1,12 +1,14 @@
 { pkgs, inputs, lib }:
 
 (with pkgs; [
+  bitwarden-cli
   curlHTTP3
   direnv
   fnm
   git
   gh
   home-manager
+  jc
   jq
   neofetch
   mosh

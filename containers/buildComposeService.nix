@@ -1,6 +1,6 @@
 { pkgs, user }:
 
-{ name, description, src, options ? "", after ? [], }:
+{ description, src, options ? "", after ? [], }:
 let composeFile = "${src}/docker-compose.yml"; in
 {
   Unit = {
@@ -15,7 +15,8 @@ let composeFile = "${src}/docker-compose.yml"; in
   Service = {
     Type = "simple";
     ExecStartPre = "${pkgs.podman-compose}/bin/podman-compose -f ${composeFile} pull";
-    ExecStart = "${pkgs.podman-compose}/bin/podman-compose -f ${composeFile} up ${options}";
+    ExecStart = "${pkgs.podman-compose}/bin/podman-compose -f ${composeFile} ${options} up";
     ExecStop = "${pkgs.podman-compose}/bin/podman-compose -f ${composeFile} down";
+    Environment = "PATH=$PATH:${pkgs.podman}/bin";
   };
 }
