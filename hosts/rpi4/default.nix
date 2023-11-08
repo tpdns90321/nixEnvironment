@@ -1,4 +1,8 @@
-{ config, pkgs, user, ... }: let buildService = import ../../containers/buildService.nix { pkgs = pkgs; user = user; }; in {
+{ config, pkgs, user, ... }:
+  let
+    buildService = import ../../containers/buildService.nix { pkgs = pkgs; user = user; };
+    buildComposeService = import ../../containers/buildComposeService.nix { pkgs = pkgs; user = user; };
+  in {
   sops = {
     age.keyFile = "/home/${user}/.config/sops/age/keys.txt";
     defaultSopsFile = ../../stay_secrets.yaml;
@@ -30,6 +34,12 @@
       format = "binary";
       mode = "0400";
       path = "/home/${user}/.config/transmission_env";
+    };
+    secrets.supabase_env = {
+      sopsFile = ./supabase_env;
+      format = "binary";
+      mode = "0400";
+      path = "/home/${user}/.config/supabase_env";
     };
   };
 
@@ -85,5 +95,13 @@
     name = "transmission";
     description = "Transmission";
     options = "-p 9091:9091/tcp -p 51413:51413/tcp -p 51413:51413/udp --env-file=/home/${user}/.config/transmission_env --volume /home/${user}/.config/transmission:/config --volume /home/${user}/data/shared:/downloads --volume /home/${user}/data/shared:/watch docker.io/linuxserver/transmission:latest";
+  });
+
+  systemd.user.services."supabase" = (buildComposeService {
+    name = "supabase";
+    description = "Supabase";
+    src = ./supabase/docker;
+    options = "--env-file=/home/${user}/.config/supabase_env";
+    after = [ "sops-nix.service" ];
   });
 }
