@@ -33,8 +33,6 @@
     };
   };
 
-  home.file.".config/duckdns_crontab".source = ./crontab;
-
   systemd.user.services."adguardhome" = (buildService {
     name = "adguardhome";
     description = "AdGuard Home";
@@ -74,7 +72,7 @@
     name = "duckdns";
     description = "Crontab";
     after = [ "sops-nix.service" ];
-    options = "--volume /home/${user}/.config/duckdns_crontab:/var/spool/cron/crontabs/curl_user --volume /home/${user}/.config/renew_duckdns.sh:/renew_duckdns.sh docker.io/curlimages/curl crond -f";
+    options = "--volume /home/${user}/.config/renew_duckdns.sh:/renew_duckdns.sh docker.io/curlimages/curl /renew_duckdns.sh";
   });
 
   systemd.user.services."vaultwarden" = (buildService {
