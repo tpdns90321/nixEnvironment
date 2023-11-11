@@ -105,5 +105,15 @@
         ./hosts/stay_nixos
       ];
     };
+
+    nixosConfigurations.kang-home-nixos = nixpkgs.lib.nixosSystem {
+      system = "x86_64-linux";
+      specialArgs = { inputs = inputs; };
+      modules = [
+        home-manager.nixosModules.home-manager
+        ./nixos
+        ./hosts/home_nixos
+      ];
+    };
   };
 }

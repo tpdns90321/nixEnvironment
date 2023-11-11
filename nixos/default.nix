@@ -38,6 +38,8 @@
     enabled = "kime";
   };
 
+  services.logrotate.checkConfig = false;
+
   # Configure keymap in X11
   services.xserver = {
     layout = "kr";
