@@ -24,6 +24,7 @@
 
   # podman(docker alternative)
   podman
+  docker-compose
   podman-compose
 
   # js development

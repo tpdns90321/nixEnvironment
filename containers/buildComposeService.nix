@@ -1,11 +1,11 @@
 { pkgs, user }:
 
-{ description, src, options ? "", after ? [], }:
-let composeFile = "${src}/docker-compose.yml"; in
+{ description, src, options ? "", filename ? "docker-compose.yml", after ? [], }:
+let composeFile = "${src}/${filename}"; in
 {
   Unit = {
     Description = description;
-    After = [ "network.target" ] ++ after;
+    After = [ "network.target" "podman.service" "docker.service" ] ++ after;
   };
 
   Install = {
@@ -13,10 +13,9 @@ let composeFile = "${src}/docker-compose.yml"; in
   };
 
   Service = {
-    Type = "simple";
-    ExecStartPre = "${pkgs.podman-compose}/bin/podman-compose -f ${composeFile} pull";
-    ExecStart = "${pkgs.podman-compose}/bin/podman-compose -f ${composeFile} ${options} up";
-    ExecStop = "${pkgs.podman-compose}/bin/podman-compose -f ${composeFile} down";
-    Environment = "PATH=$PATH:${pkgs.podman}/bin";
+    Type = "oneshot";
+    ExecStart = "${pkgs.docker-compose}/bin/docker-compose -f ${composeFile} ${options} up -d";
+    ExecStop = "${pkgs.docker-compose}/bin/docker-compose -f ${composeFile} ${options} down";
+    RemainAfterExit = "yes";
   };
 }

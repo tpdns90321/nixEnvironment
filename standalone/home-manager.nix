@@ -20,4 +20,19 @@ let
   };
 
   services.lorri.enable = true;
+
+  systemd.user.services.podman = {
+    Unit = {
+      Description="Podman API";
+    };
+
+    Service = {
+      Type = "simple";
+      ExecStart = "${pkgs.podman}/bin/podman system service -t 0 unix://%t/podman/podman.sock";
+    };
+
+    Install = {
+      WantedBy = [ "default.target" ];
+    };
+  };
 }

@@ -99,7 +99,7 @@
 
   systemd.user.services."supabase" = (buildComposeService {
     description = "Supabase";
-    src = ./supabase/docker;
+    src = "/home/${user}/nixEnvironment/hosts/rpi4/supabase/docker";
     options = "--env-file=/home/${user}/.config/supabase_env";
     after = [ "sops-nix.service" ];
   });

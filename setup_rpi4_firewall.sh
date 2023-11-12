@@ -1,6 +1,6 @@
 #!/bin/bash
 
-mkdir -p ~/.local/share/containers/storage/networks/podman.json || true
+mkdir -p ~/.local/share/containers/storage/networks || true
 mkdir -p ~/.config/caddy_data || true
 mkdir -p ~/.config/adguardhome/{conf,work} || true
 mkdir -p ~/.config/transmission || true
@@ -18,6 +18,7 @@ for PORT in $PORTS; do
   echo "-A PREROUTING -p ${TYPE} --dport ${OUT} -j REDIRECT --to-port ${IN}" | sudo tee -a /etc/ufw/before.rules
 done
 
+# allow mosh
 sudo ufw allow 60000:61000/udp
 
 echo 'COMMIT' | sudo tee -a /etc/ufw/before.rules
