@@ -111,6 +111,7 @@
       specialArgs = { inputs = inputs; };
       modules = [
         home-manager.nixosModules.home-manager
+        sops-nix.nixosModules.sops
         ./nixos
         ./hosts/home_nixos
       ];

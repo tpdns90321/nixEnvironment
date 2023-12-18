@@ -16,6 +16,10 @@ creation_rules:
         - *unioneinc_macbook
         - *stay_raspberrypi
         - *home_nixos
+  - path_regex: stay_router_user_pass.txt$
+    key_groups:
+      - age:
+        - *home_nixos
   - path_regex: hosts/rpi4/renew_duckdns.sh$
     key_groups:
       - age:
