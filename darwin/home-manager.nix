@@ -55,6 +55,9 @@ let
     "tunnelblick"
     "wireshark"
 
+    # LLM
+    "lm-studio"
+
     # react-native android development in macos
     "android-studio"
     "zulu-jdk17"
