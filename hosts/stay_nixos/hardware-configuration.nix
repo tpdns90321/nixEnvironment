@@ -8,58 +8,50 @@
     [ (modulesPath + "/installer/scan/not-detected.nix")
     ];
 
-  # Bootloader.
   boot.loader.efi = {
     canTouchEfiVariables = true;
     efiSysMountPoint = "/boot/efi";
   };
+
   boot.loader.grub = {
     efiSupport = true;
     device = "nodev";
-    enableCryptodisk = true;
     useOSProber = true;
   };
 
-  boot.initrd.availableKernelModules = [ "xhci_pci" "ahci" "usbhid" "usb_storage" "sd_mod" "aesni_intel" "cryptd" ];
+  boot.initrd.availableKernelModules = [ "xhci_pci" "ahci" "usb_storage" "usbhid" "sd_mod" ];
   boot.initrd.kernelModules = [ "dm-snapshot" ];
-  boot.initrd.secrets = {
-    "/boot/keyfile.bin" = "/boot/keyfile.bin";
-  };
-  boot.initrd.luks.devices = {
-    kang-stay-nixos = {
-      device = "/dev/disk/by-uuid/4b2b0895-4c6b-4037-a139-df7fdbab2774";
-      preLVM = true;
-      keyFile = "/boot/keyfile.bin";
-    };
-  };
-  boot.kernelModules = [ "kvm-amd" "rtl8xxxu" ];
-  boot.extraModulePackages = with config.boot.kernelPackages; [ rtl8821cu ];
+  boot.kernelModules = [ "kvm-amd" ];
+  boot.extraModulePackages = [ ];
 
   fileSystems."/" =
-    { device = "/dev/disk/by-uuid/c1394e2e-209c-4b7e-9c9d-6b72f8f167cc";
+    { device = "/dev/disk/by-uuid/a6101e2e-b2cb-4e66-bec6-deef16b37b98";
       fsType = "xfs";
     };
 
+  fileSystems."/boot" =
+    { device = "/dev/disk/by-uuid/2a4956d1-31b2-4c9d-a38c-72372f00ae3d";
+      fsType = "ext4";
+    };
+
   fileSystems."/boot/efi" =
-    { device = "/dev/disk/by-uuid/DE35-1AFD";
+    { device = "/dev/disk/by-uuid/9C80-A27D";
       fsType = "vfat";
     };
 
-  swapDevices =
-    [ { device = "/dev/disk/by-uuid/8c681e13-3c29-4c34-87e3-21a021bc855f"; }
-    ];
-
-  networking.hostName = "kang-stay-nixos"; # Define your hostname.
-  # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
+  swapDevices = [ ];
 
   # Enables DHCP on each ethernet and wireless interface. In case of scripted networking
   # (the default) this is the recommended approach. When using systemd-networkd it's
   # still possible to use this option, but it's recommended to use it in conjunction
   # with explicit per-interface declarations with `networking.interfaces.<interface>.useDHCP`.
+  networking.hostName = "kang-stay-nixos";
   networking.useDHCP = lib.mkDefault true;
   # networking.interfaces.enp34s0.useDHCP = lib.mkDefault true;
-  # networking.interfaces.wlp3s0f0u13.useDHCP = lib.mkDefault true;
 
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
   hardware.cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
+
+  security.pam.mount.enable = true;
+  users.users.kang.cryptHomeLuks = "/dev/nixos/kang";
 }
