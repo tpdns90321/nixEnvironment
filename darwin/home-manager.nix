@@ -52,8 +52,8 @@ let
     "google-chrome"
     "firefox"
     "obsidian"
-    "tunnelblick"
     "wireshark"
+    "zerotier-one"
 
     # LLM
     "lm-studio"
