@@ -20,5 +20,6 @@ done
 
 # allow mosh
 sudo ufw allow 60000:61000/udp
+sudo ufw allow 9993:9993/tcp
 
 echo 'COMMIT' | sudo tee -a /etc/ufw/before.rules

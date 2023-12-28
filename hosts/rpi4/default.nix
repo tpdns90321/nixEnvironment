@@ -46,6 +46,7 @@
   systemd.user.services."adguardhome" = (buildService {
     name = "adguardhome";
     description = "AdGuard Home";
+    after = [ "sops-nix.service" ];
     options = "--network podman -p 7080:80/tcp -p 6053:53/tcp -p 6053:53/udp -p 9000:3000/tcp -p 6853:853/tcp -p 6784:784/udp -p 6853:853/udp -p 14853:8853/udp -p 11443:5443/tcp --volume /home/${user}/.config/adguardhome/work:/opt/adguardhome/work --volume /home/${user}/.config/adguardhome/conf:/opt/adguardhome/conf docker.io/adguard/adguardhome:latest";
   });
 
@@ -88,12 +89,14 @@
   systemd.user.services."vaultwarden" = (buildService {
     name = "vaultwarden";
     description = "Vaultwarden";
+    after = [ "sops-nix.service" ];
     options = "-p 9080:80/tcp --env-file=/home/${user}/.config/vaultwarden_env --volume /home/${user}/.config/vaultwarden/data:/data docker.io/vaultwarden/server:latest";
   });
 
   systemd.user.services."transmission" = (buildService {
     name = "transmission";
     description = "Transmission";
+    after = [ "sops-nix.service" ];
     options = "-p 9091:9091/tcp -p 51413:51413/tcp -p 51413:51413/udp --env-file=/home/${user}/.config/transmission_env --volume /home/${user}/.config/transmission:/config --volume /home/${user}/data/shared:/downloads --volume /home/${user}/data/shared:/watch docker.io/linuxserver/transmission:latest";
   });
 
