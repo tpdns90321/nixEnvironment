@@ -69,6 +69,9 @@
     # browser
     firefox
     chromium
+
+    # fileSystem
+    cifs-utils
   ]) ++ (import ../common/packages_desktop.nix { pkgs = pkgs; inputs = inputs; lib = lib; });
 
   services.pipewire = {
@@ -80,6 +83,7 @@
   programs.sway = {
     extraPackages = with pkgs; [
       alacritty
+      pcmanfm
       wayland
       swaylock
       swayidle
@@ -117,6 +121,13 @@
   # };
 
   # List services that you want to enable:
+
+  # podman
+  virtualisation.podman = {
+    enable = true;
+    dockerCompat = true;
+    dockerSocket.enable = true;
+  };
 
   # Enable the OpenSSH daemon.
   # services.openssh.enable = true;

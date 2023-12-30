@@ -6,23 +6,21 @@
 
   sops.age.keyFile = "/home/kang/.config/sops/age/keys.txt";
 
-  sops.secrets.stay_router_ovpn = {
+  sops.secrets.smb_credential = {
+    sopsFile = ../../smb_credential.txt;
     format = "binary";
-    sopsFile = ../../client.ovpn;
   };
 
-  sops.secrets.stay_router_user_pass = {
-    format = "binary";
-    sopsFile = ../../stay_router_user_pass.txt;
+  fileSystems."/mnt/share" = {
+    device = "//192.168.50.254/pi";
+    fsType = "cifs";
+    options =
+      let
+        options = "x-systemd.automount,noauto,x-systemd.idle-timeout=60,x-systemd.device-timeout=5s,x-systemd.mount-timeout=5s";
+        uid = "1000";
+        gid = "100";
+        in ["${options},credentials=${config.sops.secrets.smb_credential.path},uid=${uid},gid=${gid}"];
   };
 
-  services.openvpn.servers = {
-    stay_router = {
-      config = ''
-      config ${config.sops.secrets.stay_router_ovpn.path}
-      auth-user-pass ${config.sops.secrets.stay_router_user_pass.path}
-      '';
-      updateResolvConf = true;
-    };
-  };
+  services.zerotierone.enable = true;
 }
