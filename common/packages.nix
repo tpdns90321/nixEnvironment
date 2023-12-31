@@ -11,6 +11,7 @@
   jc
   jq
   neofetch
+  ngrok
   mosh
   screen
   tmux

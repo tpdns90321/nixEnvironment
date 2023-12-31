@@ -12,7 +12,7 @@
   };
 
   fileSystems."/mnt/share" = {
-    device = "//192.168.50.254/pi";
+    device = "//192.168.219.200/pi";
     fsType = "cifs";
     options =
       let
