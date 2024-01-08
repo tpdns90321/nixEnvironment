@@ -7,7 +7,45 @@ let common-programs = import ../common/home-manager.nix { config = config; pkgs 
     users.kang = {
       home.enableNixpkgsReleaseCheck = true;
       home.packages = (import ../common/packages_desktop.nix { pkgs = pkgs; inputs = inputs; lib = lib; });
-      programs = common-programs // {};
+      programs = common-programs // { waybar = {
+          enable = true;
+          settings = [
+            {
+              layer = "bottom";
+              height = 30;
+              modules-left = [
+                "sway/workspaces"
+                "sway/mode"
+              ];
+              modules-center = [
+                "sway/window"
+              ];
+              modules-right = [
+                "cpu"
+                "memory"
+                "clock"
+                "wireplumber"
+                "tray"
+              ];
+
+              cpu = {
+                format = "{usage}% CPU";
+                interval = 5;
+              };
+
+              memory = {
+                format = "{}% RAM";
+                interval = 5;
+              };
+
+              tray = {
+                icon-size = 20;
+                spacing = 10;
+              };
+            }
+          ];
+        };
+      };
       wayland.windowManager.sway = {
         enable = true;
         config = {
@@ -16,6 +54,7 @@ let common-programs = import ../common/home-manager.nix { config = config; pkgs 
           startup = [
             { command = "mako"; }
             { command = "kime -D"; }
+            { command = "waybar"; }
           ];
           input = {
             "*" = {
@@ -23,15 +62,6 @@ let common-programs = import ../common/home-manager.nix { config = config; pkgs 
             };
           };
           bars = [
-            {
-              statusCommand = "${pkgs.i3status}/bin/i3status";
-              position = "top";
-              fonts = {
-                names = [ "NanumGhothic" ];
-                style = "Bold";
-                size = 11.0;
-              };
-            }
           ];
           fonts = {
             names = [ "NanumGhothic" ];

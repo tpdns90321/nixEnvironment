@@ -4,7 +4,6 @@
   # GUI Application for work
   alacritty
   gimp
-  postman
   
   # VSCode
   (

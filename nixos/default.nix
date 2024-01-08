@@ -53,7 +53,7 @@
   users.users.kang = {
     isNormalUser = true;
     description = "kang";
-    extraGroups = [ "networkmanager" "wheel" "video" ];
+    extraGroups = [ "networkmanager" "wheel" "video" "audio" ];
     packages = with pkgs; [];
     shell = pkgs.zsh;
   };
@@ -68,7 +68,6 @@
   environment.systemPackages = (with pkgs; [
     # browser
     firefox
-    chromium
 
     # fileSystem
     cifs-utils
@@ -95,7 +94,7 @@
   };
 
   fonts = {
-    fonts = with pkgs; [
+    packages = with pkgs; [
       noto-fonts
       noto-fonts-cjk
       noto-fonts-emoji
@@ -144,6 +143,5 @@
   # this value at the release version of the first install of this system.
   # Before changing this value read the documentation for this option
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
-  system.stateVersion = "23.05"; # Did you read the comment?
-
+  system.stateVersion = "23.11"; # Did you read the comment?
 }
