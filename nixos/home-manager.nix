@@ -24,7 +24,7 @@ let common-programs = import ../common/home-manager.nix { config = config; pkgs 
                 "cpu"
                 "memory"
                 "clock"
-                "wireplumber"
+                "pulseaudio"
                 "tray"
               ];
 
