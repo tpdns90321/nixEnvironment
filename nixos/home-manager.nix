@@ -57,7 +57,7 @@ let common-programs = import ../common/home-manager.nix { config = config; pkgs 
             { command = "waybar"; }
           ];
           input = {
-            "*" = {
+            "*GKB*" = {
               xkb_options = "ctrl:swapcaps";
             };
           };
