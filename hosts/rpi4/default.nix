@@ -47,7 +47,7 @@
     name = "adguardhome";
     description = "AdGuard Home";
     after = [ "sops-nix.service" ];
-    options = "--network podman -p 7080:80/tcp -p 6053:53/tcp -p 6053:53/udp -p 9000:3000/tcp -p 6853:853/tcp -p 6784:784/udp -p 6853:853/udp -p 14853:8853/udp -p 11443:5443/tcp --volume /home/${user}/.config/adguardhome/work:/opt/adguardhome/work --volume /home/${user}/.config/adguardhome/conf:/opt/adguardhome/conf docker.io/adguard/adguardhome:latest";
+    options = "-p 7080:80/tcp -p 6053:53/tcp -p 6053:53/udp -p 9000:3000/tcp -p 6853:853/tcp -p 6784:784/udp -p 6853:853/udp -p 14853:8853/udp -p 11443:5443/tcp --volume /home/${user}/.config/adguardhome/work:/opt/adguardhome/work --volume /home/${user}/.config/adguardhome/conf:/opt/adguardhome/conf docker.io/adguard/adguardhome:latest";
   });
 
   systemd.user.services."caddy" = {
@@ -105,5 +105,6 @@
     src = "/home/${user}/nixEnvironment/hosts/rpi4/supabase/docker";
     options = "--env-file=/home/${user}/.config/supabase_env";
     after = [ "sops-nix.service" ];
+    docker_host = "unix://%t/podman.sock";
   });
 }

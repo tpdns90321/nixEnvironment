@@ -1,6 +1,6 @@
 { pkgs, user }:
 
-{ description, src, options ? "", filename ? "docker-compose.yml", after ? [], }:
+{ description, src, options ? "", filename ? "docker-compose.yml", after ? [], docker_host ? "" }:
 let composeFile = "${src}/${filename}"; in
 {
   Unit = {
@@ -12,10 +12,11 @@ let composeFile = "${src}/${filename}"; in
     WantedBy = [ "default.target" ];
   };
 
-  Service = {
+  Service = let docker_host_flags = if docker_host != "" then "-H ${docker_host} " else ""; in
+  {
     Type = "oneshot";
-    ExecStart = "${pkgs.docker-compose}/bin/docker-compose -f ${composeFile} ${options} up -d";
-    ExecStop = "${pkgs.docker-compose}/bin/docker-compose -f ${composeFile} ${options} down";
+    ExecStart = "${pkgs.docker-compose}/bin/docker-compose ${docker_host_flags}-f ${composeFile} ${options} up -d";
+    ExecStop = "${pkgs.docker-compose}/bin/docker-compose ${docker_host_flags}-f ${composeFile} ${options} stop";
     RemainAfterExit = "yes";
   };
 }

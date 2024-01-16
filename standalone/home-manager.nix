@@ -21,6 +21,21 @@ let
 
   services.lorri.enable = true;
 
+  systemd.user.sockets.podman = {
+    Unit = {
+      Description="Podman API";
+    };
+
+    Socket = {
+      ListenStream = "%t/podman.sock";
+      SocketMode = "0666";
+    };
+
+    Install = {
+      WantedBy = [ "sockets.target" ];
+    };
+  };
+
   systemd.user.services.podman = {
     Unit = {
       Description="Podman API";
@@ -28,7 +43,7 @@ let
 
     Service = {
       Type = "simple";
-      ExecStart = "${pkgs.podman}/bin/podman system service -t 0 unix://%t/podman/podman.sock";
+      ExecStart = "${pkgs.podman}/bin/podman system service -t 0";
     };
 
     Install = {
