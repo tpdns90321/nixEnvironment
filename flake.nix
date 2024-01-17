@@ -93,7 +93,15 @@
         ./standalone
         ./hosts/rpi4
       ];
-      extraSpecialArgs = { inputs = inputs; user = "pi"; isDesktop = false; additionalPackages = with pkgs; [ caddy xcaddy wakeonlan ];};
+      extraSpecialArgs = {
+        inputs = inputs;
+        user = "pi";
+        isDesktop = false;
+        additionalPackages = with pkgs; [
+          wakeonlan
+          caddy
+        ];
+      };
     };
 
     nixosConfigurations.kang-stay-nixos = nixpkgs.lib.nixosSystem {
