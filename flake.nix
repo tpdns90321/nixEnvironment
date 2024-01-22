@@ -16,12 +16,12 @@
       url = "github:ggerganov/llama.cpp";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    vim-astro = {
-      url = "github:wuelnerdotexe/vim-astro";
-      flake = false;
-    };
     copilot-vim = {
       url = "github:github/copilot.vim";
+      flake = false;
+    };
+    vim-rzip = {
+      url = "github:lbrayner/vim-rzip";
       flake = false;
     };
     sops-nix = {
@@ -29,6 +29,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.nixpkgs-stable.follows = "nixpkgs";
     };
+    nix-vscode-extensions.url = "github:nix-community/nix-vscode-extensions";
   };
 
   outputs = { self, flake-utils, darwin, home-manager, nixpkgs, sops-nix, ... }@inputs: {

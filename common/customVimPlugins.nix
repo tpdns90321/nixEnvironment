@@ -7,4 +7,5 @@ let buildVimPluginFromFlake = name:
   }; in
 [
   (buildVimPluginFromFlake "copilot-vim")
+  (buildVimPluginFromFlake "vim-rzip")
 ]
