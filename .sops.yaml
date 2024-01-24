@@ -44,7 +44,17 @@ creation_rules:
     key_groups:
       - age:
         - *unioneinc_macbook
-  - path_regex: hosts/rpi4/*_env$
+  - path_regex: hosts/rpi4/transmission_env$
+    key_groups:
+      - age:
+        - *kang_macbook_air
+        - *stay_raspberrypi
+  - path_regex: hosts/rpi4/supabase_env$
+    key_groups:
+      - age:
+        - *kang_macbook_air
+        - *stay_raspberrypi
+  - path_regex: hosts/rpi4/librechat_env$
     key_groups:
       - age:
         - *kang_macbook_air

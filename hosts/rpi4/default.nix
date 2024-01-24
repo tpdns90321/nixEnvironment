@@ -41,7 +41,15 @@
       mode = "0400";
       path = "/home/${user}/.config/supabase_env";
     };
+    secrets.librechat_env = {
+      sopsFile = ./librechat_env;
+      format = "binary";
+      mode = "0400";
+      path = "/home/${user}/nixEnvironment/hosts/rpi4/LibreChat/.env";
+    };
   };
+
+  home.file."/home/${user}/nixEnvironment/hosts/rpi4/LibreChat/docker-compose.override.yml".source = ./librechat-docker-compose.override.yml;
 
   systemd.user.services."adguardhome" = (buildService {
     name = "adguardhome";
@@ -104,6 +112,14 @@
     description = "Supabase";
     src = "/home/${user}/nixEnvironment/hosts/rpi4/supabase/docker";
     options = "--env-file=/home/${user}/.config/supabase_env";
+    after = [ "sops-nix.service" ];
+    docker_host = "unix://%t/podman.sock";
+  });
+
+  systemd.user.services."librechat" = (buildComposeService {
+    description = "LibreChat";
+    src = "/home/${user}/nixEnvironment/hosts/rpi4/LibreChat";
+    options = "-f /home/${user}/nixEnvironment/hosts/rpi4/LibreChat/docker-compose.override.yml --env-file=${config.sops.secrets.librechat_env.path}";
     after = [ "sops-nix.service" ];
     docker_host = "unix://%t/podman.sock";
   });
