@@ -9,6 +9,7 @@ let vscode-extensions = inputs.nix-vscode-extensions.extensions.${pkgs.system}; 
   # VSCode
   (
     vscode-with-extensions.override {
+      vscode = vscodium;
       vscodeExtensions = (pkgs.vscode-utils.extensionsFromVscodeMarketplace [
        {
          name = "copilot";
