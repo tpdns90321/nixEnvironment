@@ -50,6 +50,7 @@
   };
 
   home.file."/home/${user}/nixEnvironment/hosts/rpi4/LibreChat/docker-compose.override.yml".source = ./librechat-docker-compose.override.yml;
+  home.file."/home/${user}/.config/set-route/index.html".source = ./set-route.html;
 
   systemd.user.services."adguardhome" = (buildService {
     name = "adguardhome";
