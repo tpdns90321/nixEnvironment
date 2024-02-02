@@ -70,6 +70,7 @@ let
     "Keka" = 470158793;
     "BetterSnapTool" = 417375580;
     "Bitwarden" = 1352778147;
+    "Amphetamine" = 937984704;
   } // additionalAppStore;
 
 

@@ -9,4 +9,7 @@ let common_pkgs = import ../common/packages_desktop.nix { pkgs = pkgs; inputs = 
 
   # podman machin in darwin
   qemu
+
+  # utm virtual machine
+  utm
 ]
