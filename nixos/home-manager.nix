@@ -57,8 +57,11 @@ let common-programs = import ../common/home-manager.nix { config = config; pkgs 
             { command = "waybar"; }
           ];
           input = {
-            "*GKB*" = {
+            "*" = {
               xkb_options = "ctrl:swapcaps";
+            };
+            "2131:256:Topre_Corporation_HHKB_Professional" = {
+              xkb_options = "ctrl:nocaps";
             };
           };
           bars = [
