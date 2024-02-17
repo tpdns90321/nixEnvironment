@@ -22,6 +22,7 @@
   boot.initrd.availableKernelModules = [ "xhci_pci" "ahci" "usb_storage" "usbhid" "sd_mod" ];
   boot.initrd.kernelModules = [ "dm-snapshot" ];
   boot.kernelModules = [ "kvm-amd" ];
+  boot.kernelParams = ["i915.force_probe=56a0"];
   boot.extraModulePackages = [ ];
 
   fileSystems."/" =
