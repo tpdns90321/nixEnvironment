@@ -51,7 +51,7 @@
   users.users.kang = {
     isNormalUser = true;
     description = "kang";
-    extraGroups = [ "networkmanager" "wheel" "video" "audio" ];
+    extraGroups = [ "networkmanager" "wheel" "video" "audio" "docker" ];
     packages = with pkgs; [];
     shell = pkgs.zsh;
   };
@@ -122,8 +122,10 @@
   # podman
   virtualisation.podman = {
     enable = true;
-    dockerCompat = true;
-    dockerSocket.enable = true;
+  };
+
+  virtualisation.docker = {
+    enable = true;
   };
 
   # Enable the OpenSSH daemon.

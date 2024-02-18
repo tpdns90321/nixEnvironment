@@ -61,7 +61,10 @@ let common-programs = import ../common/home-manager.nix { config = config; pkgs 
               xkb_options = "ctrl:swapcaps";
             };
             "2131:256:Topre_Corporation_HHKB_Professional" = {
-              xkb_options = "ctrl:nocaps";
+              xkb_options = "terminate:ctrl_alt_bksp";
+            };
+            "1155:20786:CATEX_TECH._GK868B" = {
+              xkb_options = "terminate:ctrl_alt_bksp";
             };
           };
           bars = [
