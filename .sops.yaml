@@ -2,6 +2,7 @@ keys:
   - &kang_macbook_air age1j96268thuepkcgmxcnhaeedfamdwum7lcjx0x62u84uqjw9099ysqqphw0
   - &stay_raspberrypi age1xf07v5cv2zdrevmv5mfwen8jhg8nu2gkl7sr0j04gdkyfqlr2fcqk9qwze
   - &home_nixos age1de0nqv36jzggd5xrhevff4w6w5772qgey3xhnru825z2l748hanse7nw55
+  - &stay_nixos age1eyjyp4n5ke066nkgcxkqmkzl50nlwkdufsm2qzz5rfvc7peelc5qlnufz7
   - &unioneinc_macbook age1z5qm2r360la9nw6w0elqymzjds9c07aevwd7d2eylt9usldw55ysa3nt6r
 creation_rules:
   - path_regex: stay_secrets.yaml$
@@ -63,4 +64,5 @@ creation_rules:
     key_groups:
       - age:
         - *home_nixos
+        - *stay_nixos
         - *kang_macbook_air
