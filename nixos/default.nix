@@ -2,7 +2,7 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, pkgs, lib, inputs, ... }:
+{ config, pkgs, lib, inputs, additionalPackages, ... }:
 
 {
   imports = [
@@ -69,7 +69,7 @@
 
     # fileSystem
     cifs-utils
-  ]) ++ (import ../common/packages_desktop.nix { pkgs = pkgs; inputs = inputs; lib = lib; });
+  ]) ++ (import ../common/packages_desktop.nix { inherit pkgs inputs lib additionalPackages; });
 
   services.pipewire = {
     enable = true;

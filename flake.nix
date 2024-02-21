@@ -29,7 +29,10 @@
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.nixpkgs-stable.follows = "nixpkgs";
     };
-    nix-vscode-extensions.url = "github:nix-community/nix-vscode-extensions";
+    nix-vscode-extensions = {
+      url = "github:nix-community/nix-vscode-extensions";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = { self, flake-utils, darwin, home-manager, nixpkgs, sops-nix, ... }@inputs: {
@@ -104,20 +107,23 @@
       };
     };
 
-    nixosConfigurations.kang-stay-nixos = nixpkgs.lib.nixosSystem {
-      system = "x86_64-linux";
-      specialArgs = { inputs = inputs; };
-      modules = [
-        home-manager.nixosModules.home-manager
-        sops-nix.nixosModules.sops
-        ./nixos
-        ./hosts/stay_nixos
-      ];
-    };
+    nixosConfigurations.kang-stay-nixos =
+      let system = "x86_64-linux";
+          pkgs = import nixpkgs { system = system; };
+      in nixpkgs.lib.nixosSystem {
+        inherit system;
+        specialArgs = { inputs = inputs; additionalPackages = [ ]; };
+        modules = [
+          home-manager.nixosModules.home-manager
+          sops-nix.nixosModules.sops
+          ./nixos
+          ./hosts/stay_nixos
+        ];
+      };
 
     nixosConfigurations.kang-home-nixos = nixpkgs.lib.nixosSystem {
       system = "x86_64-linux";
-      specialArgs = { inputs = inputs; };
+      specialArgs = { inputs = inputs; additionalPackages = []; };
       modules = [
         home-manager.nixosModules.home-manager
         sops-nix.nixosModules.sops

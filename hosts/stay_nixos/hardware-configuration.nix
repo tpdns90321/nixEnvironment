@@ -23,6 +23,16 @@
   boot.initrd.kernelModules = [ "dm-snapshot" ];
   boot.kernelModules = [ "kvm-amd" ];
   boot.kernelParams = ["i915.force_probe=56a0"];
+  boot.kernelPackages = pkgs.linuxPackagesFor (pkgs.linux.override {
+    argsOverride = rec {
+      src = pkgs.fetchurl {
+        url = "https://cdn.kernel.org/pub/linux/kernel/v6.x/linux-${version}.tar.xz";
+        sha256 = "sha256-7nZQmWunWqKf5m8wm0Ewl/JJoD5wAfKkESjHyVIFImo=";
+      };
+      version = "6.6.17";
+      modDirVersion = "6.6.17";
+    };
+  });
   boot.extraModulePackages = [ ];
 
   fileSystems."/" =

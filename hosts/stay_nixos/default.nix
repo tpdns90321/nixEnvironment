@@ -4,7 +4,7 @@
     ./hardware-configuration.nix
   ];
 
-  sops.age.keyFile = "/home/kang/.config/sops/age/keys.txt";
+  sops.age.keyFile = "/etc/sops/age/keys.txt";
 
   sops.secrets.smb_credential = {
     sopsFile = ../../smb_credential.txt;

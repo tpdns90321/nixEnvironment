@@ -1,7 +1,7 @@
-{ pkgs, inputs, lib }:
+{ pkgs, inputs, lib, additionalPackages ? [] }:
 
 let vscode-extensions = inputs.nix-vscode-extensions.extensions.${pkgs.system}; in
-  (import ./packages.nix { pkgs = pkgs; inputs = inputs; lib = lib; }) ++ (with pkgs; [
+  (import ./packages.nix { inherit pkgs inputs lib additionalPackages; }) ++ (with pkgs; [
   # GUI Application for work
   alacritty
   gimp

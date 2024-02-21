@@ -1,4 +1,4 @@
-{ pkgs, inputs, lib }:
+{ pkgs, inputs, lib, additionalPackages ? [ ] }:
 
 (with pkgs; [
   bitwarden-cli
@@ -42,4 +42,4 @@
 
   # rust development
   cargo
-])
+]) ++ additionalPackages
