@@ -67,6 +67,9 @@
     # browser
     firefox
 
+    # vnc client
+    wayvnc
+
     # fileSystem
     cifs-utils
   ]) ++ (import ../common/packages_desktop.nix { inherit pkgs inputs lib additionalPackages; });

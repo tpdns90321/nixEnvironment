@@ -24,6 +24,7 @@
 
   networking.firewall = {
     enable = true;
+    allowedTCPPorts = [ 5900 ];
   };
 
   # Enable the OpenSSH daemon.
