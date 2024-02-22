@@ -72,6 +72,9 @@
 
     # fileSystem
     cifs-utils
+
+    # cryptography disk
+    cryptsetup
   ]) ++ (import ../common/packages_desktop.nix { inherit pkgs inputs lib additionalPackages; });
 
   services.pipewire = {
