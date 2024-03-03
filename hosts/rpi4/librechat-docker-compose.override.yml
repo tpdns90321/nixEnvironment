@@ -18,8 +18,10 @@ services:
 #     image: ghcr.io/danny-avila/librechat-dev:latest
 
 # # BUILD FROM LATEST IMAGE (NUMBERED RELEASE)
-#   api:
-#     image: ghcr.io/danny-avila/librechat:latest
+  api:
+    image: ghcr.io/danny-avila/librechat:latest
+    volumes:
+      - ./librechat.yaml:/app/librechat.yaml
 
 # # BUILD FROM LATEST API IMAGE
 #   api:

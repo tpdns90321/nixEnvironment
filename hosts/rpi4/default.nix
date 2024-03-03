@@ -35,21 +35,22 @@
       mode = "0400";
       path = "/home/${user}/.config/transmission_env";
     };
-    secrets.supabase_env = {
-      sopsFile = ./supabase_env;
-      format = "binary";
-      mode = "0400";
-      path = "/home/${user}/.config/supabase_env";
-    };
     secrets.librechat_env = {
       sopsFile = ./librechat_env;
       format = "binary";
       mode = "0400";
       path = "/home/${user}/nixEnvironment/hosts/rpi4/LibreChat/.env";
     };
+    secrets.opengpts_env = {
+      sopsFile = ./opengpts_env;
+      format = "binary";
+      mode = "0400";
+      path = "/home/${user}/nixEnvironment/hosts/rpi4/opengpts/.env";
+    };
   };
 
   home.file."/home/${user}/nixEnvironment/hosts/rpi4/LibreChat/docker-compose.override.yml".source = ./librechat-docker-compose.override.yml;
+  home.file."/home/${user}/nixEnvironment/hosts/rpi4/LibreChat/librechat.yaml".source = ./librechat.yaml;
   home.file."/home/${user}/.config/set-route/index.html".source = ./set-route.html;
 
   systemd.user.services."adguardhome" = (buildService {
@@ -109,18 +110,25 @@
     options = "-p 9091:9091/tcp -p 51413:51413/tcp -p 51413:51413/udp --env-file=/home/${user}/.config/transmission_env --volume /home/${user}/.config/transmission:/config --volume /home/${user}/data/shared:/downloads --volume /home/${user}/data/shared:/watch docker.io/linuxserver/transmission:latest";
   });
 
-  systemd.user.services."supabase" = (buildComposeService {
-    description = "Supabase";
-    src = "/home/${user}/nixEnvironment/hosts/rpi4/supabase/docker";
-    options = "--env-file=/home/${user}/.config/supabase_env";
-    after = [ "sops-nix.service" ];
-    docker_host = "unix://%t/podman.sock";
-  });
-
   systemd.user.services."librechat" = (buildComposeService {
     description = "LibreChat";
     src = "/home/${user}/nixEnvironment/hosts/rpi4/LibreChat";
     options = "-f /home/${user}/nixEnvironment/hosts/rpi4/LibreChat/docker-compose.override.yml --env-file=${config.sops.secrets.librechat_env.path}";
+    after = [ "sops-nix.service" ];
+    docker_host = "unix://%t/podman.sock";
+  });
+
+  systemd.user.services."opengpts" = (buildComposeService {
+    description = "OpenGPTS";
+    src = "/home/${user}/nixEnvironment/hosts/rpi4/opengpts";
+    filename = "docker-compose-prod.yml";
+    after = [ "sops-nix.service" ];
+    docker_host = "unix://%t/podman.sock";
+  });
+
+  systemd.user.services."codesherpa" = (buildComposeService {
+    description = "CodeSherpa";
+    src = "/home/${user}/nixEnvironment/hosts/rpi4/codesherpa";
     after = [ "sops-nix.service" ];
     docker_host = "unix://%t/podman.sock";
   });

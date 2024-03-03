@@ -1,6 +1,9 @@
-[submodule "hosts/rpi4/supabase"]
-	path = hosts/rpi4/supabase
-	url = https://github.com/supabase/supabase
 [submodule "LibreChat"]
 	path = hosts/rpi4/LibreChat
 	url = https://github.com/danny-avila/LibreChat
+[submodule "hosts/rpi4/opengpts"]
+	path = hosts/rpi4/opengpts
+	url = https://github.com/langchain-ai/opengpts
+[submodule "hosts/rpi4/codesherpa"]
+	path = hosts/rpi4/codesherpa
+	url = https://github.com/iamgreggarcia/codesherpa

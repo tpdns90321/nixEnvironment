@@ -3,8 +3,37 @@
 <head>
     <meta charset="UTF-8">
     <title>Set Route Cookie</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        .set-route {
+          font-family: Arial, sans-serif;
+          margin: 0;
+          padding: 0;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          height: 100dvh;
+        }
+
+        .set-route button {
+          padding: 10px 20px;
+          margin: 10px;
+          font-size: 16px;
+          cursor: pointer;
+          background-color: #007bff;
+          color: #fff;
+          border: none;
+          border-radius: 5px;
+          transition: background-color 0.3s ease;
+        }
+
+        .set-route button:hover {
+          background-color: #0056b3;
+        }
+    </style>
 </head>
-<body>
+<body class="set-route">
     <button onclick="setCookie('app_route', 'librechat')">Go to LibreChat</button>
     <button onclick="setCookie('app_route', 'other')">Go to Other</button>
     

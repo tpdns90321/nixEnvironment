@@ -60,6 +60,11 @@ creation_rules:
       - age:
         - *kang_macbook_air
         - *stay_raspberrypi
+  - path_regex: hosts/rpi4/opengpts_env$
+    key_groups:
+      - age:
+        - *kang_macbook_air
+        - *stay_raspberrypi
   - path_regex: smb_credential.txt$
     key_groups:
       - age:
