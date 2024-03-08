@@ -23,15 +23,6 @@
   };
 
   services.zerotierone.enable = true;
-  services.openvpn.servers = {
-    stay_router = {
-      config = ''
-      config ${config.sops.secrets.stay_router_ovpn.path}
-      auth-user-pass ${config.sops.secrets.stay_router_user_pass.path}
-      '';
-      updateResolvConf = true;
-    };
-  };
 
   console.useXkbConfig = true;
 }
