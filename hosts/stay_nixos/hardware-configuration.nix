@@ -51,8 +51,8 @@
     };
 
   fileSystems."/data" =
-    { device = "/dev/disk/by-uuid/ed3c4eb5-cebc-4ace-8699-32af81085325";
-      fsType = "ext4";
+    { device = "/dev/disk/by-uuid/98e50b4f-c441-4a37-b0bc-a8d78e144973";
+      fsType = "xfs";
     };
 
   swapDevices = [ ];
