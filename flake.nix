@@ -131,5 +131,16 @@
         ./hosts/home_nixos
       ];
     };
+
+    nixosConfigurations.kang-virtualbox = nixpkgs.lib.nixosSystem {
+      system = "x86_64-linux";
+      specialArgs = { inputs = inputs; additionalPackages = with (import nixpkgs { system = "x86_64-linux"; }); [ wlr-randr ]; };
+      modules = [
+        home-manager.nixosModules.home-manager
+        sops-nix.nixosModules.sops
+        ./nixos
+        ./hosts/kang_virtualbox
+      ];
+    };
   };
 }

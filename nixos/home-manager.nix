@@ -49,7 +49,7 @@ let common-programs = import ../common/home-manager.nix { config = config; pkgs 
       wayland.windowManager.sway = {
         enable = true;
         config = {
-          modifier = "Mod4";
+          modifier = "Mod1";
           terminal = "alacritty";
           startup = [
             { command = "mako"; }
