@@ -77,6 +77,7 @@ let
 
     extraPackages = with pkgs; [
       # lspconfig
+      gopls
       rnix-lsp
       rust-analyzer
       nodePackages.vscode-langservers-extracted
@@ -149,6 +150,8 @@ let
       })
 
       require('lspconfig').astro.setup({})
+
+      require('lspconfig').gopls.setup({})
 
       require('lspconfig').tailwindcss.setup({})
 
