@@ -24,7 +24,7 @@
 
   networking.firewall = {
     enable = true;
-    allowedTCPPorts = [ 5900 ];
+    allowedTCPPorts = [ 5900 8080 ];
   };
 
   # Enable the OpenSSH daemon.
@@ -46,5 +46,16 @@
       #vaapiVdpau
       #libvdpau-va-gl
     ];
+  };
+
+  systemd.services.localai = {
+    description = "Local AI service";
+    wantedBy = [ "multi-user.target" ];
+    serviceConfig = {
+      Type = "simple";
+      ExecStart = "${pkgs.docker}/bin/docker run -d --rm --name localai --privileged -v /dev/dri:/dev/dri -p 8080:8080 -v /data/models:/build/models quay.io/go-skynet/local-ai:latest-aio-gpu-intel-f32";
+      ExecStop = "${pkgs.docker}/bin/docker stop localai";
+      RemainAfterExit = true;
+    };
   };
 }
