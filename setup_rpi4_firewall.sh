@@ -15,7 +15,7 @@ for PORT in $PORTS; do
   OUT=${PARSED[1]}
   TYPE=${PARSED[2]}
   sudo ufw allow ${IN}/${TYPE}
-  echo "-A PREROUTING -p ${TYPE} --dport ${OUT} -j REDIRECT --to-port ${IN}" | sudo tee -a /etc/ufw/before.rules
+  echo "-A PREROUTING -p ${TYPE} --dport ${OUT} -d 192.168.219.200 -j REDIRECT --to-port ${IN}" | sudo tee -a /etc/ufw/before.rules
 done
 
 # allow mosh
