@@ -51,7 +51,7 @@
   users.users.kang = {
     isNormalUser = true;
     description = "kang";
-    extraGroups = [ "networkmanager" "wheel" "video" "audio" "docker" ];
+    extraGroups = [ "networkmanager" "wheel" "video" "audio" "docker" "wireshark" ];
     packages = with pkgs; [];
     shell = pkgs.zsh;
   };
@@ -75,6 +75,9 @@
 
     # cryptography disk
     cryptsetup
+
+    # wireshark
+    wireshark
   ]) ++ (import ../common/packages_desktop.nix { inherit pkgs inputs lib additionalPackages; });
 
   services.pipewire = {
@@ -114,6 +117,8 @@
   };
 
   programs.zsh.enable = true;
+
+  programs.wireshark.enable = true;
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
