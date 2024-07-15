@@ -18,12 +18,12 @@ parse_sops_yaml() {
         # Extract paths from sops.yaml and convert them to a grep pattern
         local pattern=$(grep "path_regex:" "$sops_file" | sed -E 's/.*path_regex: *(.*)$/\1/' | tr '\n' '|' | sed 's/|$//')
         if [ -n "$pattern" ]; then
-            echo "-E -v '($pattern|\\.git|\\.DS_Store)'"
+            echo "-E -v '($pattern|\\.git|\\.DS_Store|flake.lock)'"
         else
-            echo "-E -v '(\\.git|\\.DS_Store)'"
+            echo "-E -v '(\\.git|\\.DS_Store|flake.lock)'"
         fi
     else
-        echo "-E -v '(\\.git|\\.DS_Store)'"
+        echo "-E -v '(\\.git|\\.DS_Store|flake.lock)'"
     fi
 }
 
@@ -43,9 +43,10 @@ fi
 grep_pattern=$(parse_sops_yaml "$1")
 
 # Get list of files in the folder, excluding patterns from sops.yaml, .git and .DS_Store
-files=$(find "$1" -type f -name '*' | eval grep $grep_pattern)
+files=$(find "$1" -type f -name '*' | eval grep $grep_pattern | sort)
 
 # Create or truncate the output file
+rm "$2" 2>/dev/null
 touch "$2"
 
 # Check if we have permission to write to the output file
@@ -57,10 +58,9 @@ fi
 # Loop through each file and append to the output file
 for file in $files; do
     if [ -r "$file" ]; then
-        echo "--- $file: \`\`\`" >> "$2"
+        echo "--- $file:" >> "$2"
         # Use sed to filter out lines containing 'boot.loader'
-        sed '/boot\.loader/d' "$file" >> "$2"
-        echo "\`\`\`" >> "$2"
+        sed 's/boot\.loader//g' "$file" | sed 's/boot//g' >> "$2"
     else
         echo "Warning: Cannot read $file. Skipping."
     fi
