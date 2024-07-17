@@ -78,7 +78,6 @@ let
     extraPackages = with pkgs; [
       # lspconfig
       gopls
-      rnix-lsp
       rust-analyzer
       nodePackages.vscode-langservers-extracted
       nodePackages.typescript-language-server
@@ -141,8 +140,6 @@ let
       end)
 
       -- language servers
-      require('lspconfig').rnix.setup({})
-
       require('lspconfig').tsserver.setup({})
 
       require('lspconfig').eslint.setup({
