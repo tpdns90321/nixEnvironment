@@ -41,10 +41,10 @@
   services.logrotate.checkConfig = false;
 
   # Configure keymap in X11
-  services.xserver = {
+  services.xserver.xkb = {
     layout = "kr";
-    xkbVariant = "kr104";
-    xkbOptions = "ctrl:swapcaps";
+    variant = "kr104";
+    options = "ctrl:swapcaps";
   };
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
