@@ -17,7 +17,7 @@ endpoints:
       apiKey: "sk-1234"
       baseURL: "http://192.168.219.105:8080/v1"
       models:
-        default: ["mistral-7b-instruct-v0.2.Q4_K_M"]
+        default: ["llama-8b-instruct"]
         fetch: true
     # Mistral AI API
 #    - name: "Mistral"  # Unique name for the endpoint
