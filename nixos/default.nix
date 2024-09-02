@@ -64,9 +64,6 @@
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = (with pkgs; [
-    # browser
-    firefox
-
     # vnc client
     wayvnc
 
@@ -80,6 +77,11 @@
     wireshark
   ]) ++ (import ../common/packages_desktop.nix { inherit pkgs inputs lib additionalPackages; });
 
+  environment.variables = {
+    EDITOR = "nvim";
+    VISUAL = "nvim";
+  };
+
   services.pipewire = {
     enable = true;
     alsa.enable = true;
@@ -88,7 +90,7 @@
 
   programs.sway = {
     extraPackages = with pkgs; [
-      alacritty
+      bemenu
       pcmanfm
       wayland
       swaylock

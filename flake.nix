@@ -4,6 +4,9 @@
     nixpkgs = {
       url = "github:nixos/nixpkgs/24.05";
     };
+    nixos = {
+      url = "github:nixos/nixpkgs/nixos-24.05";
+    };
     home-manager = {
       url = "github:nix-community/home-manager/release-24.05";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -35,7 +38,7 @@
     };
   };
 
-  outputs = { self, flake-utils, darwin, home-manager, nixpkgs, sops-nix, ... }@inputs: {
+  outputs = { self, flake-utils, darwin, home-manager, nixpkgs, nixos, sops-nix, ... }@inputs: {
     darwinConfigurations = {
       "uniones-MacBook-Pro" = darwin.lib.darwinSystem {
         system = "aarch64-darwin";
@@ -132,9 +135,9 @@
       ];
     };
 
-    nixosConfigurations.kang-virtualbox = nixpkgs.lib.nixosSystem {
+    nixosConfigurations.kang-virtualbox = nixos.lib.nixosSystem {
       system = "x86_64-linux";
-      specialArgs = { inputs = inputs; additionalPackages = with (import nixpkgs { system = "x86_64-linux"; }); [ wlr-randr ]; };
+      specialArgs = { inputs = inputs; additionalPackages = with (import nixos { system = "x86_64-linux"; }); [ wlr-randr ]; };
       modules = [
         home-manager.nixosModules.home-manager
         sops-nix.nixosModules.sops

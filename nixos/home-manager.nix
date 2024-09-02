@@ -45,12 +45,29 @@ let common-programs = import ../common/home-manager.nix { config = config; pkgs 
             }
           ];
         };
+        chromium = {
+          enable = true;
+          commandLineArgs = [
+            "--enable-features=UseOzonePlatform"
+            "--ozone-platform=wayland"
+            "--gtk-version=4"
+          ];
+        };
+
+        foot = {
+          enable = true;
+          settings = {
+            main = {
+              font = "monospace:size=12";
+            };
+          };
+        };
       };
-      wayland.windowManager.sway = {
+      wayland.windowManager.sway = let modifier = "Mod1"; in {
         enable = true;
         config = {
-          modifier = "Mod1";
-          terminal = "alacritty";
+          modifier = modifier;
+          terminal = "foot";
           startup = [
             { command = "mako"; }
             { command = "kime -D"; }
@@ -73,6 +90,9 @@ let common-programs = import ../common/home-manager.nix { config = config; pkgs 
             names = [ "NanumGhothic" ];
             style = "Bold Semi-Condensed";
             size = 9.0;
+          };
+          keybindings = lib.mkOptionDefault {
+            "${modifier}+d" = "exec bemenu-run";
           };
         };
       };
