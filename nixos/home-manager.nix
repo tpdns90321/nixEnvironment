@@ -53,21 +53,15 @@ let common-programs = import ../common/home-manager.nix { config = config; pkgs 
             "--gtk-version=4"
           ];
         };
-
-        foot = {
+        firefox = {
           enable = true;
-          settings = {
-            main = {
-              font = "monospace:size=12";
-            };
-          };
         };
       };
       wayland.windowManager.sway = let modifier = "Mod1"; in {
         enable = true;
         config = {
           modifier = modifier;
-          terminal = "foot";
+          terminal = "${pkgs.germinal}/bin/germinal";
           startup = [
             { command = "mako"; }
             { command = "kime -D"; }
