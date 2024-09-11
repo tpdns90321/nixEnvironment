@@ -124,6 +124,19 @@
         ];
       };
 
+    nixosConfigurations.kang-stay-gmk =
+      let system = "x86_64-linux";
+          pkgs = import nixpkgs { system = system; };
+      in nixpkgs.lib.nixosSystem {
+        inherit system;
+        specialArgs = { inputs = inputs; additionalPackages = [ ]; };
+        modules = [
+          home-manager.nixosModules.home-manager
+          ./nixos
+          ./hosts/stay_GMK
+        ];
+      };
+
     nixosConfigurations.kang-home-nixos = nixpkgs.lib.nixosSystem {
       system = "x86_64-linux";
       specialArgs = { inputs = inputs; additionalPackages = []; };
