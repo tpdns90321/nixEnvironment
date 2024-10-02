@@ -6,7 +6,25 @@
 
   networking.firewall = {
     enable = true;
-    allowedTCPPorts = [ 5900 8080 ];
+    allowedTCPPorts = [
+      # vnc
+      5900
+      # k3s API Server
+      6443
+      #etcd ports for client or peer
+      2379
+      2380
+    ];
+    allowedUDPPorts = [
+      # k3s flannel
+      8472
+    ];
+  };
+
+  # k3s
+  services.k3s = {
+    enable = true;
+    role = "server";
   };
 
   # Enable the OpenSSH daemon.
