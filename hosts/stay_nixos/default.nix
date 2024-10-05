@@ -24,8 +24,17 @@
 
   networking.firewall = {
     enable = true;
-    allowedTCPPorts = [ 5900 8080 ];
+    allowedTCPPorts = [
+      5900
+      # k3s ports api-server
+      6443
+    ];
   };
+
+  services.k3s = {
+    enable = true;
+    role = "server";
+  }
 
   # Enable the OpenSSH daemon.
   services.openssh.enable = true;

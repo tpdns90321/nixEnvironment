@@ -18,6 +18,12 @@
   wget
   zsh
 
+  kubectl
+  helmfile
+  kubernetes-helm
+  kubernetes-helmPlugins.helm-diff
+  kubernetes-helmPlugins.helm-secrets
+
   # secrets management
   age
   ssh-to-age
