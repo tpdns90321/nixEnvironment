@@ -29,12 +29,16 @@
       # k3s ports api-server
       6443
     ];
+    allowedUDPPorts = [
+      # k3s ports flannel
+      8472
+    ];
   };
 
   services.k3s = {
     enable = true;
     role = "server";
-  }
+  };
 
   # Enable the OpenSSH daemon.
   services.openssh.enable = true;
