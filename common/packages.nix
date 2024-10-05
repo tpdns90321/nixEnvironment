@@ -20,9 +20,12 @@
 
   kubectl
   helmfile
-  kubernetes-helm
-  kubernetes-helmPlugins.helm-diff
-  kubernetes-helmPlugins.helm-secrets
+  (wrapHelm kubernetes-helm {
+    plugins = with pkgs.kubernetes-helmPlugins; [
+      helm-diff
+      helm-secrets
+    ];
+  })
 
   # secrets management
   age
