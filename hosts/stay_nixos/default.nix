@@ -5,9 +5,13 @@
   ];
 
   sops.age.keyFile = "/etc/sops/age/keys.txt";
-
   sops.secrets.smb_credential = {
     sopsFile = ../../smb_credential.txt;
+    format = "binary";
+  };
+
+  sops.secrets.k3s_tokenfile = {
+    sopsFile = ../../k3sCluster/tokenfile;
     format = "binary";
   };
 
@@ -37,7 +41,9 @@
 
   services.k3s = {
     enable = true;
-    role = "server";
+    role = "agent";
+    tokenFile = config.sops.secrets.k3s_tokenfile.path;
+    serverAddr = "https://192.168.219.114:6443";
   };
 
   # Enable the OpenSSH daemon.
