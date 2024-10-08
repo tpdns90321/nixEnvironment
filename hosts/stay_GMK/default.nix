@@ -18,9 +18,8 @@
       5900
       # k3s API Server
       6443
-      #etcd ports for client or peer
-      2379
-      2380
+      # kublet metric
+      10250
     ];
     allowedUDPPorts = [
       # k3s flannel
