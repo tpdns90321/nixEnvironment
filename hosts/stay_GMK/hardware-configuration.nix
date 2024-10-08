@@ -11,7 +11,7 @@
 
   boot.loader.efi = {
     canTouchEfiVariables = true;
-    efiSysMountPoint = "/boot";
+    efiSysMountPoint = "/boot/efi";
   };
 
   boot.loader.grub = {
@@ -21,19 +21,19 @@
   };
 
   boot.initrd.availableKernelModules = [ "xhci_pci" "ahci" "nvme" "usbhid" "usb_storage" "sd_mod" "sdhci_pci" ];
-  boot.initrd.kernelModules = [ ];
+  boot.initrd.kernelModules = [ "dm-snapshot" ];
   boot.kernelModules = [ "kvm-intel" ];
   boot.extraModulePackages = [ ];
 
   fileSystems."/" =
-    { device = "/dev/disk/by-uuid/b9e6930e-17fb-477c-af1e-2bdbd6ffde70";
-      fsType = "ext4";
+    { device = "/dev/disk/by-uuid/060fd0bc-f506-457f-85bd-cdee6e67fc11";
+      fsType = "xfs";
     };
 
-  fileSystems."/boot" =
-    { device = "/dev/disk/by-uuid/21AE-6F41";
+  fileSystems."/boot/efi" =
+    { device = "/dev/disk/by-uuid/8C75-3F07";
       fsType = "vfat";
-      options = [ "fmask=0077" "dmask=0077" ];
+      options = [ "fmask=0022" "dmask=0022" ];
     };
 
   swapDevices = [ ];
