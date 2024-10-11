@@ -1,4 +1,4 @@
-{ ... }:
+{ pkgs, ... }:
 {
   services.drbd = {
     enable = true;
@@ -26,4 +26,11 @@ resource k3s_server_node {
 }
 '';
   };
+
+  # Fix drbd service PATH issue
+  systemd.services.drbd.path = with pkgs; [
+      "${drbd}/bin:${drbd}/sbin:${coreutils}/bin:${util-linux}/bin:${systemd}/bin"
+  ];
+  systemd.services.drbd.serviceConfig.Type = "oneshot";
+  systemd.services.drbd.serviceConfig.RemainAfterExit = "true";
 }
