@@ -73,7 +73,7 @@ case $STATE in
         # Start K3s server
         ${systemd}/bin/systemctl start k3s-server.service
         ;;
-    "BACKUP"|"FAULT")
+    "BACKUP"|"FAULT"|"STOP")
         ${systemd}/bin/systemctl stop k3s-server.service
         # Unmount DRBD device
         ${util-linux}/bin/umount /var/lib/rancher/k3s/server
