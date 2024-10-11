@@ -66,15 +66,17 @@ STATE=$3
 
 case $STATE in
     "MASTER")
+        sleep 60
         ${systemd}/bin/systemctl stop k3s_agent.service
         ${drbd}/bin/drbdadm primary --force k3s_server_node
         # Mount DRBD device
         ${util-linux}/bin/mount /dev/drbd1 /var/lib/rancher/k3s/server
         # Start K3s server
-        ${systemd}/bin/systemctl start k3s-server.service
+        ${systemd}/bin/systemctl start k3s_server.service
         ;;
     "BACKUP"|"FAULT"|"STOP")
-        ${systemd}/bin/systemctl stop k3s-server.service
+        ${systemd}/bin/systemctl stop k3s_server.service
+        sleep 60
         # Unmount DRBD device
         ${util-linux}/bin/umount /var/lib/rancher/k3s/server
         # Stop K3s server
