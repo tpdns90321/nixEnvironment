@@ -33,6 +33,10 @@
       5900
       # k3s ports api-server
       6443
+      # k3s ports kubelet metric
+      10250
+      # drbd port
+      7789
     ];
     allowedUDPPorts = [
       # k3s ports flannel
