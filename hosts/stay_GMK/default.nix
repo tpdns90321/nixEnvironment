@@ -2,6 +2,7 @@
 {
   imports = [
     ./hardware-configuration.nix
+    ../../k3sCluster/drbd.nix
   ];
 
   sops.age.keyFile = "/etc/sops/age/keys.txt";
@@ -20,6 +21,8 @@
       6443
       # kublet metric
       10250
+      # drbd port
+      7789
     ];
     allowedUDPPorts = [
       # k3s flannel

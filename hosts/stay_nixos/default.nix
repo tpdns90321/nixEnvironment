@@ -2,6 +2,7 @@
 {
   imports = [
     ./hardware-configuration.nix
+    ../../k3sCluster/drbd.nix
   ];
 
   sops.age.keyFile = "/etc/sops/age/keys.txt";
