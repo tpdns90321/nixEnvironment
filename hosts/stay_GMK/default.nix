@@ -2,15 +2,8 @@
 {
   imports = [
     ./hardware-configuration.nix
-    ../../k3sCluster/drbd.nix
+    ../../k3sCluster
   ];
-
-  sops.age.keyFile = "/etc/sops/age/keys.txt";
-
-  sops.secrets.k3s_tokenfile = {
-    sopsFile = ../../k3sCluster/tokenfile;
-    format = "binary";
-  };
 
   networking.firewall = {
     enable = true;
@@ -28,13 +21,6 @@
       # k3s flannel
       8472
     ];
-  };
-
-  # k3s
-  services.k3s = {
-    enable = true;
-    role = "server";
-    tokenFile = config.sops.secrets.k3s_tokenfile.path;
   };
 
   # Enable the OpenSSH daemon.

@@ -2,17 +2,12 @@
 {
   imports = [
     ./hardware-configuration.nix
-    ../../k3sCluster/drbd.nix
+    ../../k3sCluster
   ];
 
   sops.age.keyFile = "/etc/sops/age/keys.txt";
   sops.secrets.smb_credential = {
     sopsFile = ../../smb_credential.txt;
-    format = "binary";
-  };
-
-  sops.secrets.k3s_tokenfile = {
-    sopsFile = ../../k3sCluster/tokenfile;
     format = "binary";
   };
 
@@ -42,13 +37,6 @@
       # k3s ports flannel
       8472
     ];
-  };
-
-  services.k3s = {
-    enable = true;
-    role = "agent";
-    tokenFile = config.sops.secrets.k3s_tokenfile.path;
-    serverAddr = "https://192.168.219.114:6443";
   };
 
   # Enable the OpenSSH daemon.
