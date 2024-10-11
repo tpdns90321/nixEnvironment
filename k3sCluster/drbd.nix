@@ -33,4 +33,7 @@ resource k3s_server_node {
   ];
   systemd.services.drbd.serviceConfig.Type = "oneshot";
   systemd.services.drbd.serviceConfig.RemainAfterExit = "true";
+  systemd.services.drbd.after = [
+    "firewall.service"
+  ];
 }
