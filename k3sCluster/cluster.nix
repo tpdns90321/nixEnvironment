@@ -68,6 +68,7 @@ case $STATE in
     "MASTER")
         ${drbd}/bin/drbdadm connect --discard-my-data k3s_server_node
         ${drbd}/bin/drbdadm wait-connect k3s_server_node
+        ${drbd}/bin/drbdsetup wait-sync 1
         sleep 60
         ${drbd}/bin/drbdadm primary --force k3s_server_node
         # Mount DRBD device
