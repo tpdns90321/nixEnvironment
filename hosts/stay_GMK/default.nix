@@ -14,8 +14,9 @@
       6443
       # kublet metric
       10250
-      # drbd port
+      # drbd ports
       7789
+      7790
     ];
     allowedUDPPorts = [
       # k3s flannel
