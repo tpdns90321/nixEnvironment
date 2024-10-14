@@ -23,16 +23,6 @@
   boot.initrd.kernelModules = [ "dm-snapshot" ];
   boot.kernelModules = [ "kvm-amd" ];
   boot.kernelParams = ["i915.force_probe=56a0"];
-  boot.kernelPackages = pkgs.linuxPackagesFor (pkgs.linux.override {
-    argsOverride = rec {
-      src = pkgs.fetchurl {
-        url = "https://cdn.kernel.org/pub/linux/kernel/v6.x/linux-${version}.tar.xz";
-        sha256 = "sha256-7nZQmWunWqKf5m8wm0Ewl/JJoD5wAfKkESjHyVIFImo=";
-      };
-      version = "6.6.17";
-      modDirVersion = "6.6.17";
-    };
-  });
   boot.extraModulePackages = [ ];
 
   fileSystems."/" =
@@ -66,6 +56,15 @@
   # networking.interfaces.enp34s0.useDHCP = lib.mkDefault true;
   # enable WOL
   networking.interfaces.enp34s0.wakeOnLan.enable = true;
+  networking.interfaces.enp34s0.ipv4.addresses = [
+    {
+      address = "192.168.219.105";
+      prefixLength = 24;
+    }
+  ];
+  networking.defaultGateway = {
+    address = "192.168.219.1";
+  };
 
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
   hardware.cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
