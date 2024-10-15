@@ -33,10 +33,24 @@
       # drbd ports
       7789
       7790
+      # NFS ports
+      111
+      2049
+      4000
+      4001
+      4002
+      20048
     ];
     allowedUDPPorts = [
       # k3s ports flannel
       8472
+      # NFS ports
+      111
+      2049
+      4000
+      4001
+      4002
+      20048
     ];
   };
 

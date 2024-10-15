@@ -67,25 +67,35 @@ STATE=$3
 case $STATE in
     "MASTER")
         ${drbd}/bin/drbdadm connect --discard-my-data k3s_server_node
+        ${drbd}/bin/drbdadm connect --discard-my-data k3s_nfs
         ${drbd}/bin/drbdadm wait-connect k3s_server_node
+        ${drbd}/bin/drbdadm wait-connect k3s_nfs
         ${drbd}/bin/drbdsetup wait-sync 1
+        ${drbd}/bin/drbdsetup wait-sync 2
         sleep 60
         ${drbd}/bin/drbdadm primary --force k3s_server_node
+        ${drbd}/bin/drbdadm primary --force k3s_nfs
         # Mount DRBD device
         ${util-linux}/bin/mount /dev/drbd1 /var/lib/rancher/k3s/server
+        ${util-linux}/bin/mount /dev/drbd2 /nfs
         # Start K3s server
         ${systemd}/bin/systemctl stop k3s_agent.service
         ${systemd}/bin/systemctl start k3s_server.service
+        ${systemd}/bin/systemctl start nfs-server.service
         ;;
     "BACKUP"|"FAULT"|"STOP")
         # Stop K3s server
+        ${systemd}/bin/systemctl stop nfs-server.service
         ${systemd}/bin/systemctl stop k3s_server.service
         # Unmount DRBD device
         ${util-linux}/bin/umount /var/lib/rancher/k3s/server
+        ${util-linux}/bin/umount /nfs
         ${drbd}/bin/drbdadm secondary k3s_server_node
+        ${drbd}/bin/drbdadm secondary k3s_nfs
         sleep 60
         ${drbd}/bin/drbdadm connect k3s_server_node
         ${drbd}/bin/drbdadm wait-connect k3s_server_node
+        ${drbd}/bin/drbdadm wait-connect k3s_nfs
         ${systemd}/bin/systemctl start k3s_agent.service
         ;;
     *)
