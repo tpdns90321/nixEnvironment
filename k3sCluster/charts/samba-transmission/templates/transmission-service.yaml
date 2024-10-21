@@ -1,0 +1,18 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: transmission
+  labels:
+    app: transmission
+spec:
+  type: {{ .Values.transmission.service.type }}
+  selector:
+    app: transmission
+  ports:
+    {{- range .Values.transmission.service.ports }}
+    - name: {{ .name }}
+      port: {{ .port }}
+      protocol: {{ .protocol | default "TCP" }}
+      targetPort: {{ .targetPort }}
+    {{- end }}
+

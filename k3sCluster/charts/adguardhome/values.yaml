@@ -1,0 +1,45 @@
+image:
+  repository: docker.io/adguard/adguardhome
+  tag: latest
+  pullPolicy: IfNotPresent
+
+service:
+  type: ClusterIP
+  ports:
+    - name: http
+      port: 80
+      protocol: TCP
+      targetPort: 80
+    - name: dns-tcp
+      port: 53
+      protocol: TCP
+      targetPort: 53
+    - name: dns-udp
+      port: 53
+      protocol: UDP
+      targetPort: 53
+    - name: admin
+      port: 3000
+      protocol: TCP
+      targetPort: 3000
+    - name: dns-over-tls
+      port: 853
+      protocol: TCP
+      targetPort: 853
+    - name: over-tls-udp
+      port: 853
+      protocol: UDP
+      targetPort: 853
+    - name: dns-over-https
+      port: 443
+      protocol: TCP
+      targetPort: 443
+
+persistence:
+  enabled: true
+  storageClass: nfs-client
+  volumes:
+    work:
+      size: 500Mi
+    conf:
+      size: 500Mi

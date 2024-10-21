@@ -10,7 +10,7 @@ releases:
   chart: kubernetes-dashboard/kubernetes-dashboard
 - name: kubernetes-dashboard-config
   namespace: kubernetes-dashboard
-  chart: ./kubernetes-dashboard-config
+  chart: ./charts/kubernetes-dashboard-config
 - name: nfs-subdir-external-provisioner
   namespace: nfs-subdir-external-provisioner
   chart: nfs-subdir-external-provisioner/nfs-subdir-external-provisioner
@@ -19,3 +19,22 @@ releases:
     value: 192.168.219.150
   - name: nfs.path
     value: /nfs
+- name: adguardhome
+  namespace: adguardhome
+  chart: ./charts/adguardhome
+  values:
+    - ./charts/adguardhome/values.yaml
+- name: samba-transmission
+  namespace: samba-transmission
+  chart: ./charts/samba-transmission
+  values:
+    - ./charts/samba-transmission/values.yaml
+  secrets:
+    - ./charts/samba-transmission/secrets.yaml
+- name: vaultwarden
+  namespace: vaultwarden
+  chart: ./charts/vaultwarden
+  values:
+    - ./charts/vaultwarden/values.yaml
+  secrets:
+    - ./charts/vaultwarden/secrets.yaml

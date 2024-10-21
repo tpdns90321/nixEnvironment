@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: transmission
+  labels:
+    app: transmission
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: transmission
+  template:
+    metadata:
+      labels:
+        app: transmission
+    spec:
+      containers:
+        - name: transmission
+          image: "{{ .Values.transmission.image.repository }}:{{ .Values.transmission.image.tag }}"
+          imagePullPolicy: "{{ .Values.transmission.image.pullPolicy }}"
+          ports:
+            - containerPort: 9091
+              name: web
+            - containerPort: 51413
+              name: peer-tcp
+            - containerPort: 51413
+              name: peer-udp
+              protocol: UDP
+          envFrom:
+            - secretRef:
+                name: {{ .Values.transmission.envSecret }}
+          volumeMounts:
+            - name: config
+              mountPath: /config
+            - name: shared-data
+              mountPath: /downloads
+      volumes:
+        - name: config
+          persistentVolumeClaim:
+            claimName: transmission-config-pvc
+        - name: shared-data
+          persistentVolumeClaim:
+            claimName: shared-data-pvc
+

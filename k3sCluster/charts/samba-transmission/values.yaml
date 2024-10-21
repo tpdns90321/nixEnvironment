@@ -1,0 +1,37 @@
+global:
+  storageClass: nfs-client
+  sharedDataSize: 10Gi
+
+samba:
+  image:
+    repository: ghcr.io/crazy-max/samba
+    tag: latest
+    pullPolicy: IfNotPresent
+  service:
+    type: ClusterIP
+    port: 445
+  configSecret: smb-config
+
+transmission:
+  image:
+    repository: docker.io/linuxserver/transmission
+    tag: latest
+    pullPolicy: IfNotPresent
+  service:
+    type: ClusterIP
+    ports:
+    - name: web
+      port: 9091
+      protocol: TCP
+      targetPort: 9091
+    - name: peer-tcp
+      port: 51413
+      protocol: TCP
+      targetPort: 51413
+    - name: peer-udp
+      port: 51413
+      protocol: UDP
+      targetPort: 51413
+  envSecret: transmission-env
+  configSize: 500Mi
+

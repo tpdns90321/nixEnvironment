@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: samba
+  labels:
+    app: samba
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: samba
+  template:
+    metadata:
+      labels:
+        app: samba
+    spec:
+      containers:
+      - name: samba
+        image: "{{ .Values.samba.image.repository }}:{{ .Values.samba.image.tag }}"
+        imagePullPolicy: "{{ .Values.samba.image.pullPolicy }}"
+        ports:
+        - containerPort: 445
+          name: smb
+        volumeMounts:
+        - name: smb-config
+          mountPath: /data/config.yml
+          subPath: config.yml
+        - name: shared-data
+          mountPath: /samba
+      volumes:
+      - name: smb-config
+        secret:
+          secretName: {{ .Values.samba.configSecret }}
+      - name: shared-data
+        persistentVolumeClaim:
+          claimName: shared-data-pvc
+

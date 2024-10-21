@@ -1,6 +1,16 @@
 { pkgs, inputs, lib, additionalPackages ? [ ] }:
 
-(with pkgs; [
+let
+  my-helm = (pkgs.wrapHelm pkgs.kubernetes-helm {
+    plugins = with pkgs.kubernetes-helmPlugins; [
+      helm-diff
+      helm-secrets
+    ];
+  });
+  my-helmfile = pkgs.helmfile-wrapped.override {
+    inherit (my-helm) pluginsDir;
+  };
+in (with pkgs; [
   bitwarden-cli
   curlHTTP3
   direnv
@@ -19,13 +29,8 @@
   zsh
 
   kubectl
-  helmfile
-  (wrapHelm kubernetes-helm {
-    plugins = with pkgs.kubernetes-helmPlugins; [
-      helm-diff
-      helm-secrets
-    ];
-  })
+  my-helm
+  my-helmfile
 
   # secrets management
   age

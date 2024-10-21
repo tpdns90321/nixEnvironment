@@ -1,0 +1,7 @@
+apiVersion: v2
+name: samba-transmission
+description: A combined Helm chart for Samba and Transmission
+type: application
+version: 0.1.0
+appVersion: "latest"
+
