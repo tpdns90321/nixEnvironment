@@ -56,6 +56,23 @@ let VIP = "192.168.219.150"; in {
     };
   };
 
+  networking.bridges.br0 = {
+    interfaces = [
+      (if config.networking.hostName == "kang-stay-gmk" then "enp3s0" else "enp34s0") # Replace with your network interface
+      "ztfp6i26fp"
+    ];
+  };
+
+  networking.interfaces.br0.ipv4.addresses = [
+    {
+      address = if config.networking.hostName == "kang-stay-gmk" then "192.168.219.114" else "192.168.219.105";
+      prefixLength = 24;
+    }
+  ];
+  networking.defaultGateway = {
+    address = "192.168.219.1";
+  };
+
   environment.etc."keepalived_notify.sh" = {
     text = with pkgs; ''
 #!${bash}/bin/bash
@@ -110,7 +127,7 @@ esac
     openFirewall = true;
     vrrpInstances = {
         K3S = {
-        interface = if config.networking.hostName == "kang-stay-gmk" then "enp3s0" else "enp34s0"; # Replace with your network interface
+        interface = "br0"; # Replace with your network interface
         state = if config.networking.hostName == "kang-stay-gmk" then "MASTER" else "BACKUP";
         virtualRouterId = 51;
         priority = if config.networking.hostName == "kang-stay-gmk" then 100 else 90;

@@ -24,6 +24,8 @@
       4001
       4002
       20048
+      # Zerotier
+      9993
     ];
     allowedUDPPorts = [
       # k3s flannel
@@ -35,12 +37,17 @@
       4001
       4002
       20048
+      # Zerotier
+      9993
     ];
   };
 
   # Enable the OpenSSH daemon.
   services.openssh.enable = true;
   programs.mosh.enable = true;
+
+  # Enable Zerotier
+  services.zerotierone.enable = true;
 
   # Hardware acceleration
   nixpkgs.config.packageOverrides = pkgs: {
