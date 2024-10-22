@@ -114,7 +114,7 @@ esac
         state = if config.networking.hostName == "kang-stay-gmk" then "MASTER" else "BACKUP";
         virtualRouterId = 51;
         priority = if config.networking.hostName == "kang-stay-gmk" then 100 else 90;
-        virtualIps = [{ addr = "${VIP}/32"; }]; # Virtual IP address
+        virtualIps = [{ addr = "${VIP}/24"; }]; # Virtual IP address
         extraConfig = ''
         notify "/etc/keepalived_notify.sh"
         '';
