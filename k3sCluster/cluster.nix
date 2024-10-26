@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, pkgs, lib, ... }:
 let VIP = "192.168.219.150"; in {
   sops.age.keyFile = "/etc/sops/age/keys.txt";
   sops.secrets.k3s_tokenfile = {
@@ -16,7 +16,7 @@ let VIP = "192.168.219.150"; in {
       "firewall.service"
       "network-online.target"
     ];
-    wantedBy = [ "multi-user.target" ];
+    wantedBy = [ ];
     serviceConfig = {
       Type = "notify";
       KillMode = "process";
@@ -41,7 +41,7 @@ let VIP = "192.168.219.150"; in {
       "firewall.service"
       "network-online.target"
     ];
-    wantedBy = [ "multi-user.target" ];
+    wantedBy = [ ];
     serviceConfig = {
       Type = "exec";
       KillMode = "process";
@@ -56,6 +56,36 @@ let VIP = "192.168.219.150"; in {
     };
   };
 
+  networking.useNetworkd = true;
+
+  systemd.network.netdevs."30-br0" = {
+    enable = true;
+
+    netdevConfig = {
+      Name = "br0";
+      Kind = "bridge";
+    };
+
+    bridgeConfig = {
+      STP = true;
+      ForwardDelaySec = 4;
+      Priority = 2;
+    };
+  };
+
+  systemd.network.networks."30-br0" = {
+    enable = true;
+
+    matchConfig = {
+      Name = "br0";
+    };
+
+    networkConfig = {
+      Address = if config.networking.hostName == "kang-stay-gmk" then "192.168.219.114" else "192.168.219.105";
+      Gateway = "192.168.219.1";
+    };
+  };
+
   networking.bridges.br0 = {
     interfaces = [
       (if config.networking.hostName == "kang-stay-gmk" then "enp3s0" else "enp34s0") # Replace with your network interface
@@ -63,15 +93,7 @@ let VIP = "192.168.219.150"; in {
     ];
   };
 
-  networking.interfaces.br0.ipv4.addresses = [
-    {
-      address = if config.networking.hostName == "kang-stay-gmk" then "192.168.219.114" else "192.168.219.105";
-      prefixLength = 24;
-    }
-  ];
-  networking.defaultGateway = {
-    address = "192.168.219.1";
-  };
+  systemd.services.zerotierone.wantedBy = lib.mkForce [ ];
 
   environment.etc."keepalived_notify.sh" = {
     text = with pkgs; ''
@@ -97,11 +119,13 @@ case $STATE in
         ${systemd}/bin/systemctl stop k3s_agent.service
         ${systemd}/bin/systemctl start k3s_server.service
         ${systemd}/bin/systemctl start nfs-server.service
+        ${systemd}/bin/systemctl start zerotierone.service
         ;;
     "BACKUP"|"FAULT"|"STOP")
         # Stop K3s server
         ${systemd}/bin/systemctl stop nfs-server.service
         ${systemd}/bin/systemctl stop k3s_server.service
+        ${systemd}/bin/systemctl stop zerotierone.service
         # Unmount DRBD device
         ${util-linux}/bin/umount /var/lib/rancher/k3s/server
         ${util-linux}/bin/umount /nfs
