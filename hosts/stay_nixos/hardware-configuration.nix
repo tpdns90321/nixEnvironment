@@ -56,15 +56,6 @@
   # networking.interfaces.enp34s0.useDHCP = lib.mkDefault true;
   # enable WOL
   networking.interfaces.enp34s0.wakeOnLan.enable = true;
-  networking.interfaces.enp34s0.ipv4.addresses = [
-    {
-      address = "192.168.219.105";
-      prefixLength = 24;
-    }
-  ];
-  networking.defaultGateway = {
-    address = "192.168.219.1";
-  };
 
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
   hardware.cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;

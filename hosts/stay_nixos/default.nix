@@ -40,6 +40,8 @@
       4001
       4002
       20048
+      # Zerotier port
+      9993
     ];
     allowedUDPPorts = [
       # k3s ports flannel
@@ -51,8 +53,13 @@
       4001
       4002
       20048
+      # Zerotier port
+      9993
     ];
   };
+
+  # Enable the Zerotier service.
+  services.zerotierone.enable = true;
 
   # Enable the OpenSSH daemon.
   services.openssh.enable = true;
