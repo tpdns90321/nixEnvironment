@@ -9,11 +9,9 @@ let VIP = "192.168.219.150"; in {
   systemd.services.k3s_server = {
     description = "k3s server service";
     after = [
-      "firewall.service"
       "network-online.target"
     ];
     wants = [
-      "firewall.service"
       "network-online.target"
     ];
     wantedBy = [ ];
@@ -34,11 +32,9 @@ let VIP = "192.168.219.150"; in {
   systemd.services.k3s_agent = {
     description = "k3s agent service";
     after = [
-      "firewall.service"
       "network-online.target"
     ];
     wants = [
-      "firewall.service"
       "network-online.target"
     ];
     wantedBy = [ ];
@@ -84,6 +80,10 @@ let VIP = "192.168.219.150"; in {
       Address = if config.networking.hostName == "kang-stay-gmk" then "192.168.219.114" else "192.168.219.105";
       Gateway = "192.168.219.1";
     };
+
+    linkConfig = {
+      MTUBytes = "1500";
+    };
   };
 
   networking.bridges.br0 = {
@@ -107,8 +107,6 @@ case $STATE in
     "MASTER")
         ${drbd}/bin/drbdadm connect --discard-my-data k3s_server_node
         ${drbd}/bin/drbdadm connect --discard-my-data k3s_nfs
-        ${drbd}/bin/drbdsetup wait-sync 1
-        ${drbd}/bin/drbdsetup wait-sync 2
         sleep 60
         ${drbd}/bin/drbdadm primary --force k3s_server_node
         ${drbd}/bin/drbdadm primary --force k3s_nfs
@@ -132,10 +130,9 @@ case $STATE in
         ${drbd}/bin/drbdadm secondary k3s_server_node
         ${drbd}/bin/drbdadm secondary k3s_nfs
         sleep 60
-        ${drbd}/bin/drbdadm connect k3s_server_node
-        ${drbd}/bin/drbdadm wait-connect k3s_server_node
-        ${drbd}/bin/drbdadm wait-connect k3s_nfs
         ${systemd}/bin/systemctl start k3s_agent.service
+        ${drbd}/bin/drbdadm connect --discard-my-data k3s_server_node
+        ${drbd}/bin/drbdadm connect --discard-my-data k3s_nfs
         ;;
     *)
         echo "Unknown state"

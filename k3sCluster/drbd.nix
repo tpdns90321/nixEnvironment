@@ -47,14 +47,16 @@ resource k3s_nfs {
   systemd.services.drbd.path = with pkgs; [
       "${drbd}/bin:${drbd}/sbin:${coreutils}/bin:${util-linux}/bin:${systemd}/bin"
   ];
-  systemd.services.drbd.serviceConfig.Type = "oneshot";
-  systemd.services.drbd.serviceConfig.RemainAfterExit = "true";
+  systemd.services.drbd.serviceConfig = {
+    Type = "oneshot";
+    RemainAfterExit = "true";
+    Restart = "on-failure";
+    RestartSec = "5";
+  };
   systemd.services.drbd.after = [
     "network-online.target"
-    "firewall.service"
   ];
   systemd.services.drbd.wants = [
     "network-online.target"
-    "firewall.service"
   ];
 }
