@@ -120,6 +120,7 @@ case $STATE in
         ${systemd}/bin/systemctl start zerotierone.service
         ;;
     "BACKUP"|"FAULT"|"STOP")
+        kill $(${procps}/bin/ps -ef | ${gnugrep}/bin/grep MASTER | ${gawk}/bin/awk '{ print $2 }')
         # Stop K3s server
         ${systemd}/bin/systemctl stop nfs-server.service
         ${systemd}/bin/systemctl stop k3s_server.service
