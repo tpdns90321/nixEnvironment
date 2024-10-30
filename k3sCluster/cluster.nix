@@ -86,11 +86,28 @@ let VIP = "192.168.219.150"; in {
     };
   };
 
-  networking.bridges.br0 = {
-    interfaces = [
-      (if config.networking.hostName == "kang-stay-gmk" then "enp3s0" else "enp34s0") # Replace with your network interface
-      "ztfp6i26fp"
-    ];
+  systemd.network.networks."30-br0-en" = {
+    enable = true;
+
+    matchConfig = {
+      Name = (if config.networking.hostName == "kang-stay-gmk" then "enp3s0" else "enp34s0"); # Replace with your network interface
+    };
+
+    networkConfig = {
+      Bridge = "br0";
+    };
+  };
+
+  systemd.network.networks."30-br0-zt" = {
+    enable = true;
+
+    matchConfig = {
+      Name = "ztfp6i26fp";
+    };
+
+    networkConfig = {
+      Bridge = "br0";
+    };
   };
 
   systemd.services.zerotierone.wantedBy = lib.mkForce [ ];
