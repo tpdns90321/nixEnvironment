@@ -25,7 +25,7 @@ let VIP = "192.168.219.150"; in {
       LimitNPROC = "infinity";
       LimitCORE = "infinity";
       TasksMax = "infinity";
-      ExecStart = "${pkgs.k3s}/bin/k3s server --tls-san ${VIP} --token-file ${config.sops.secrets.k3s_tokenfile.path}";
+      ExecStart = "${pkgs.k3s}/bin/k3s server --disable traefik --tls-san ${VIP} --token-file ${config.sops.secrets.k3s_tokenfile.path}";
     };
   };
 
