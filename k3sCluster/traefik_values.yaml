@@ -1,0 +1,27 @@
+
+Deployment:
+  Kind: DaemonSet
+
+ports:
+  web:
+    forwardedHeaders:
+      trustedIPs:
+        - 10.0.0.0/8
+    proxyProtocol:
+      trustedIPs:
+        - 10.0.0.0/8
+  websecure:
+    forwardedHeaders:
+      trustedIPs:
+        - 10.0.0.0/8
+    proxyProtocol:
+      trustedIPs:
+        - 10.0.0.0/8
+
+service:
+  externalIPs:
+    - 192.168.219.105
+    - 192.168.219.114
+    - 192.168.219.150
+  spec:
+    externalTrafficPolicy: Local
