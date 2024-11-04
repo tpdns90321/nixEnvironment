@@ -1,6 +1,6 @@
 
-Deployment:
-  Kind: DaemonSet
+deployment:
+  kind: DaemonSet
 
 ports:
   web:
@@ -17,8 +17,23 @@ ports:
     proxyProtocol:
       trustedIPs:
         - 10.0.0.0/8
+  dns-tcp:
+    port: 8053
+    expose:
+      default: true
+    exposedPort: 53
+    tls:
+      enabled: false
+  dns-udp:
+    port: 8054
+    expose:
+      default: true
+    exposedPort: 53
+    protocol: UDP
 
 service:
+  single: false
+  type: NodePort
   externalIPs:
     - 192.168.219.105
     - 192.168.219.114
