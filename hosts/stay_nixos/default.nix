@@ -56,7 +56,8 @@
       # Zerotier port
       9993
     ];
-    extraCommands = "iptables -A FORWARD -p tcp --tcp-flags SYN,RST SYN -j TCPMSS --clamp-mss-to-pmtu";
+    extraCommands = ''iptables -A FORWARD -p tcp --tcp-flags SYN,RST SYN -j TCPMSS --clamp-mss-to-pmtu
+iptables -t nat -A OUTPUT -p tcp --dport 50443 -j DNAT --to-destination :443'';
   };
 
   # Enable the Zerotier service.
