@@ -108,8 +108,32 @@ let VIP = "192.168.219.150"; in {
       }
     ];
 
-    address = "10.14.0.2/16";
+    address = [ "10.14.0.2/16" ];
     dns = [ "162.252.172.57" "149.154.159.92" ];
+    postUp = with pkgs;
+      let
+        ip = "${iproute2}/bin/ip";
+        iptables = "${iptables}/bin/iptables";
+        in ''
+        ${ip} route add table 200 default via 192.168.219.1 dev br0
+        ${ip} rule add fwmark 0x1 table 200
+
+        ${iptables} -t mangle -A OUTPUT -s 192.168.219.150 -p tcp --sport 443 -j MARK --set-mark 1
+        ${iptables} -t mangle -A OUTPUT -s 192.168.219.150 -p udp --sport 443 -j MARK --set-mark 1
+        ${iptables} -t mangle -A OUTPUT -s 192.168.219.150 -p tcp --sport 80 -j MARK --set-mark 1
+    '';
+    preDown = with pkgs;
+      let
+        ip = "${iproute2}/bin/ip";
+        iptables = "${iptables}/bin/iptables";
+        in ''
+        ${ip} rule del fwmark 0x1 table 200
+        ${ip} route flush table 200 default via
+
+        ${iptables} -t mangle -D OUTPUT -s 192.168.219.150 -p tcp --sport 443 -j MARK --set-mark 1
+        ${iptables} -t mangle -D OUTPUT -s 192.168.219.150 -p udp --sport 443 -j MARK --set-mark 1
+        ${iptables} -t mangle -D OUTPUT -s 192.168.219.150 -p tcp --sport 80 -j MARK --set-mark 1
+    '';
   };
 
   systemd.services.zerotierone.wantedBy = lib.mkForce [ ];
