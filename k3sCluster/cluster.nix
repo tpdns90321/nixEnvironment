@@ -5,6 +5,10 @@ let VIP = "192.168.219.150"; in {
     sopsFile = ./tokenfile;
     format = "binary";
  };
+ sops.secrets.wireguard_private_key = {
+    sopsFile = ./wg_private_key;
+    format = "binary";
+  };
 
   systemd.services.k3s_server = {
     description = "k3s server service";
@@ -91,6 +95,21 @@ let VIP = "192.168.219.150"; in {
       (if config.networking.hostName == "kang-stay-gmk" then "enp3s0" else "enp34s0") # Replace with your network interface
       "ztfp6i26fp"
     ];
+  };
+
+  networking.wg-quick.interfaces.jp-tok = {
+    privateKeyFile = config.sops.secrets.wireguard_private_key.path;
+    listenPort = 51820;
+    peers = [
+      {
+        publicKey = "YJSjrc/WWOjQUyUi4iYcHb7LsWWoCY+2fK8/8VtC/BY=";
+        allowedIPs = [ "0.0.0.0/0" ];
+        endpoint = "jp-tok.prod.surfshark.com:51820";
+      }
+    ];
+
+    address = "10.14.0.2/16";
+    dns = [ "162.252.172.57" "149.154.159.92" ];
   };
 
   systemd.services.zerotierone.wantedBy = lib.mkForce [ ];
