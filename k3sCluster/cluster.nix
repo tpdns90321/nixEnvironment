@@ -81,7 +81,7 @@ let VIP = "192.168.219.150"; in {
     };
 
     networkConfig = {
-      Address = if config.networking.hostName == "kang-stay-gmk" then "192.168.219.114" else "192.168.219.105";
+      Address = if config.networking.hostName == "kang-stay-gmk" then "192.168.219.114/24" else "192.168.219.105/24";
       Gateway = "192.168.219.1";
     };
 
@@ -109,31 +109,74 @@ let VIP = "192.168.219.150"; in {
     ];
 
     address = [ "10.14.0.2/16" ];
-    dns = [ "162.252.172.57" "149.154.159.92" ];
     postUp = with pkgs;
       let
         ip = "${iproute2}/bin/ip";
-        iptables = "${iptables}/bin/iptables";
+        iptables = "${pkgs.iptables}/bin/iptables";
         in ''
         ${ip} route add table 200 default via 192.168.219.1 dev br0
         ${ip} rule add fwmark 0x1 table 200
 
-        ${iptables} -t mangle -A OUTPUT -s 192.168.219.150 -p tcp --sport 443 -j MARK --set-mark 1
-        ${iptables} -t mangle -A OUTPUT -s 192.168.219.150 -p udp --sport 443 -j MARK --set-mark 1
-        ${iptables} -t mangle -A OUTPUT -s 192.168.219.150 -p tcp --sport 80 -j MARK --set-mark 1
+        ${iptables} -t mangle -A OUTPUT -s 192.168.219.150/24 -p tcp --sport 443 -j MARK --set-mark 1
+        ${iptables} -t mangle -A OUTPUT -s 192.168.219.150/24 -p udp --sport 443 -j MARK --set-mark 1
+        ${iptables} -t mangle -A OUTPUT -s 192.168.219.150/24 -p tcp --sport 80 -j MARK --set-mark 1
+        ${iptables} -t mangle -A OUTPUT -p tcp --dport 50443 -j MARK --set-mark 1
     '';
-    preDown = with pkgs;
+    postDown = with pkgs;
       let
         ip = "${iproute2}/bin/ip";
-        iptables = "${iptables}/bin/iptables";
+        iptables = "${pkgs.iptables}/bin/iptables";
         in ''
         ${ip} rule del fwmark 0x1 table 200
         ${ip} route flush table 200 default via
 
-        ${iptables} -t mangle -D OUTPUT -s 192.168.219.150 -p tcp --sport 443 -j MARK --set-mark 1
-        ${iptables} -t mangle -D OUTPUT -s 192.168.219.150 -p udp --sport 443 -j MARK --set-mark 1
-        ${iptables} -t mangle -D OUTPUT -s 192.168.219.150 -p tcp --sport 80 -j MARK --set-mark 1
+        ${iptables} -t mangle -D OUTPUT -s 192.168.219.150/24 -p tcp --sport 443 -j MARK --set-mark 1
+        ${iptables} -t mangle -D OUTPUT -s 192.168.219.150/24 -p udp --sport 443 -j MARK --set-mark 1
+        ${iptables} -t mangle -D OUTPUT -s 192.168.219.150/24 -p tcp --sport 80 -j MARK --set-mark 1
+        ${iptables} -t mangle -D OUTPUT -p tcp --dport 50443 -j MARK --set-mark 1
     '';
+  };
+
+  networking.firewall = {
+    enable = true;
+    allowedTCPPorts = [
+      # vnc
+      5900
+      # k3s API Server
+      6443
+      # kublet metric
+      10250
+      # drbd ports
+      7789
+      7790
+      # NFS ports
+      111
+      2049
+      4000
+      4001
+      4002
+      20048
+      # Zerotier
+      9993
+    ];
+    allowedUDPPorts = [
+      # k3s flannel
+      8472
+      # NFS ports
+      111
+      2049
+      4000
+      4001
+      4002
+      20048
+      # Zerotier
+      9993
+    ];
+    extraCommands = ''iptables -A FORWARD -p tcp --tcp-flags SYN,RST SYN -j TCPMSS --clamp-mss-to-pmtu
+iptables -t nat -A POSTROUTING -o jp+ -j MASQUERADE
+iptables -t nat -A POSTROUTING -o br0 -j MASQUERADE
+iptables -t nat -A OUTPUT -p tcp --dport 50443 -j DNAT --to-destination :443'';
+    checkReversePath = false;
   };
 
   systemd.services.zerotierone.wantedBy = lib.mkForce [ ];

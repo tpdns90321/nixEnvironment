@@ -22,46 +22,6 @@
         in ["${options},credentials=${config.sops.secrets.smb_credential.path},uid=${uid},gid=${gid}"];
   };
 
-  networking.firewall = {
-    enable = true;
-    allowedTCPPorts = [
-      5900
-      # k3s ports api-server
-      6443
-      # k3s ports kubelet metric
-      10250
-      # drbd ports
-      7789
-      7790
-      # NFS ports
-      111
-      2049
-      4000
-      4001
-      4002
-      20048
-      # Zerotier port
-      9993
-    ];
-    allowedUDPPorts = [
-      # k3s ports flannel
-      8472
-      # NFS ports
-      111
-      2049
-      4000
-      4001
-      4002
-      20048
-      # Zerotier port
-      9993
-    ];
-    extraCommands = ''iptables -A FORWARD -p tcp --tcp-flags SYN,RST SYN -j TCPMSS --clamp-mss-to-pmtu
-iptables -t nat -A POSTROUTING -o jp+ -j MASQUERADE
-iptables -t nat -A POSTROUTING -o br0 -j MASQUERADE
-iptables -t nat -A OUTPUT -p tcp --dport 50443 -j DNAT --to-destination :443'';
-  };
-
   # Enable the Zerotier service.
   services.zerotierone.enable = true;
 
