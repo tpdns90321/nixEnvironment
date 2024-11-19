@@ -117,10 +117,11 @@ let VIP = "192.168.219.150"; in {
         ${ip} route add table 200 default via 192.168.219.1 dev br0
         ${ip} rule add fwmark 0x1 table 200
 
-        ${iptables} -t mangle -A OUTPUT -s 192.168.219.150/24 -p tcp --sport 443 -j MARK --set-mark 1
-        ${iptables} -t mangle -A OUTPUT -s 192.168.219.150/24 -p udp --sport 443 -j MARK --set-mark 1
-        ${iptables} -t mangle -A OUTPUT -s 192.168.219.150/24 -p tcp --sport 80 -j MARK --set-mark 1
+        ${iptables} -t mangle -A OUTPUT -s 192.168.219.150 -p tcp --sport 443 -j MARK --set-mark 1
+        ${iptables} -t mangle -A OUTPUT -s 192.168.219.150 -p udp --sport 443 -j MARK --set-mark 1
+        ${iptables} -t mangle -A OUTPUT -s 192.168.219.150 -p tcp --sport 80 -j MARK --set-mark 1
         ${iptables} -t mangle -A OUTPUT -p tcp --dport 50443 -j MARK --set-mark 1
+        ${iptables} -t mangle -A PREROUTING -p tcp --dport 50443 -j MARK --set-mark 1
     '';
     postDown = with pkgs;
       let
@@ -130,10 +131,11 @@ let VIP = "192.168.219.150"; in {
         ${ip} rule del fwmark 0x1 table 200
         ${ip} route flush table 200 default via
 
-        ${iptables} -t mangle -D OUTPUT -s 192.168.219.150/24 -p tcp --sport 443 -j MARK --set-mark 1
-        ${iptables} -t mangle -D OUTPUT -s 192.168.219.150/24 -p udp --sport 443 -j MARK --set-mark 1
-        ${iptables} -t mangle -D OUTPUT -s 192.168.219.150/24 -p tcp --sport 80 -j MARK --set-mark 1
+        ${iptables} -t mangle -D OUTPUT -s 192.168.219.150 -p tcp --sport 443 -j MARK --set-mark 1
+        ${iptables} -t mangle -D OUTPUT -s 192.168.219.150 -p udp --sport 443 -j MARK --set-mark 1
+        ${iptables} -t mangle -D OUTPUT -s 192.168.219.150 -p tcp --sport 80 -j MARK --set-mark 1
         ${iptables} -t mangle -D OUTPUT -p tcp --dport 50443 -j MARK --set-mark 1
+        ${iptables} -t mangle -D PREROUTING -p tcp --dport 50443 -j MARK --set-mark 1
     '';
   };
 
@@ -173,9 +175,12 @@ let VIP = "192.168.219.150"; in {
       9993
     ];
     extraCommands = ''iptables -A FORWARD -p tcp --tcp-flags SYN,RST SYN -j TCPMSS --clamp-mss-to-pmtu
+iptables -t mangle -A POSTROUTING -p tcp --tcp-flags SYN,RST SYN -j TCPMSS --clamp-mss-to-pmtu
 iptables -t nat -A POSTROUTING -o jp+ -j MASQUERADE
 iptables -t nat -A POSTROUTING -o br0 -j MASQUERADE
-iptables -t nat -A OUTPUT -p tcp --dport 50443 -j DNAT --to-destination :443'';
+iptables -t nat -A OUTPUT -p tcp --dport 50443 -j DNAT --to-destination :443
+iptables -t nat -A PREROUTING -p tcp --dport 50443 -j DNAT --to-destination :443
+'';
     checkReversePath = false;
   };
 
