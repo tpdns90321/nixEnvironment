@@ -84,3 +84,15 @@ creation_rules:
         - *stay_gmk
         - *stay_nixos
         - *kang_macbook_air
+  - path_regex: k3sCluster/wg_external_private_key$
+    key_groups:
+      - age:
+        - *stay_gmk
+        - *stay_nixos
+        - *kang_macbook_air
+  - path_regex: k3sCluster/wg_vxlan_private_key$
+    key_groups:
+      - age:
+        - *stay_gmk
+        - *stay_nixos
+        - *kang_macbook_air

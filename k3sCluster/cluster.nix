@@ -4,9 +4,13 @@ let VIP = "192.168.219.150"; in {
   sops.secrets.k3s_tokenfile = {
     sopsFile = ./tokenfile;
     format = "binary";
- };
- sops.secrets.wireguard_private_key = {
-    sopsFile = ./wg_private_key;
+  };
+  sops.secrets.wireguard_external_private_key = {
+    sopsFile = ./wg_external_private_key;
+    format = "binary";
+  };
+  sops.secrets.wireguard_vxlan_private_key = {
+    sopsFile = ./wg_vxlan_private_key;
     format = "binary";
   };
 
@@ -98,7 +102,7 @@ let VIP = "192.168.219.150"; in {
   };
 
   networking.wg-quick.interfaces.jp-tok = {
-    privateKeyFile = config.sops.secrets.wireguard_private_key.path;
+    privateKeyFile = config.sops.secrets.wireguard_external_private_key.path;
     listenPort = 51820;
     peers = [
       {
@@ -137,6 +141,18 @@ let VIP = "192.168.219.150"; in {
       '';
   };
 
+  networking.wireguard.interfaces.wg-vxlan = {
+    ips = [ "192.168.128.1/24" ];
+    privateKeyFile = config.sops.secrets.wireguard_vxlan_private_key.path;
+    listenPort = 51821;
+    peers = [
+      {
+        publicKey = "caRfWhLxITlPUIJ4HacslrFLGEfyWbNMsfwSVacFaSI=";
+        allowedIPs = [ "192.168.128.2/32" ];
+      }
+    ];
+  };
+
   networking.firewall = {
     enable = true;
     allowedTCPPorts = [
@@ -171,6 +187,8 @@ let VIP = "192.168.219.150"; in {
       20048
       # Zerotier
       9993
+      # Wireguard
+      51821
     ];
     extraCommands = ''iptables -A FORWARD -p tcp --tcp-flags SYN,RST SYN -j TCPMSS --clamp-mss-to-pmtu
 iptables -t mangle -A POSTROUTING -p tcp --tcp-flags SYN,RST SYN -j TCPMSS --clamp-mss-to-pmtu
