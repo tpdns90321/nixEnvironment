@@ -1,3 +1,4 @@
+{{ if .Values.transmission.enabled }}
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -41,4 +42,4 @@ spec:
         - name: shared-data
           persistentVolumeClaim:
             claimName: shared-data-pvc
-
+{{ end }}

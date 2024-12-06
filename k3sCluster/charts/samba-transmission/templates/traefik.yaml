@@ -1,0 +1,81 @@
+{{ if .Values.samba.enabled }}
+apiVersion: traefik.io/v1alpha1
+kind: IngressRouteTCP
+metadata:
+  name: samba
+spec:
+  entryPoints:
+    - smb
+  routes:
+    - match: HostSNI(`*`)
+      services:
+        - name: samba
+          port: 445
+
+---
+{{ end }}
+{{ if .Values.transmission.enabled }}
+apiVersion: traefik.io/v1alpha1
+kind: Middleware
+metadata:
+  name: transmission-stripprefix
+spec:
+  stripPrefix:
+    prefixes:
+      - /transmission
+---
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: transmission-web
+spec:
+  entryPoints:
+    - web
+  routes:
+    - match: ClientIP(`192.168.219.0/24`) && PathPrefix(`/transmission`)
+      kind: Rule
+      services:
+        - name: transmission
+          port: 9091
+---
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: transmission-websecure
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - match: ClientIP(`192.168.219.0/24`) && PathPrefix(`/transmission`)
+      kind: Rule
+      services:
+        - name: transmission
+          port: 9091
+  tls:
+    secretName: generic-certificate
+---
+apiVersion: traefik.io/v1alpha1
+kind: IngressRouteTCP
+metadata:
+  name: transmission-peer-tcp
+spec:
+  entryPoints:
+    - mission-tcp
+  routes:
+    - match: HostSNI(`*`)
+      services:
+        - name: transmission
+          port: 51413
+---
+apiVersion: traefik.io/v1alpha1
+kind: IngressRouteUDP
+metadata:
+  name: transmission-peer-udp
+spec:
+  entryPoints:
+    - mission-udp
+  routes:
+    - services:
+        - name: transmission
+          port: 51413
+{{ end }}

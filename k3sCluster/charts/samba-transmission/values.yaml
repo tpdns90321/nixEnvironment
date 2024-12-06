@@ -3,6 +3,7 @@ global:
   sharedDataSize: 10Gi
 
 samba:
+  enabled: true
   image:
     repository: ghcr.io/crazy-max/samba
     tag: latest
@@ -13,6 +14,7 @@ samba:
   configSecret: smb-config
 
 transmission:
+  enabled: true
   image:
     repository: docker.io/linuxserver/transmission
     tag: latest

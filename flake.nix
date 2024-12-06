@@ -69,7 +69,7 @@
         specialArgs = {
           inherit inputs;
           user = "kang";
-          additionalCasks = [ "android-studio" "discord" "parallels@19" "raspberry-pi-imager" "steam" "ollama" "jan" "obs" "burp-suite" ];
+          additionalCasks = [ "android-studio" "discord" "parallels@19" "raspberry-pi-imager" "steam" "ollama" "lm-studio" "obs" "iterm2" ];
           additionalAppStore = {
             "KakaoTalk" = 869223134;
             "Blackmagic Disk Speed Test" = 425264550;

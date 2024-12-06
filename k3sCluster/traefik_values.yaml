@@ -30,6 +30,28 @@ ports:
       default: true
     exposedPort: 53
     protocol: UDP
+  smb:
+    port: 445
+    expose:
+      default: true
+    exposedPort: 445
+    protocol: TCP
+    tls:
+      enabled: false
+  mission-tcp:
+    port: 51413
+    expose:
+      default: true
+    exposedPort: 51413
+    protocol: TCP
+    tls:
+      enabled: false
+  mission-udp:
+    port: 51413
+    expose:
+      default: true
+    exposedPort: 51413
+    protocol: UDP
 
 service:
   single: false

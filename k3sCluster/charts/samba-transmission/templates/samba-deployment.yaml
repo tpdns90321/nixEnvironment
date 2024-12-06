@@ -1,3 +1,4 @@
+{{ if .Values.samba.enabled }}
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -26,7 +27,7 @@ spec:
           mountPath: /data/config.yml
           subPath: config.yml
         - name: shared-data
-          mountPath: /samba
+          mountPath: /samba/shared
       volumes:
       - name: smb-config
         secret:
@@ -34,4 +35,4 @@ spec:
       - name: shared-data
         persistentVolumeClaim:
           claimName: shared-data-pvc
-
+{{ end }}

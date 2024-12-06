@@ -1,0 +1,25 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: refresher
+spec:
+  schedule: "*/5 * * * *"
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+          - name: refresher
+            image: alpine/curl:latest
+            command:
+            - sh
+            - -c
+            args:
+            - |
+              for DOMAIN in $DUCKDNS_DOMAINS; do
+                curl -s "https://www.duckdns.org:50443/update?domains=${DOMAIN}&token=${DUCKDNS_TOKEN}"
+              done
+            envFrom:
+            - secretRef:
+                name: duckdns-environment
+          restartPolicy: OnFailure

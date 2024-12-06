@@ -1,3 +1,4 @@
+{{ if .Values.samba.enabled }}
 apiVersion: v1
 kind: Service
 metadata:
@@ -12,4 +13,4 @@ spec:
   - name: smb
     port: {{ .Values.samba.service.port }}
     targetPort: 445
-
+{{ end }}

@@ -26,6 +26,26 @@ spec:
           port: 80
 ---
 apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: adguard-https
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - match: ClientIP(`192.168.219.0/24`) && PathPrefix(`/adguard`)
+      kind: Rule
+      middlewares:
+        - name: adguard-stripprefix
+          namespace: {{ .Release.Namespace }}
+      services:
+        - name: adguardhome
+          namespace: {{ .Release.Namespace }}
+          port: 80
+  tls:
+    secretName: generic-certificate
+---
+apiVersion: traefik.io/v1alpha1
 kind: IngressRouteUDP
 metadata:
   name: adguardhome-udp

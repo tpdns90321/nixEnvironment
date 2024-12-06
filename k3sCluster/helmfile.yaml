@@ -5,6 +5,10 @@ repositories:
   url: https://kubernetes-sigs.github.io/nfs-subdir-external-provisioner
 - name: traefik
   url: https://traefik.github.io/charts
+- name: jetstack
+  url: https://charts.jetstack.io
+- name: emberstack
+  url: https://emberstack.github.io/helm-charts
 
 releases:
 - name: traefik
@@ -26,6 +30,25 @@ releases:
     value: 192.168.219.150
   - name: nfs.path
     value: /nfs
+- name: cert-manager
+  namespace: cert-manager
+  chart: jetstack/cert-manager
+  set:
+    - name: crds.enabled
+      value: true
+    - name: prometheus.enabled
+      value: false
+- name: reflector
+  namespace: reflector
+  chart: emberstack/reflector
+- name: cert-manager-config
+  namespace: cert-manager-config
+  chart: ./charts/cert-manager-config
+  secrets:
+    - ./charts/cert-manager-config/secrets.yaml
+  needs:
+    - cert-manager/cert-manager
+    - reflector/reflector
 - name: adguard
   namespace: adguard
   chart: ./charts/adguardhome
@@ -40,6 +63,8 @@ releases:
     - ./charts/samba-transmission/values.yaml
   secrets:
     - ./charts/samba-transmission/secrets.yaml
+  needs:
+    - traefik/traefik
 - name: vaultwarden
   namespace: vaultwarden
   chart: ./charts/vaultwarden
@@ -47,3 +72,12 @@ releases:
     - ./charts/vaultwarden/values.yaml
   secrets:
     - ./charts/vaultwarden/secrets.yaml
+  needs:
+    - traefik/traefik
+- name: duckdns
+  namespace: duckdns
+  chart: ./charts/duckdns
+  secrets:
+    - ./charts/duckdns/secrets.yaml
+  needs:
+    - traefik/traefik
