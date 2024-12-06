@@ -147,10 +147,11 @@ let VIP = "192.168.219.150"; in {
     listenPort = 51821;
     peers = [
       {
-        publicKey = "caRfWhLxITlPUIJ4HacslrFLGEfyWbNMsfwSVacFaSI=";
+        publicKey = "3yJIlOLKJZvSzVzwZfJGe/DOKJLesFhSBtuMmoPFsF4=";
         allowedIPs = [ "192.168.128.2/32" ];
       }
     ];
+    fwMark = "0x1";
   };
 
   networking.firewall = {
