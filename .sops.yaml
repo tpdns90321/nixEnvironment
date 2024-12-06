@@ -4,7 +4,6 @@ keys:
   - &home_nixos age1de0nqv36jzggd5xrhevff4w6w5772qgey3xhnru825z2l748hanse7nw55
   - &stay_nixos age1eyjyp4n5ke066nkgcxkqmkzl50nlwkdufsm2qzz5rfvc7peelc5qlnufz7
   - &stay_gmk age1wjnx0ggpvkk9aufyu2juzc7fvlgcefxx5ngn5hsae5n5vl47fcaqzstuf5
-  - &unioneinc_macbook age1z5qm2r360la9nw6w0elqymzjds9c07aevwd7d2eylt9usldw55ysa3nt6r
 creation_rules:
   - path_regex: stay_secrets.yaml$
     key_groups:
@@ -15,7 +14,6 @@ creation_rules:
     key_groups:
       - age:
         - *kang_macbook_air
-        - *unioneinc_macbook
         - *stay_raspberrypi
         - *home_nixos
   - path_regex: stay_router_user_pass.txt$
@@ -42,10 +40,6 @@ creation_rules:
       - age:
         - *kang_macbook_air
         - *stay_raspberrypi
-  - path_regex: hosts/unione_macbook/env$
-    key_groups:
-      - age:
-        - *unioneinc_macbook
   - path_regex: hosts/rpi4/transmission_env$
     key_groups:
       - age:
@@ -95,4 +89,8 @@ creation_rules:
       - age:
         - *stay_gmk
         - *stay_nixos
+        - *kang_macbook_air
+  - path_regex: keys/.*\_age_key.txt$
+    key_groups:
+      - age:
         - *kang_macbook_air
