@@ -40,24 +40,6 @@
 
   outputs = { self, flake-utils, darwin, home-manager, nixpkgs, nixos, sops-nix, ... }@inputs: {
     darwinConfigurations = {
-      "uniones-MacBook-Pro" = darwin.lib.darwinSystem {
-        system = "aarch64-darwin";
-        modules = [
-          home-manager.darwinModules.home-manager
-          ./hosts/unione_macbook
-          ./darwin
-        ];
-        inputs = { inherit darwin; };
-        specialArgs = {
-          inherit inputs;
-          user = "unione";
-          additionalCasks = ["cyberduck"];
-          additionalAppStore = {
-            "Polaris Office" = 1098211970;
-          };
-          sops-nix = sops-nix.homeManagerModules.sops;
-        };
-      };
       "kang-macbook-air" = darwin.lib.darwinSystem {
         system = "aarch64-darwin";
         modules = [
@@ -69,7 +51,7 @@
         specialArgs = {
           inherit inputs;
           user = "kang";
-          additionalCasks = [ "android-studio" "discord" "parallels@19" "raspberry-pi-imager" "steam" "ollama" "lm-studio" "obs" "iterm2" ];
+          additionalCasks = [ "android-studio" "discord" "parallels@19" "raspberry-pi-imager" "steam" "ollama" "lm-studio" "obs" "iterm2" "moonlight" ];
           additionalAppStore = {
             "KakaoTalk" = 869223134;
             "Blackmagic Disk Speed Test" = 425264550;
