@@ -7,6 +7,9 @@
     nixos = {
       url = "github:nixos/nixpkgs/nixos-24.05";
     };
+    nixos-hardware = {
+      url = "github:nixos/nixos-hardware/master";
+    };
     home-manager = {
       url = "github:nix-community/home-manager/release-24.05";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -38,7 +41,7 @@
     };
   };
 
-  outputs = { self, flake-utils, darwin, home-manager, nixpkgs, nixos, sops-nix, ... }@inputs: {
+  outputs = { self, flake-utils, darwin, home-manager, nixpkgs, nixos, nixos-hardware, sops-nix, ... }@inputs: {
     darwinConfigurations = {
       "kang-macbook-air" = darwin.lib.darwinSystem {
         system = "aarch64-darwin";
@@ -139,6 +142,17 @@
         sops-nix.nixosModules.sops
         ./nixos
         ./hosts/kang_virtualbox
+      ];
+    };
+
+    nixosConfigurations.kang-rpi4 = nixos.lib.nixosSystem {
+      system = "aarch64-linux";
+      specialArgs = { inputs = inputs; additionalPackages = with (import nixos { system = "x86_64-linux"; }); [ wlr-randr ]; };
+      modules = [
+        home-manager.nixosModules.home-manager
+        ./nixos
+        nixos-hardware.nixosModules.raspberry-pi-4
+        ./hosts/kang_rpi4
       ];
     };
   };
