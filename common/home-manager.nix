@@ -79,6 +79,7 @@ let
       # lspconfig
       gopls
       rust-analyzer
+      ruff
       nodePackages.vscode-langservers-extracted
       nodePackages.typescript-language-server
       nodePackages."@astrojs/language-server"
@@ -95,6 +96,9 @@ let
 
       " line
       set number
+
+      " clipboard
+      set clipboard^=unnamed,unnamedplus
 
       " filetype
       syntax on
@@ -119,6 +123,10 @@ let
 \        'typescriptreact': [
 \          'eslint',
 \          'prettier',
+\        ],
+\        'python': [
+\          'ruff',
+\          'ruff_format',
 \        ],
 \      }
 
@@ -163,6 +171,8 @@ let
           }
         }
       })
+
+      require('lspconfig').ruff.setup({})
 
       lsp.setup()
 
