@@ -4,6 +4,7 @@ keys:
   - &home_nixos age1de0nqv36jzggd5xrhevff4w6w5772qgey3xhnru825z2l748hanse7nw55
   - &stay_nixos age1eyjyp4n5ke066nkgcxkqmkzl50nlwkdufsm2qzz5rfvc7peelc5qlnufz7
   - &stay_gmk age1wjnx0ggpvkk9aufyu2juzc7fvlgcefxx5ngn5hsae5n5vl47fcaqzstuf5
+  - &kang_rpi age10vsknp7hlnnw6hndrqhzv5wd3u2ucp888du5lmykamext6lzn3jqmjgstu
 creation_rules:
   - path_regex: stay_secrets.yaml$
     key_groups:
@@ -72,6 +73,7 @@ creation_rules:
         - *stay_gmk
         - *stay_nixos
         - *kang_macbook_air
+        - *kang_rpi
   - path_regex: k3sCluster/charts/.*/.*-?secrets\.yaml$
     key_groups:
       - age:
@@ -84,12 +86,14 @@ creation_rules:
         - *stay_gmk
         - *stay_nixos
         - *kang_macbook_air
+        - *kang_rpi
   - path_regex: k3sCluster/wg_vxlan_private_key$
     key_groups:
       - age:
         - *stay_gmk
         - *stay_nixos
         - *kang_macbook_air
+        - *kang_rpi
   - path_regex: keys/.*\_age_key.txt$
     key_groups:
       - age:
