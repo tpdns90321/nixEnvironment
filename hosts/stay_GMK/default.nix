@@ -9,9 +9,6 @@
   services.openssh.enable = true;
   programs.mosh.enable = true;
 
-  # Enable Zerotier
-  services.zerotierone.enable = true;
-
   # Hardware acceleration
   nixpkgs.config.packageOverrides = pkgs: {
     vaapiIntel = pkgs.vaapiIntel.override { enableHybridCodec = true; };

@@ -85,7 +85,7 @@ let VIP = "192.168.219.150"; in {
     };
 
     networkConfig = {
-      Address = if config.networking.hostName == "kang-stay-gmk" then "192.168.219.114/24" else "192.168.219.105/24";
+      Address = if config.networking.hostName == "kang-stay-gmk" then "192.168.219.114/24" else "192.168.219.104/24";
       Gateway = "192.168.219.1";
     };
 
@@ -96,7 +96,7 @@ let VIP = "192.168.219.150"; in {
 
   networking.bridges.br0 = {
     interfaces = [
-      (if config.networking.hostName == "kang-stay-gmk" then "enp3s0" else "enp34s0") # Replace with your network interface
+      (if config.networking.hostName == "kang-stay-gmk" then "enp3s0" else "end0") # Replace with your network interface
       "ztfp6i26fp"
     ];
   };
@@ -201,6 +201,8 @@ iptables -t nat -A PREROUTING -p tcp --dport 50443 -j DNAT --to-destination :443
     checkReversePath = false;
   };
 
+  # Enable Zerotier
+  services.zerotierone.enable = true;
   systemd.services.zerotierone.wantedBy = lib.mkForce [ ];
 
   environment.etc."keepalived_notify.sh" = {

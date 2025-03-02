@@ -150,6 +150,7 @@
       specialArgs = { inputs = inputs; additionalPackages = with (import nixos { system = "x86_64-linux"; }); [ wlr-randr ]; };
       modules = [
         home-manager.nixosModules.home-manager
+        sops-nix.nixosModules.sops
         ./nixos
         nixos-hardware.nixosModules.raspberry-pi-4
         ./hosts/kang_rpi4

@@ -17,10 +17,10 @@ resource k3s_server_node {
     address    192.168.219.114:7789;
     meta-disk  internal;
   }
-  on kang-stay-nixos {
+  on kang-rpi4 {
     device     /dev/drbd1;
     disk       /dev/nixos/k3s-server;
-    address    192.168.219.105:7789;
+    address    192.168.219.104:7789;
     meta-disk  internal;
   }
 }
@@ -33,10 +33,10 @@ resource k3s_nfs {
     meta-disk internal;
   }
 
-  on kang-stay-nixos {
+  on kang-rpi4 {
     device    /dev/drbd2;
     disk      /dev/nixos/nfs;
-    address   192.168.219.105:7790;
+    address   192.168.219.104:7790;
     meta-disk internal;
   }
 }
