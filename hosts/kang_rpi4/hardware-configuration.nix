@@ -8,6 +8,10 @@
   boot.initrd.kernelModules = [ "dm-snapshot" ];
   boot.kernelModules = [ ];
   boot.extraModulePackages = [ ];
+  boot.kernelParams = [
+    "cgroup_enable=memory"
+    "cgroup_memory=1"
+  ];
 
   hardware = {
     raspberry-pi."4".apply-overlays-dtmerge.enable = true;
