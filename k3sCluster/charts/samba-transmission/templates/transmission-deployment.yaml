@@ -42,4 +42,5 @@ spec:
         - name: shared-data
           persistentVolumeClaim:
             claimName: shared-data-pvc
+      nodeSelector: {{ .Values.global.nodeSelector | toYaml | nindent 8 }}
 {{ end }}

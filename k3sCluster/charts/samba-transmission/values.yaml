@@ -1,6 +1,8 @@
 global:
   storageClass: nfs-client
-  sharedDataSize: 10Gi
+  sharedDataSize: 90Gi
+  nodeSelector:
+    current-mode: primary
 
 samba:
   enabled: true

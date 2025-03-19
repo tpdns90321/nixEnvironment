@@ -30,6 +30,8 @@ releases:
     value: 192.168.219.150
   - name: nfs.path
     value: /nfs
+  - name: nodeSelector.current-mode
+    value: primary
 - name: cert-manager
   namespace: cert-manager
   chart: jetstack/cert-manager
