@@ -42,6 +42,8 @@ let
     enable = true;
     keyMode = "vi";
     extraConfig = ''
+      set -g default-command "$SHELL"
+
       # https://blog.sanctum.geek.nz/vi-mode-in-tmux/
       bind -T copy-mode-vi v send -X begin-selection
       bind -T copy-mode-vi y send-keys -X copy-pipe-and-cancel "pbcopy"
@@ -52,6 +54,7 @@ let
       bind % split-window -h -c "#{pane_current_path}"
       bind c new-window -c "#{pane_current_path}"
     '';
+    shell="$SHELL";
   };
 
   neovim = {
@@ -80,11 +83,13 @@ let
       gopls
       rust-analyzer
       ruff
+      nixd
       nodePackages.vscode-langservers-extracted
       nodePackages.typescript-language-server
       nodePackages."@astrojs/language-server"
       nodePackages."@tailwindcss/language-server"
-      nodePackages.pyright
+      pyright
+      typescript
     ];
 
     extraConfig = ''
@@ -148,7 +153,7 @@ let
       end)
 
       -- language servers
-      require('lspconfig').tsserver.setup({})
+      require('lspconfig').ts_ls.setup({})
 
       require('lspconfig').eslint.setup({
         single_file_support = false,
@@ -158,9 +163,11 @@ let
 
       require('lspconfig').gopls.setup({})
 
-      require('lspconfig').tailwindcss.setup({})
-
       require('lspconfig').pyright.setup({})
+
+      require('lspconfig').nixd.setup({})
+
+      require('lspconfig').tailwindcss.setup({})
 
       require('lspconfig').rust_analyzer.setup({
         settings = {

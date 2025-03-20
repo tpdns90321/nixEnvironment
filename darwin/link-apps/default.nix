@@ -65,7 +65,7 @@ in
       fi
       mkdir -p ${cfg.dest}
       chown ${cfg.userName} ${cfg.dest}
-      find ${config.system.build.applications}/Applications -maxdepth 1 -type l | while read f; do
+      find ${config.system.build.applications}/Applications -maxdepth 1 -type l | while read -r f; do
         src=$(/usr/bin/stat -f%Y "$f")
         appname=$(basename "$src")
         dest=${cfg.dest}/$appname

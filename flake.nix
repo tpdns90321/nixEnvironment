@@ -2,24 +2,20 @@
   description = "A nix environment for me";
   inputs = {
     nixpkgs = {
-      url = "github:nixos/nixpkgs/24.05";
+      url = "github:nixos/nixpkgs/24.11";
     };
     nixos = {
-      url = "github:nixos/nixpkgs/nixos-24.05";
+      url = "github:nixos/nixpkgs/nixos-24.11";
     };
     nixos-hardware = {
       url = "github:nixos/nixos-hardware/master";
     };
     home-manager = {
-      url = "github:nix-community/home-manager/release-24.05";
+      url = "github:nix-community/home-manager/release-24.11";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     darwin = {
-      url = "github:LnL7/nix-darwin/master";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-    llama_cpp = {
-      url = "github:ggerganov/llama.cpp";
+      url = "github:LnL7/nix-darwin/nix-darwin-24.11";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     copilot-vim = {
@@ -33,7 +29,6 @@
     sops-nix = {
       url = "github:Mic92/sops-nix";
       inputs.nixpkgs.follows = "nixpkgs";
-      inputs.nixpkgs-stable.follows = "nixpkgs";
     };
     nix-vscode-extensions = {
       url = "github:nix-community/nix-vscode-extensions";

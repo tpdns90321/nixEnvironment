@@ -25,8 +25,5 @@ let vscode-extensions = inputs.nix-vscode-extensions.extensions.${pkgs.system}; 
       ]);
     }
   )
-]) ++ [
-  # llamacpp
-  inputs.llama_cpp.packages.${pkgs.system}.default
-]
+])
 

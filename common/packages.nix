@@ -11,7 +11,6 @@ let
     inherit (my-helm) pluginsDir;
   };
 in (with pkgs; [
-  bitwarden-cli
   curlHTTP3
   direnv
   fnm
