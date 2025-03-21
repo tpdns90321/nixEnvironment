@@ -100,7 +100,7 @@
           pkgs = import nixpkgs { system = system; };
       in nixpkgs.lib.nixosSystem {
         inherit system;
-        specialArgs = { inputs = inputs; additionalPackages = [ ]; };
+        specialArgs = { inputs = inputs; additionalPackages = [ ]; isDesktop = true; };
         modules = [
           home-manager.nixosModules.home-manager
           sops-nix.nixosModules.sops
@@ -114,7 +114,7 @@
           pkgs = import nixpkgs { system = system; };
       in nixpkgs.lib.nixosSystem {
         inherit system;
-        specialArgs = { inputs = inputs; additionalPackages = [ ]; };
+        specialArgs = { inputs = inputs; additionalPackages = [ ]; isDesktop = false; };
         modules = [
           home-manager.nixosModules.home-manager
           sops-nix.nixosModules.sops
@@ -125,7 +125,7 @@
 
     nixosConfigurations.kang-home-nixos = nixpkgs.lib.nixosSystem {
       system = "x86_64-linux";
-      specialArgs = { inputs = inputs; additionalPackages = []; };
+      specialArgs = { inputs = inputs; additionalPackages = []; isDesktop = true; };
       modules = [
         home-manager.nixosModules.home-manager
         sops-nix.nixosModules.sops
@@ -136,7 +136,7 @@
 
     nixosConfigurations.kang-virtualbox = nixos.lib.nixosSystem {
       system = "x86_64-linux";
-      specialArgs = { inputs = inputs; additionalPackages = with (import nixos { system = "x86_64-linux"; }); [ wlr-randr ]; };
+      specialArgs = { inputs = inputs; additionalPackages = with (import nixos { system = "x86_64-linux"; }); [ wlr-randr ]; isDesktop = true; };
       modules = [
         home-manager.nixosModules.home-manager
         sops-nix.nixosModules.sops
@@ -147,7 +147,7 @@
 
     nixosConfigurations.kang-rpi4 = nixos.lib.nixosSystem {
       system = "aarch64-linux";
-      specialArgs = { inputs = inputs; additionalPackages = with (import nixos { system = "x86_64-linux"; }); [ wlr-randr ]; };
+      specialArgs = { inputs = inputs; additionalPackages = []; isDesktop = false; };
       modules = [
         home-manager.nixosModules.home-manager
         sops-nix.nixosModules.sops

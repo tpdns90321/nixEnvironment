@@ -2,7 +2,7 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, pkgs, lib, inputs, additionalPackages, ... }:
+{ pkgs, lib, inputs, additionalPackages, isDesktop, ... }:
 
 {
   imports = [
@@ -16,7 +16,7 @@
 
   # Network NameServers
   networking.nameservers = [
-    "192.168.219.200"
+    "192.168.219.150"
     "1.1.1.1"
   ];
 
@@ -55,7 +55,6 @@
     isNormalUser = true;
     description = "kang";
     extraGroups = [ "networkmanager" "wheel" "video" "audio" "docker" "wireshark" ];
-    packages = with pkgs; [];
     shell = pkgs.zsh;
   };
 
@@ -78,7 +77,7 @@
 
     # wireshark
     wireshark
-  ]) ++ (import ../common/packages_desktop.nix { inherit pkgs inputs lib additionalPackages; });
+  ]) ++ (import ../common/packages_desktop.nix { inherit pkgs inputs lib additionalPackages isDesktop; });
 
   environment.variables = {
     EDITOR = "nvim";
@@ -102,7 +101,7 @@
       wdisplays
       xdg-utils
     ];
-    enable = true;
+    enable = isDesktop;
   };
 
   fonts = {
@@ -123,7 +122,7 @@
 
   programs.zsh.enable = true;
 
-  programs.wireshark.enable = true;
+  programs.wireshark.enable = isDesktop;
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
@@ -137,13 +136,9 @@
 
   # podman
   virtualisation.podman = {
-    enable = true;
+    enable = isDesktop;
+    dockerCompat = true;
   };
-
-  virtualisation.docker = {
-    enable = true;
-  };
-
   # Enable the OpenSSH daemon.
   # services.openssh.enable = true;
 

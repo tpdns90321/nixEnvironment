@@ -1,4 +1,4 @@
-{ config, pkgs, inputs, home-manager, lib, ... }:
+{ config, pkgs, inputs, home-manager, lib, isDesktop, ... }:
 
 let common-programs = import ../common/home-manager.nix { config = config; pkgs = pkgs; inputs = inputs; }; in
 {
@@ -6,9 +6,9 @@ let common-programs = import ../common/home-manager.nix { config = config; pkgs 
     useGlobalPkgs = true;
     users.kang = {
       home.enableNixpkgsReleaseCheck = true;
-      home.packages = (import ../common/packages_desktop.nix { pkgs = pkgs; inputs = inputs; lib = lib; });
+      home.packages = (import ../common/packages_desktop.nix { inherit pkgs inputs lib isDesktop; });
       programs = common-programs // { waybar = {
-          enable = true;
+          enable = isDesktop;
           settings = [
             {
               layer = "bottom";
@@ -46,7 +46,7 @@ let common-programs = import ../common/home-manager.nix { config = config; pkgs 
           ];
         };
         chromium = {
-          enable = true;
+          enable = isDesktop;
           commandLineArgs = [
             "--enable-features=UseOzonePlatform"
             "--ozone-platform=wayland"
@@ -54,11 +54,11 @@ let common-programs = import ../common/home-manager.nix { config = config; pkgs 
           ];
         };
         firefox = {
-          enable = true;
+          enable = isDesktop;
         };
       };
       wayland.windowManager.sway = let modifier = "Mod1"; in {
-        enable = true;
+        enable = isDesktop;
         config = {
           modifier = modifier;
           terminal = "${pkgs.germinal}/bin/germinal";
