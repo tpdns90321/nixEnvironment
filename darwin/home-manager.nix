@@ -41,7 +41,7 @@ let
   homebrew.brewPrefix = "/opt/homebrew/bin";
   homebrew.taps = [
     {
-      name = "mdogan/zulu";
+      name = "bell-sw/liberica";
     }
   ];
   homebrew.casks = [
@@ -61,7 +61,7 @@ let
 
     # react-native android development in macos
     "android-studio"
-    "zulu-jdk17"
+    "liberica-jdk17"
   ] ++ additionalCasks;
   homebrew.masApps = {
     "Xcode" = 497799835;
