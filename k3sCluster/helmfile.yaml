@@ -9,6 +9,8 @@ repositories:
   url: https://charts.jetstack.io
 - name: emberstack
   url: https://emberstack.github.io/helm-charts
+- name: blue-atlas
+  url: https://charts.blue-atlas.de
 
 releases:
 - name: traefik
@@ -81,5 +83,33 @@ releases:
   chart: ./charts/duckdns
   secrets:
     - ./charts/duckdns/secrets.yaml
+  needs:
+    - traefik/traefik
+- name: librechat-config
+  namespace: librechat
+  chart: ./charts/librechat
+  values:
+    - ./charts/librechat/values.yaml
+  secrets:
+    - ./charts/librechat/secrets.yaml
+  needs:
+    - traefik/traefik
+- name: librechat
+  namespace: librechat
+  chart: blue-atlas/librechat
+  values:
+    - ./charts/librechat/values.yaml
+    - ./charts/librechat/values.gotmpl
+  secrets:
+    - ./charts/librechat/secrets.yaml
+  needs:
+    - librechat-config
+- name: cookie-based-routing-index
+  namespace: cookie-based-routing-index
+  chart: ./charts/cookie-based-routing-index/
+  secrets:
+    - ./charts/cookie-based-routing-index/secrets.yaml
+  values:
+    - ./charts/cookie-based-routing-index/values.yaml
   needs:
     - traefik/traefik

@@ -1,0 +1,6 @@
+apiVersion: v2
+name: librechat-config
+description: A Helm chart for LibreChat Config
+type: application
+version: 0.1.0
+appVersion: "latest"

@@ -1,0 +1,27 @@
+mongodb:
+  persistence:
+    size: 10Gi
+    storageClass: "nfs-client"
+  nodeSelector:
+    kubernetes.io/arch: amd64
+
+meilisearch:
+  enabled: true
+  persistence:
+    storageClass: "nfs-client"
+
+ingress:
+  enabled: false
+
+librechat:
+  configEnv:
+    ALLOW_REGISTRATION: "true"
+  imageVolume:
+    enabled: true
+    size: 5Gi
+    storageClassName: "nfs-client"
+  configYamlContent: ""
+
+mcp_servers:
+- name: fetch-mcp
+  command: "npx -y fetch-mcp"

@@ -57,7 +57,7 @@ service:
   single: false
   type: NodePort
   externalIPs:
-    - 192.168.219.105
+    - 192.168.219.104
     - 192.168.219.114
     - 192.168.219.150
   spec:

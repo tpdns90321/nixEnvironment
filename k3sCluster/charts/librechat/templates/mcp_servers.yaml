@@ -1,0 +1,41 @@
+{{- range .Values.mcp_servers }}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .name }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mcp-server-{{ .name }}
+  template:
+    metadata:
+      labels:
+        app: mcp-server-{{ .name }}
+    spec:
+      containers:
+      - name: supergateway
+        image: supercorp/supergateway:latest
+        args: ["--stdio", "{{ .command }}", "--port", "8000"]
+        {{- if .env }}
+        env:
+          {{- range $key, $value := .env }}
+          - name: {{ $key }}
+            value: {{ $value }}
+          {{- end }}
+        {{- end }}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: mcp-server-{{ .name }}
+spec:
+  type: ClusterIP
+  selector:
+    app: mcp-server-{{ .name }}
+  ports:
+  - protocol: TCP
+    port: 8000
+    targetPort: 8000
+---
+{{- end }}
