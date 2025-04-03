@@ -41,10 +41,10 @@ secret:
           function setCookie(name, value, days) {
             let expires = "";
             if (days) {
-              let seconds = days*24*60*60*1000;
-              expires = "; expires=" + seconds;
+              let seconds = parseInt(days)*24*60*60;
+              expires = ";max-age=" + seconds;
             }
-            document.cookie = name + "=" + (value || "")  + expires + "; path=/";
+            document.cookie = name + "=" + (value || "") + expires;
             window.location.replace("/");
           }
           </script>
