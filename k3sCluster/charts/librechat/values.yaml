@@ -23,5 +23,7 @@ librechat:
   configYamlContent: ""
 
 mcp_servers:
-- name: fetch-mcp
-  command: "npx -y fetch-mcp"
+  fetch-mcp:
+    command: "npx -y fetch-mcp"
+  brave-search:
+    command: "npx -y @modelcontextprotocol/server-brave-search"

@@ -5,9 +5,9 @@ librechat:
   configYamlContent: |
     version: 1.0.8
     mcpServers:
-      {{- range $mcpServers }}
-      "{{ .name }}":
-        {{- if .command }}
-        url: "http://mcp-server-{{ .name }}:8000/sse"
+      {{- range $name, $value := $mcpServers }}
+      "{{ $name }}":
+        {{- if $value.command }}
+        url: "http://mcp-server-{{ $name }}:8000/sse"
         {{- end }}
       {{- end }}
