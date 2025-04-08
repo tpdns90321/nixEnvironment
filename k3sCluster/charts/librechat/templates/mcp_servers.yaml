@@ -14,28 +14,35 @@ spec:
         app: mcp-server-{{ $name }}
     spec:
       containers:
-      {{- if $value.command }}
+      {{- if not $value.image }}
       - name: supergateway
         image: supercorp/supergateway:latest
         args: ["--stdio", "{{ $value.command }}", "--port", "8000", "--healthEndpoint", "/healthz"]
+      {{- else }}
+      - name: {{ $name }}
+        image: {{ $value.image }}
+        command: {{ $value.command }}
+        args: [
+          {{- range $arg := $value.args }}
+          "{{ $arg }}",
+          {{- end }}
+        ]
+      {{- end }}
+        {{- if not $value.notHaveHealthEndpoint }}
         livenessProbe:
           httpGet:
             path: /healthz
             port: 8000
+        {{- end }}
         {{- if $value.secrets }}
         envFrom:
           - secretRef:
               name: {{ $name }}-secrets
         {{- end }}
-      {{- else }}
-      - name: {{ $name }}
-        image: {{ $value.image }}
-        command: {{ $value.command }}
-        args: {{ $value.args }}
-        {{- if $value.secrets }}
-        envFrom:
-          - secretRef:
-              name: {{ $name }}-secrets
+      {{- if $value.nodeSelector }}
+      nodeSelector:
+        {{- range $key, $val := $value.nodeSelector }}
+        {{ $key }}: {{ $val }}
         {{- end }}
       {{- end }}
 ---
