@@ -15,7 +15,7 @@ spec:
   entryPoints:
     - web
   routes:
-    - match: (ClientIP(`192.168.219.0/24`) && Host(`{{ .Values.secrets.hostname }}`)) && (!HeaderRegexp(`Cookie`, `app_route`) || PathPrefix(`/set-route.html`))
+    - match: ((ClientIP(`192.168.219.0/24`) || ClientIP(`192.168.128.0/24`)) && Host(`{{ .Values.secrets.hostname }}`)) && (!HeaderRegexp(`Cookie`, `app_route`) || PathPrefix(`/set-route.html`))
       kind: Rule
       middlewares:
         - name: redirect-path
@@ -32,7 +32,7 @@ spec:
   entryPoints:
     - websecure
   routes:
-    - match: (ClientIP(`192.168.219.0/24`) && Host(`{{ .Values.secrets.hostname }}`)) && (!HeaderRegexp(`Cookie`, `app_route`) || PathPrefix(`/set-route.html`))
+    - match: ((ClientIP(`192.168.219.0/24`) || ClientIP(`192.168.128.0/24`)) && Host(`{{ .Values.secrets.hostname }}`)) && (!HeaderRegexp(`Cookie`, `app_route`) || PathPrefix(`/set-route.html`))
       middlewares:
         - name: redirect-path
           namespace: {{ .Release.Namespace }}

@@ -6,7 +6,7 @@ spec:
   entryPoints:
     - web
   routes:
-    - match: ClientIP(`192.168.219.0/24`) && HeaderRegexp(`Cookie`, `app_route=librechat`)
+    - match: (ClientIP(`192.168.219.0/24`) || ClientIP(`192.168.128.0/24`)) && HeaderRegexp(`Cookie`, `app_route=librechat`)
       kind: Rule
       services:
         - name: librechat-librechat
@@ -20,7 +20,7 @@ spec:
   entryPoints:
     - websecure
   routes:
-    - match: ClientIP(`192.168.219.0/24`) && HeaderRegexp(`Cookie`, `app_route=librechat`)
+    - match: (ClientIP(`192.168.219.0/24`) || ClientIP(`192.168.128.0/24`)) && HeaderRegexp(`Cookie`, `app_route=librechat`)
       kind: Rule
       services:
         - name: librechat-librechat

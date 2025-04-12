@@ -19,7 +19,7 @@ spec:
     - name: force-https
       namespace: {{ .Release.Namespace }}
   routes:
-    - match: ClientIP(`192.168.219.0/24`) && Host(`{{ .Values.secrets.hostname }}`)
+    - match: (ClientIP(`192.168.219.0/24`) || ClientIP(`192.168.128.0/24`)) && Host(`{{ .Values.secrets.hostname }}`)
       kind: Rule
       services:
         - name: vaultwarden
