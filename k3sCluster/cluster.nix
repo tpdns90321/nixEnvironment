@@ -150,6 +150,14 @@ let VIP = "192.168.219.150"; in {
         publicKey = "3yJIlOLKJZvSzVzwZfJGe/DOKJLesFhSBtuMmoPFsF4=";
         allowedIPs = [ "192.168.128.2/32" ];
       }
+      {
+        publicKey = "KSY+aV+oqhKm1rrX8CJlY9hHNClwjpQrI/glFoLHmhM=";
+        allowedIPs = [ "192.168.128.3/32" ];
+      }
+      {
+        publicKey = "On0wg+yUObyosZfnanz0T5BawVpQVp1lZPwZQtE97xc=";
+        allowedIPs = [ "192.168.128.4/32" ];
+      }
     ];
     fwMark = "0x1";
   };
