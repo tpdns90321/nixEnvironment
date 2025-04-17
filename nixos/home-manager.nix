@@ -88,6 +88,14 @@ let common-programs = import ../common/home-manager.nix { config = config; pkgs 
           keybindings = lib.mkOptionDefault {
             "${modifier}+d" = "exec bemenu-run";
           };
+          window.commands = [
+            {
+              command = "border none";
+              criteria = {
+                app_id = "zen";
+              };
+            }
+          ];
         };
       };
 
