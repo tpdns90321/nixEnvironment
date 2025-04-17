@@ -38,10 +38,12 @@
     LC_TIME = "ko_KR.UTF-8";
   };
   i18n.inputMethod = {
-    enabled = "kime";
+    enable = true;
+    type = "kime";
   };
 
   services.logrotate.checkConfig = false;
+  services.flatpak.enable = true;
 
   # Configure keymap in X11
   services.xserver.xkb = {
@@ -108,7 +110,7 @@
   fonts = {
     packages = with pkgs; [
       noto-fonts
-      noto-fonts-cjk
+      noto-fonts-cjk-sans
       noto-fonts-emoji
       font-awesome
       nanum

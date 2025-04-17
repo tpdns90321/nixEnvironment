@@ -2,7 +2,7 @@
   description = "A nix environment for me";
   inputs = {
     nixpkgs = {
-      url = "github:nixos/nixpkgs/24.11";
+      url = "github:nixos/nixpkgs/release-24.11";
     };
     nixos = {
       url = "github:nixos/nixpkgs/nixos-24.11";
@@ -126,6 +126,17 @@
         sops-nix.nixosModules.sops
         ./nixos
         ./hosts/home_nixos
+      ];
+    };
+
+    nixosConfigurations.kang-soyo = nixpkgs.lib.nixosSystem {
+      system = "x86_64-linux";
+      specialArgs = { inputs = inputs; additionalPackages = []; };
+      modules = [
+        home-manager.nixosModules.home-manager
+        sops-nix.nixosModules.sops
+        ./nixos
+        ./hosts/kang_soyo
       ];
     };
 

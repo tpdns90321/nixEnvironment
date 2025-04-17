@@ -31,7 +31,9 @@ let
 
     # if exist '.env' in home, export exists environment variable.
     if [ -f ~/.env ]; then
-      export $(cat ~/.env | xargs)
+      set -a
+      . ~/.env
+      set +a
     fi
 
     # connect nix-profile's mosh-server

@@ -61,7 +61,7 @@ let common-programs = import ../common/home-manager.nix { config = config; pkgs 
         enable = true;
         config = {
           modifier = modifier;
-          terminal = "${pkgs.germinal}/bin/germinal";
+          terminal = "${pkgs.alacritty}/bin/alacritty";
           startup = [
             { command = "mako"; }
             { command = "kime -D"; }
@@ -91,7 +91,7 @@ let common-programs = import ../common/home-manager.nix { config = config; pkgs 
         };
       };
 
-      home.stateVersion = "23.05";
+      home.stateVersion = "24.11";
     };
   };
 }
