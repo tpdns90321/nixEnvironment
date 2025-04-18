@@ -269,6 +269,6 @@ let
 
   alacritty = {
     enable = true;
-    settings.font.size = 14;
+    settings.font.size = 13;
   };
 }

@@ -57,7 +57,7 @@ let common-programs = import ../common/home-manager.nix { config = config; pkgs 
           enable = true;
         };
       };
-      wayland.windowManager.sway = let modifier = "Mod1"; in {
+      wayland.windowManager.sway = let modifier = "Mod4"; in {
         enable = true;
         config = {
           modifier = modifier;
@@ -90,7 +90,7 @@ let common-programs = import ../common/home-manager.nix { config = config; pkgs 
           };
           window.commands = [
             {
-              command = "border none";
+              command = "border pixel 2";
               criteria = {
                 app_id = "zen";
               };
