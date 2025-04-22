@@ -20,7 +20,6 @@ in (with pkgs; [
   jc
   jq
   neofetch
-  ngrok
   mosh
   screen
   tmux
@@ -42,10 +41,10 @@ in (with pkgs; [
   podman-compose
 
   # js development
-  nodePackages.npm
-  nodePackages.pnpm
-  nodePackages.yarn
-  nodejs
+  nodejs_20
+  nodePackages_latest.npm
+  nodePackages_latest.pnpm
+  nodePackages_latest.yarn
 
   # react-native development
   # jdk11 in linux

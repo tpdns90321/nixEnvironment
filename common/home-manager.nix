@@ -16,7 +16,7 @@ let
 
     # editor
     export EDITOR=nvim
-    export PATH=$PATH:${pkgs.nodePackages."@astrojs/language-server".outPath}/bin
+    export PATH=$PATH:${pkgs.nodePackages_latest."@astrojs/language-server".outPath}/bin
 
     # react-native android
     export ANDROID_HOME=$HOME/Library/Android/sdk
@@ -86,10 +86,10 @@ let
       rust-analyzer
       ruff
       nixd
-      nodePackages.vscode-langservers-extracted
-      nodePackages.typescript-language-server
-      nodePackages."@astrojs/language-server"
-      nodePackages."@tailwindcss/language-server"
+      nodePackages_latest.vscode-langservers-extracted
+      nodePackages_latest.typescript-language-server
+      nodePackages_latest."@astrojs/language-server"
+      nodePackages_latest."@tailwindcss/language-server"
       pyright
       typescript
     ];
