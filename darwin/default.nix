@@ -53,4 +53,9 @@
       };
     };
   };
+
+  launchd.daemons."sysctl-vram-limit" = {
+    command = "/usr/sbin/sysctl iogpu.wired_limit_mb=19660";
+    serviceConfig.RunAtLoad = true;
+  };
 }
