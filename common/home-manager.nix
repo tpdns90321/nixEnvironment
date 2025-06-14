@@ -32,8 +32,20 @@ let
     # if exist '.env' in home, export exists environment variable.
     if [ -f ~/.env ]; then
       set -a
-      . ~/.env
+      if [ -f ~/.env ]; then
+        . ~/.env
+      fi
       set +a
+    fi
+
+    if [ -f ~/.env.* ]; then
+      for file in ~/.env.*; do
+        set -a
+        if [ -f $file ]; then
+          . $file
+        fi
+        set +a
+      done
     fi
 
     # connect nix-profile's mosh-server
@@ -158,7 +170,11 @@ let
       require('lspconfig').ts_ls.setup({})
 
       require('lspconfig').eslint.setup({
-        single_file_support = false,
+        settings = {
+          experimental = {
+            useFlatConfig = nil,
+          },
+        },
       })
 
       require('lspconfig').astro.setup({})

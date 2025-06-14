@@ -54,6 +54,9 @@
             "KakaoTalk" = 869223134;
             "Blackmagic Disk Speed Test" = 425264550;
           };
+          additionalPackages = let pkgs = (import nixpkgs { system = "aarch64-darwin"; }); in [
+            pkgs.mitmproxy
+          ];
           sops-nix = sops-nix.homeManagerModules.sops;
         };
       };

@@ -1,4 +1,4 @@
-{ config, pkgs, inputs, home-manager, lib, sops-nix, user, additionalCasks, additionalAppStore ? {}, ... }:
+{ config, pkgs, inputs, home-manager, lib, sops-nix, user, additionalCasks, additionalAppStore ? {}, additionalPackages ? [], ... }:
 
 let
   common-programs = import ../common/home-manager.nix { config = config; pkgs = pkgs; inputs = inputs; }; in
@@ -80,7 +80,7 @@ let
     useGlobalPkgs = true;
     users.${user} = {
       home.enableNixpkgsReleaseCheck = true;
-      home.packages = pkgs.callPackage (import ./packages.nix inputs) { };
+      home.packages = pkgs.callPackage (import ./packages.nix { inherit inputs additionalPackages; }) { };
       programs = common-programs // {};
 
       home.stateVersion = "23.05";

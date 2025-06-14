@@ -53,5 +53,5 @@ in (with pkgs; [
   python311
 
   # rust development
-  cargo
+  rustup
 ]) ++ additionalPackages
