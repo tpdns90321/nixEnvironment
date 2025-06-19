@@ -23,8 +23,8 @@ librechat:
   configYamlContent: ""
 
 mcp_servers:
-  fetch-mcp:
-    command: "npx -y fetch-mcp"
+  mcp-youtube-transcript:
+    command: "apk add --no-interactive uv python3 git && uvx --from git+https://github.com/jkawamoto/mcp-youtube-transcript mcp-youtube-transcript"
   brave-search:
     command: "npx -y @modelcontextprotocol/server-brave-search"
   puppeteer:
