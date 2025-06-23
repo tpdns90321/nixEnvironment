@@ -9,8 +9,6 @@
     ./home-manager.nix
   ];
 
-  services.nix-daemon.enable = true;
-
   nix = {
     package = pkgs.nix;
     extraOptions = ''
@@ -20,7 +18,6 @@
     settings.trusted-users = [ "@admin" "${user}" ];
 
     gc = {
-      user = "root";
       automatic = true;
       interval = { Weekday = 0; Hour = 2; Minute = 0; };
       options = "--delete-older-than 30d";
@@ -41,6 +38,7 @@
   };
 
   system = {
+    primaryUser = user;
     stateVersion = 4;
 
     defaults = {

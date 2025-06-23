@@ -41,7 +41,7 @@ in (with pkgs; [
   podman-compose
 
   # js development
-  nodejs_20
+  nodejs_22
   nodePackages_latest.npm
   nodePackages_latest.pnpm
   nodePackages_latest.yarn
