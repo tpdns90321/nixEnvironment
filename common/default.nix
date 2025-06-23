@@ -1,4 +1,4 @@
-{ user ? "kang", ... }:
+{ ... }:
 
 {
   nixpkgs = {
@@ -8,7 +8,7 @@
   };
 
   home-manager = {
-    users.${user} = {
+    users.kang = {
       home.file.".env.nvim" = {
         enable = true;
         text = ''

@@ -43,7 +43,8 @@
   };
 
   services.logrotate.checkConfig = false;
-  services.flatpak.enable = true;
+  services.flatpak.enable = isDesktop;
+  xdg.portal.enable = isDesktop;
 
   # Configure keymap in X11
   services.xserver.xkb = {
