@@ -1,7 +1,7 @@
 image:
   repository: docker.io/vaultwarden/server
   tag: latest
-  pullPolicy: IfNotPresent
+  pullPolicy: Always
 
 service:
   type: ClusterIP

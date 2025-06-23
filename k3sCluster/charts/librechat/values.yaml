@@ -1,0 +1,58 @@
+mongodb:
+  persistence:
+    size: 10Gi
+    storageClass: "nfs-client"
+  nodeSelector:
+    kubernetes.io/arch: amd64
+
+meilisearch:
+  enabled: true
+  persistence:
+    storageClass: "nfs-client"
+
+ingress:
+  enabled: false
+
+librechat:
+  configEnv:
+    ALLOW_REGISTRATION: "true"
+  imageVolume:
+    enabled: true
+    size: 5Gi
+    storageClassName: "nfs-client"
+  configYamlContent: ""
+
+mcp_servers:
+  mcp-youtube-transcript:
+    command: "apk add --no-interactive uv python3 git && uvx --from git+https://github.com/jkawamoto/mcp-youtube-transcript mcp-youtube-transcript"
+  brave-search:
+    command: "npx -y @modelcontextprotocol/server-brave-search"
+  puppeteer:
+    image: mcp/puppeteer:latest
+    command: ["npx"]
+    args: [
+      "-y",
+      "supergateway",
+      "--stdio",
+      "node dist/index.js",
+      "--port",
+      "8000",
+      "--healthEndpoint",
+      "/healthz",
+    ]
+    secrets:
+      DOCKER_CONTAINER: "true"
+  run-python:
+    image: denoland/deno:latest
+    command: ["deno"]
+    args: [
+      "run",
+      "-N",
+      "-R=node_modules",
+      "-W=node_modules",
+      "--node-modules-dir=auto",
+      "jsr:@pydantic/mcp-run-python",
+      "sse",
+      "--port=8000"
+    ]
+    notHaveHealthEndpoint: true

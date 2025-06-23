@@ -32,7 +32,7 @@ spec:
   entryPoints:
     - web
   routes:
-    - match: ClientIP(`192.168.219.0/24`) && PathPrefix(`/transmission`)
+    - match: (ClientIP(`192.168.219.0/24`) || ClientIP(`192.168.128.0/24`)) && PathPrefix(`/transmission`)
       kind: Rule
       services:
         - name: transmission
@@ -46,7 +46,7 @@ spec:
   entryPoints:
     - websecure
   routes:
-    - match: ClientIP(`192.168.219.0/24`) && PathPrefix(`/transmission`)
+    - match: (ClientIP(`192.168.219.0/24`) || ClientIP(`192.168.128.0/24`)) && PathPrefix(`/transmission`)
       kind: Rule
       services:
         - name: transmission

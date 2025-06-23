@@ -1,4 +1,4 @@
-{ pkgs, inputs, lib, additionalPackages ? [] }:
+{ pkgs, inputs, lib, additionalPackages ? [], isDesktop ? true }:
 
 let vscode-extensions = inputs.nix-vscode-extensions.extensions.${pkgs.system}; in
   (import ./packages.nix { inherit pkgs inputs lib additionalPackages; }) ++ (with pkgs; [
@@ -26,4 +26,3 @@ let vscode-extensions = inputs.nix-vscode-extensions.extensions.${pkgs.system}; 
     }
   )
 ])
-

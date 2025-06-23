@@ -27,8 +27,6 @@ in (with pkgs; [
   zsh
 
   kubectl
-  my-helm
-  my-helmfile
 
   # secrets management
   age

@@ -1,0 +1,13 @@
+{{ $values := readFile "./values.yaml" | fromYaml }}
+{{ $mcpServers := $values.mcp_servers }}
+
+librechat:
+  configYamlContent: |
+    version: 1.0.8
+    mcpServers:
+      {{- range $name, $value := $mcpServers }}
+      "{{ $name }}":
+        {{- if $value.command }}
+        url: "http://mcp-server-{{ $name }}:8000/sse"
+        {{- end }}
+      {{- end }}
