@@ -1,7 +1,20 @@
 { pkgs, inputs, lib, additionalPackages ? [], isDesktop ? false }:
 
-let vscode-extensions = inputs.nix-vscode-extensions.extensions.${pkgs.system}; in
+let
+  vscode-extensions = inputs.nix-vscode-extensions.extensions.${pkgs.system};
+  my-helm = (pkgs.wrapHelm pkgs.kubernetes-helm {
+    plugins = with pkgs.kubernetes-helmPlugins; [
+      helm-diff
+      helm-secrets
+    ];
+  });
+  my-helmfile = pkgs.helmfile-wrapped.override {
+    inherit (my-helm) pluginsDir;
+  };
+  in
   (import ./packages.nix { inherit pkgs inputs lib additionalPackages; }) ++ (if isDesktop then (with pkgs; [
+  my-helm
+  my-helmfile
   # GUI Application for work
   alacritty
   gimp

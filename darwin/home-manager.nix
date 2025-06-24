@@ -80,7 +80,7 @@ let
     useGlobalPkgs = true;
     users.${user} = {
       home.enableNixpkgsReleaseCheck = true;
-      home.packages = pkgs.callPackage (import ./packages.nix { inherit inputs additionalPackages; }) { };
+      # home.packages = pkgs.callPackage (import ./packages.nix { inherit inputs additionalPackages; }) { };
       programs = common-programs // {};
 
       home.stateVersion = "23.05";

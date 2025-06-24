@@ -1,4 +1,4 @@
-{ config, pkgs, inputs, lib, user, additionalCasks ? [], ... }:
+{ config, pkgs, inputs, lib, user, additionalPackages ? [], additionalCasks ? [], ... }:
 
 
 {
@@ -24,7 +24,7 @@
     };
   };
 
-  environment.systemPackages = import ../common/packages_desktop.nix { pkgs = pkgs; inputs = inputs; lib = lib; };
+  environment.systemPackages = pkgs.callPackage (import ./packages.nix { inherit inputs additionalPackages; }) { };
   system.build.application = pkgs.lib.mkForce (pkgs.buildEnv {
     name = "applications";
     paths = config.environment.systemPackages ++ config.home-manager.users.${user}.home.packages;

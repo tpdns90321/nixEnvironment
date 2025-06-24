@@ -6,7 +6,7 @@ let common-programs = import ../common/home-manager.nix { inherit config pkgs in
     useGlobalPkgs = true;
     users.kang = {
       home.enableNixpkgsReleaseCheck = true;
-      home.packages = (import ../common/packages_desktop.nix { inherit pkgs inputs lib isDesktop; });
+      # home.packages = (import ../common/packages_desktop.nix { inherit pkgs inputs lib isDesktop; });
       programs = common-programs // { waybar = {
           enable = isDesktop;
           settings = [

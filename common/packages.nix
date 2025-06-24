@@ -1,16 +1,6 @@
 { pkgs, inputs, lib, additionalPackages ? [ ] }:
 
-let
-  my-helm = (pkgs.wrapHelm pkgs.kubernetes-helm {
-    plugins = with pkgs.kubernetes-helmPlugins; [
-      helm-diff
-      helm-secrets
-    ];
-  });
-  my-helmfile = pkgs.helmfile-wrapped.override {
-    inherit (my-helm) pluginsDir;
-  };
-in (with pkgs; [
+(with pkgs; [
   curlHTTP3
   direnv
   fnm
