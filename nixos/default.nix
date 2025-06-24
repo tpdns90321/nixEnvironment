@@ -38,10 +38,13 @@
     LC_TIME = "ko_KR.UTF-8";
   };
   i18n.inputMethod = {
-    enabled = "kime";
+    enable = true;
+    type = "kime";
   };
 
   services.logrotate.checkConfig = false;
+  services.flatpak.enable = isDesktop;
+  xdg.portal.enable = isDesktop;
 
   # Configure keymap in X11
   services.xserver.xkb = {
@@ -107,7 +110,7 @@
   fonts = {
     packages = with pkgs; [
       noto-fonts
-      noto-fonts-cjk
+      noto-fonts-cjk-sans
       noto-fonts-emoji
       font-awesome
       nanum
@@ -154,5 +157,5 @@
   # this value at the release version of the first install of this system.
   # Before changing this value read the documentation for this option
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
-  system.stateVersion = "24.05"; # Did you read the comment?
+  system.stateVersion = "25.11"; # Did you read the comment?
 }

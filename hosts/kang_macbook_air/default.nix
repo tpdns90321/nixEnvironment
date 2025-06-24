@@ -7,4 +7,5 @@
       path = "/Users/${user}/.env";
     };
   };
+  ids.gids.nixbld = 350;
 }

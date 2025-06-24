@@ -1,7 +1,16 @@
 { pkgs, inputs, lib, additionalPackages ? [ ] }:
 
-(with pkgs; [
-  bitwarden-cli
+let
+  my-helm = (pkgs.wrapHelm pkgs.kubernetes-helm {
+    plugins = with pkgs.kubernetes-helmPlugins; [
+      helm-diff
+      helm-secrets
+    ];
+  });
+  my-helmfile = pkgs.helmfile-wrapped.override {
+    inherit (my-helm) pluginsDir;
+  };
+in (with pkgs; [
   curlHTTP3
   direnv
   fnm
@@ -11,7 +20,6 @@
   jc
   jq
   neofetch
-  ngrok
   mosh
   screen
   tmux
@@ -31,10 +39,10 @@
   podman-compose
 
   # js development
-  nodePackages.npm
-  nodePackages.pnpm
-  nodePackages.yarn
-  nodejs
+  nodejs_22
+  nodePackages_latest.npm
+  nodePackages_latest.pnpm
+  nodePackages_latest.yarn
 
   # react-native development
   # jdk11 in linux
@@ -43,5 +51,5 @@
   python311
 
   # rust development
-  cargo
+  rustup
 ]) ++ additionalPackages

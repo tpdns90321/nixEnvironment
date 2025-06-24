@@ -141,8 +141,8 @@ let VIP = "192.168.219.150"; in {
       '';
   };
 
-  networking.wireguard.interfaces.wg-vxlan = {
-    ips = [ "192.168.128.1/24" ];
+  networking.wg-quick.interfaces.wg-vxlan = {
+    address = [ "192.168.128.1/24" ];
     privateKeyFile = config.sops.secrets.wireguard_vxlan_private_key.path;
     listenPort = 51821;
     peers = [
@@ -159,7 +159,9 @@ let VIP = "192.168.219.150"; in {
         allowedIPs = [ "192.168.128.4/32" ];
       }
     ];
-    fwMark = "0x1";
+    extraOptions = {
+      FwMark = "0x1";
+    };
   };
 
   networking.firewall = {
@@ -223,6 +225,7 @@ STATE=$3
 
 case $STATE in
     "MASTER")
+        ${drbd}/bin/drbdadm up all
         ${drbd}/bin/drbdadm connect --discard-my-data k3s_server_node
         ${drbd}/bin/drbdadm connect --discard-my-data k3s_nfs
         sleep 60
@@ -236,10 +239,13 @@ case $STATE in
         ${systemd}/bin/systemctl start k3s_server.service
         ${systemd}/bin/systemctl start nfs-server.service
         ${systemd}/bin/systemctl start zerotierone.service
+        ${k3s}/bin/k3s kubectl label nodes ${config.networking.hostName} current-mode=primary --overwrite
         ;;
     "BACKUP"|"FAULT"|"STOP")
+        ${drbd}/bin/drbdadm up all
         kill $(${procps}/bin/ps -ef | ${gnugrep}/bin/grep MASTER | ${gawk}/bin/awk '{ print $2 }')
         # Stop K3s server
+        ${k3s}/bin/k3s kubectl label nodes ${config.networking.hostName} current-mode=secondary --overwrite
         ${systemd}/bin/systemctl stop nfs-server.service
         ${systemd}/bin/systemctl stop k3s_server.service
         ${systemd}/bin/systemctl stop zerotierone.service

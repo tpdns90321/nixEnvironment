@@ -57,11 +57,12 @@ let common-programs = import ../common/home-manager.nix { config = config; pkgs 
           enable = isDesktop;
         };
       };
-      wayland.windowManager.sway = let modifier = "Mod1"; in {
-        enable = isDesktop;
+      wayland.windowManager.sway = let modifier = "Mod4"; in {
+        enable = true;
         config = {
+          defaultWorkspace = "workspace number 1";
           modifier = modifier;
-          terminal = "${pkgs.germinal}/bin/germinal";
+          terminal = "${pkgs.alacritty}/bin/alacritty";
           startup = [
             { command = "mako"; }
             { command = "kime -D"; }
@@ -88,10 +89,18 @@ let common-programs = import ../common/home-manager.nix { config = config; pkgs 
           keybindings = lib.mkOptionDefault {
             "${modifier}+d" = "exec bemenu-run";
           };
+          window.commands = [
+            {
+              command = "border pixel 2";
+              criteria = {
+                app_id = "zen";
+              };
+            }
+          ];
         };
       };
 
-      home.stateVersion = "23.05";
+      home.stateVersion = "24.11";
     };
   };
 }

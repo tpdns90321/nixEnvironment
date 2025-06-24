@@ -16,7 +16,7 @@ let
 
     # editor
     export EDITOR=nvim
-    export PATH=$PATH:${pkgs.nodePackages."@astrojs/language-server".outPath}/bin
+    export PATH=$PATH:${pkgs.nodePackages_latest."@astrojs/language-server".outPath}/bin
 
     # react-native android
     export ANDROID_HOME=$HOME/Library/Android/sdk
@@ -31,7 +31,21 @@ let
 
     # if exist '.env' in home, export exists environment variable.
     if [ -f ~/.env ]; then
-      export $(cat ~/.env | xargs)
+      set -a
+      if [ -f ~/.env ]; then
+        . ~/.env
+      fi
+      set +a
+    fi
+
+    if [ -f ~/.env.* ]; then
+      for file in ~/.env.*; do
+        set -a
+        if [ -f $file ]; then
+          . $file
+        fi
+        set +a
+      done
     fi
 
     # connect nix-profile's mosh-server
@@ -42,6 +56,8 @@ let
     enable = true;
     keyMode = "vi";
     extraConfig = ''
+      set -g default-command "$SHELL"
+
       # https://blog.sanctum.geek.nz/vi-mode-in-tmux/
       bind -T copy-mode-vi v send -X begin-selection
       bind -T copy-mode-vi y send-keys -X copy-pipe-and-cancel "pbcopy"
@@ -52,6 +68,7 @@ let
       bind % split-window -h -c "#{pane_current_path}"
       bind c new-window -c "#{pane_current_path}"
     '';
+    shell="$SHELL";
   };
 
   neovim = {
@@ -80,11 +97,13 @@ let
       gopls
       rust-analyzer
       ruff
-      nodePackages.vscode-langservers-extracted
-      nodePackages.typescript-language-server
-      nodePackages."@astrojs/language-server"
-      nodePackages."@tailwindcss/language-server"
-      nodePackages.pyright
+      nixd
+      nodePackages_latest.vscode-langservers-extracted
+      nodePackages_latest.typescript-language-server
+      nodePackages_latest."@astrojs/language-server"
+      nodePackages_latest."@tailwindcss/language-server"
+      pyright
+      typescript
     ];
 
     extraConfig = ''
@@ -148,19 +167,25 @@ let
       end)
 
       -- language servers
-      require('lspconfig').tsserver.setup({})
+      require('lspconfig').ts_ls.setup({})
 
       require('lspconfig').eslint.setup({
-        single_file_support = false,
+        settings = {
+          experimental = {
+            useFlatConfig = nil,
+          },
+        },
       })
 
       require('lspconfig').astro.setup({})
 
       require('lspconfig').gopls.setup({})
 
-      require('lspconfig').tailwindcss.setup({})
-
       require('lspconfig').pyright.setup({})
+
+      require('lspconfig').nixd.setup({})
+
+      require('lspconfig').tailwindcss.setup({})
 
       require('lspconfig').rust_analyzer.setup({
         settings = {
@@ -260,6 +285,6 @@ let
 
   alacritty = {
     enable = true;
-    settings.font.size = 14;
+    settings.font.size = 13;
   };
 }

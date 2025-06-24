@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, pkgs, lib, ... }:
 {
   services.drbd = {
     enable = true;
@@ -52,6 +52,7 @@ resource k3s_nfs {
     RemainAfterExit = "true";
     Restart = "on-failure";
     RestartSec = "5";
+    ExecStart = lib.mkForce "-${pkgs.drbd}/bin/drbdadm up all";
   };
   systemd.services.drbd.after = [
     "network-online.target"

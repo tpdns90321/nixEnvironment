@@ -1,4 +1,4 @@
-{ config, pkgs, inputs, home-manager, lib, sops-nix, user, additionalCasks, additionalAppStore ? {}, ... }:
+{ config, pkgs, inputs, home-manager, lib, sops-nix, user, additionalCasks, additionalAppStore ? {}, additionalPackages ? [], ... }:
 
 let
   common-programs = import ../common/home-manager.nix { config = config; pkgs = pkgs; inputs = inputs; }; in
@@ -41,7 +41,7 @@ let
   homebrew.brewPrefix = "/opt/homebrew/bin";
   homebrew.taps = [
     {
-      name = "mdogan/zulu";
+      name = "bell-sw/liberica";
     }
   ];
   homebrew.casks = [
@@ -49,8 +49,9 @@ let
     "adguard"
     "arc"
     "coconutbattery"
-    "google-chrome"
     "firefox"
+    "google-chrome"
+    "karabiner-elements"
     "obsidian"
     "wireshark"
     "zerotier-one"
@@ -60,7 +61,7 @@ let
 
     # react-native android development in macos
     "android-studio"
-    "zulu-jdk17"
+    "liberica-jdk17"
   ] ++ additionalCasks;
   homebrew.masApps = {
     "Xcode" = 497799835;
@@ -79,7 +80,7 @@ let
     useGlobalPkgs = true;
     users.${user} = {
       home.enableNixpkgsReleaseCheck = true;
-      home.packages = pkgs.callPackage (import ./packages.nix inputs) { };
+      home.packages = pkgs.callPackage (import ./packages.nix { inherit inputs additionalPackages; }) { };
       programs = common-programs // {};
 
       home.stateVersion = "23.05";
