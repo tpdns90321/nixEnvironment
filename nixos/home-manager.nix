@@ -60,6 +60,7 @@ let common-programs = import ../common/home-manager.nix { config = config; pkgs 
       wayland.windowManager.sway = let modifier = "Mod4"; in {
         enable = true;
         config = {
+          defaultWorkspace = "workspace number 1";
           modifier = modifier;
           terminal = "${pkgs.alacritty}/bin/alacritty";
           startup = [

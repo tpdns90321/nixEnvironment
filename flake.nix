@@ -134,7 +134,7 @@
 
     nixosConfigurations.kang-soyo = nixpkgs.lib.nixosSystem {
       system = "x86_64-linux";
-      specialArgs = { inputs = inputs; additionalPackages = []; };
+      specialArgs = { inputs = inputs; additionalPackages = []; isDesktop = true; };
       modules = [
         home-manager.nixosModules.home-manager
         sops-nix.nixosModules.sops

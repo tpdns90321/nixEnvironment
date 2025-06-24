@@ -10,20 +10,6 @@
 
   boot.initrd.availableKernelModules = [ "xhci_pci" "ahci" "usbhid" "usb_storage" "sd_mod" "sdhci_pci" ];
   boot.initrd.kernelModules = [ ];
-  boot.kernelPackages = pkgs.linuxPackagesFor (pkgs.linux.override {
-    argsOverride = rec {
-      src = fetchTarball {
-        url = "https://cdn.kernel.org/pub/linux/kernel/v6.x/linux-${version}.tar.xz";
-        sha256 = "0s4na5v02a06fgb1li4dl820g6qa5j52h7gqj4l7x251nbdq2na3";
-      };
-      version = "6.12.23";
-      modDirVersion = version;
-#      structuredExtraConfig = with lib.kernel; {
-#        NVME_AUTH = lib.mkForce no;
-#      };
-#      ignoreConfigErrors = true;
-    };
-  });
   boot.kernelModules = [ "kvm-intel" ];
   boot.extraModulePackages = [ ];
   boot.loader.grub = {
@@ -39,7 +25,7 @@
   nixpkgs.config.packageOverrides = pkgs: {
     vaapiIntel = pkgs.vaapiIntel.override { enableHybridCodec = true; };
   };
-  hardware.opengl = {
+  hardware.graphics = {
     enable = true;
     extraPackages = with pkgs; [
       intel-media-driver # LIBVA_DRIVER_NAME=iHD
