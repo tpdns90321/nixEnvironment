@@ -225,6 +225,7 @@ STATE=$3
 
 case $STATE in
     "MASTER")
+        ${drbd}/bin/drbdadm up all
         ${drbd}/bin/drbdadm connect --discard-my-data k3s_server_node
         ${drbd}/bin/drbdadm connect --discard-my-data k3s_nfs
         sleep 60
@@ -241,6 +242,7 @@ case $STATE in
         ${k3s}/bin/k3s kubectl label nodes ${config.networking.hostName} current-mode=primary --overwrite
         ;;
     "BACKUP"|"FAULT"|"STOP")
+        ${drbd}/bin/drbdadm up all
         kill $(${procps}/bin/ps -ef | ${gnugrep}/bin/grep MASTER | ${gawk}/bin/awk '{ print $2 }')
         # Stop K3s server
         ${k3s}/bin/k3s kubectl label nodes ${config.networking.hostName} current-mode=secondary --overwrite
