@@ -238,7 +238,7 @@ case $STATE in
         ${systemd}/bin/systemctl start k3s_server.service
         ${systemd}/bin/systemctl start nfs-server.service
         ${systemd}/bin/systemctl start zerotierone.service
-        ${k3s}/bin/k3s kubectl label nodes ${config.networking.hostName} current-mode=master --overwrite
+        ${k3s}/bin/k3s kubectl label nodes ${config.networking.hostName} current-mode=primary --overwrite
         ;;
     "BACKUP"|"FAULT"|"STOP")
         kill $(${procps}/bin/ps -ef | ${gnugrep}/bin/grep MASTER | ${gawk}/bin/awk '{ print $2 }')
