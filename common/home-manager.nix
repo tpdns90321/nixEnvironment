@@ -1,4 +1,4 @@
-{ config, pkgs, inputs, ... }:
+{ config, pkgs, inputs, isDesktop ? false, ... }:
 
 let
   userName = "tpdns90321";
@@ -284,7 +284,7 @@ let
   };
 
   alacritty = {
-    enable = true;
+    enable = isDesktop;
     settings.font.size = 13;
   };
 }

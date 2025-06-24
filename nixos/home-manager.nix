@@ -1,6 +1,6 @@
 { config, pkgs, inputs, home-manager, lib, isDesktop, ... }:
 
-let common-programs = import ../common/home-manager.nix { config = config; pkgs = pkgs; inputs = inputs; }; in
+let common-programs = import ../common/home-manager.nix { inherit config pkgs inputs isDesktop; }; in
 {
   home-manager = {
     useGlobalPkgs = true;
@@ -58,7 +58,7 @@ let common-programs = import ../common/home-manager.nix { config = config; pkgs 
         };
       };
       wayland.windowManager.sway = let modifier = "Mod4"; in {
-        enable = true;
+        enable = isDesktop;
         config = {
           defaultWorkspace = "workspace number 1";
           modifier = modifier;
@@ -100,7 +100,7 @@ let common-programs = import ../common/home-manager.nix { config = config; pkgs 
         };
       };
 
-      home.stateVersion = "24.11";
+      home.stateVersion = "25.05";
     };
   };
 }

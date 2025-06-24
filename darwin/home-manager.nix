@@ -1,7 +1,7 @@
 { config, pkgs, inputs, home-manager, lib, sops-nix, user, additionalCasks, additionalAppStore ? {}, additionalPackages ? [], ... }:
 
 let
-  common-programs = import ../common/home-manager.nix { config = config; pkgs = pkgs; inputs = inputs; }; in
+  common-programs = import ../common/home-manager.nix { inherit config pkgs inputs; isDesktop = true; }; in
 {
   imports = [
     # import from https://github.com/dustinlyons/nixos-config/ . thanks @dustinlyons

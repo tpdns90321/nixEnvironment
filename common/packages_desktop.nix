@@ -1,7 +1,7 @@
-{ pkgs, inputs, lib, additionalPackages ? [], isDesktop ? true }:
+{ pkgs, inputs, lib, additionalPackages ? [], isDesktop ? false }:
 
 let vscode-extensions = inputs.nix-vscode-extensions.extensions.${pkgs.system}; in
-  (import ./packages.nix { inherit pkgs inputs lib additionalPackages; }) ++ (with pkgs; [
+  (import ./packages.nix { inherit pkgs inputs lib additionalPackages; }) ++ (if isDesktop then (with pkgs; [
   # GUI Application for work
   alacritty
   gimp
@@ -25,4 +25,4 @@ let vscode-extensions = inputs.nix-vscode-extensions.extensions.${pkgs.system}; 
       ]);
     }
   )
-])
+]) else [])
