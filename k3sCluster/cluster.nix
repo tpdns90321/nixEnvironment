@@ -237,15 +237,17 @@ case $STATE in
         # Start K3s server
         ${systemd}/bin/systemctl stop k3s_agent.service
         ${systemd}/bin/systemctl start k3s_server.service
+
+        ${k3s}/bin/k3s kubectl label nodes ${if config.networking.hostName == "kang-stay-gmk" then "kang-rpi4" else "kang-stay-gmk"} current-mode=secondary --overwrite
+        ${k3s}/bin/k3s kubectl label nodes ${config.networking.hostName} current-mode=primary --overwrite
+
         ${systemd}/bin/systemctl start nfs-server.service
         ${systemd}/bin/systemctl start zerotierone.service
-        ${k3s}/bin/k3s kubectl label nodes ${config.networking.hostName} current-mode=primary --overwrite
         ;;
     "BACKUP"|"FAULT"|"STOP")
         ${drbd}/bin/drbdadm up all
         kill $(${procps}/bin/ps -ef | ${gnugrep}/bin/grep MASTER | ${gawk}/bin/awk '{ print $2 }')
         # Stop K3s server
-        ${k3s}/bin/k3s kubectl label nodes ${config.networking.hostName} current-mode=secondary --overwrite
         ${systemd}/bin/systemctl stop nfs-server.service
         ${systemd}/bin/systemctl stop k3s_server.service
         ${systemd}/bin/systemctl stop zerotierone.service
