@@ -22,6 +22,10 @@ librechat:
     storageClassName: "nfs-client"
   configYamlContent: ""
 
+image:
+  pullPolicy: Always
+  tag: latest
+
 mcp_servers:
   mcp-youtube-transcript:
     command: "apk add --no-interactive uv python3 git && uvx --from git+https://github.com/jkawamoto/mcp-youtube-transcript mcp-youtube-transcript"
