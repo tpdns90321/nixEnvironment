@@ -1,0 +1,11 @@
+
+persistence:
+  size: 10Gi
+  storageClass: "nfs-client"
+
+ollama:
+  enabled: false
+
+extraEnvFrom:
+  - secretRef:
+      name: open-webui-secret-env

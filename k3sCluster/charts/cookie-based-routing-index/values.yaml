@@ -36,6 +36,7 @@ secret:
       </head>
       <body class="set-route">
           <button onclick="setCookie('app_route', 'librechat', 300)">Go to LibreChat</button>
+          <button onclick="setCookie('app_route', 'open-webui', 300)">Go to open-webui</button>
           <button onclick="setCookie('app_route', 'other')">Go to Other</button>
           <script>
           function setCookie(name, value, days) {
