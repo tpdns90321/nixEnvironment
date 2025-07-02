@@ -39,6 +39,7 @@
 
   # python development
   python311
+  uv
 
   # rust development
   rustup
