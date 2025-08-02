@@ -49,13 +49,13 @@
         specialArgs = {
           inherit inputs;
           user = "kang";
-          additionalCasks = [ "android-studio" "claude" "discord" "parallels@19" "raspberry-pi-imager" "steam" "ollama" "lm-studio" "obs" "iterm2" "moonlight" ];
+          additionalCasks = [ "android-studio" "claude" "discord" "parallels@19" "raspberry-pi-imager" "steam" "lm-studio" "ollama-app" "obs" "iterm2" "moonlight" "wireshark-app" ];
           additionalAppStore = {
             "KakaoTalk" = 869223134;
             "Blackmagic Disk Speed Test" = 425264550;
           };
-          additionalPackages = let pkgs = (import nixpkgs { system = "aarch64-darwin"; }); in [
-            pkgs.mitmproxy
+          additionalPackages = let pkgs = (import nixpkgs { system = "aarch64-darwin"; }); in with pkgs; [
+            mitmproxy
           ];
           sops-nix = sops-nix.homeManagerModules.sops;
         };

@@ -53,7 +53,6 @@ let
     "google-chrome"
     "karabiner-elements"
     "obsidian"
-    "wireshark"
     "zerotier-one"
 
     # LLM
