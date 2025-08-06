@@ -1,6 +1,7 @@
 { pkgs, inputs, lib, additionalPackages ? [ ] }:
 
 (with pkgs; [
+  claude-code
   curlHTTP3
   direnv
   fnm
