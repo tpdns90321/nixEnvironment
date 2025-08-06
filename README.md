@@ -105,6 +105,7 @@ home-manager switch --flake .#<user>
 ## Included Software
 
 ### Development Tools
+- **Neovim**: Full-featured editor with LSP support, auto-completion, and language servers for TypeScript, Python, Go, Rust, Nix, and more
 - **Git & GitHub CLI**: Version control and GitHub integration
 - **Kubernetes Tools**: kubectl, helm, and k3s cluster management
 - **Container Tools**: Podman, docker-compose, podman-compose
