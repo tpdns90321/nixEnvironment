@@ -1,0 +1,21 @@
+{{ if .Values.samba.enabled }}
+apiVersion: v1
+kind: Service
+metadata:
+  name: samba-external
+  labels:
+    component: samba-external
+spec:
+  type: NodePort
+  externalIPs:
+    - 192.168.219.104
+    - 192.168.219.114
+    - 192.168.219.150
+  ports:
+    - name: smb
+      port: 445
+      targetPort: 445
+      protocol: TCP
+  selector:
+    app: samba
+{{ end }}

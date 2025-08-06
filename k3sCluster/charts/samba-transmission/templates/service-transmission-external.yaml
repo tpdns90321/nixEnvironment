@@ -1,0 +1,25 @@
+{{ if .Values.transmission.enabled }}
+apiVersion: v1
+kind: Service
+metadata:
+  name: transmission-external
+  labels:
+    component: transmission-external
+spec:
+  type: NodePort
+  externalIPs:
+    - 192.168.219.104
+    - 192.168.219.114
+    - 192.168.219.150
+  ports:
+    - name: peer-tcp
+      port: 51413
+      targetPort: 51413
+      protocol: TCP
+    - name: peer-udp
+      port: 51413
+      targetPort: 51413
+      protocol: UDP
+  selector:
+    app: transmission
+{{ end }}

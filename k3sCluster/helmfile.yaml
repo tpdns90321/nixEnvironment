@@ -11,8 +11,6 @@ repositories:
   url: https://emberstack.github.io/helm-charts
 - name: blue-atlas
   url: https://charts.blue-atlas.de
-- name: open-webui
-  url: https://open-webui.github.io/helm-charts
 
 releases:
 - name: traefik
@@ -106,20 +104,6 @@ releases:
     - ./charts/librechat/secrets.yaml
   needs:
     - librechat-config
-- name: open-webui-config
-  namespace: open-webui
-  chart: ./charts/open-webui
-  secrets:
-    - ./charts/open-webui/secrets.yaml
-  needs:
-    - traefik/traefik
-- name: open-webui
-  namespace: open-webui
-  chart: open-webui/open-webui
-  values:
-    - ./charts/open-webui/values.yaml
-  needs:
-    - open-webui-config
 - name: cookie-based-routing-index
   namespace: cookie-based-routing-index
   chart: ./charts/cookie-based-routing-index/

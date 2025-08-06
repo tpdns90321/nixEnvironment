@@ -17,41 +17,6 @@ ports:
     proxyProtocol:
       trustedIPs:
         - 10.0.0.0/8
-  dns-tcp:
-    port: 8053
-    expose:
-      default: true
-    exposedPort: 53
-    tls:
-      enabled: false
-  dns-udp:
-    port: 8054
-    expose:
-      default: true
-    exposedPort: 53
-    protocol: UDP
-  smb:
-    port: 445
-    expose:
-      default: true
-    exposedPort: 445
-    protocol: TCP
-    tls:
-      enabled: false
-  mission-tcp:
-    port: 51413
-    expose:
-      default: true
-    exposedPort: 51413
-    protocol: TCP
-    tls:
-      enabled: false
-  mission-udp:
-    port: 51413
-    expose:
-      default: true
-    exposedPort: 51413
-    protocol: UDP
 
 service:
   single: false
