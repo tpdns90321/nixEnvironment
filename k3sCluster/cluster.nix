@@ -87,12 +87,17 @@ let VIP = "192.168.219.150"; in {
     networkConfig = {
       Address = if config.networking.hostName == "kang-stay-gmk" then "192.168.219.114/24" else "192.168.219.104/24";
       Gateway = "192.168.219.1";
+      BindCarrier = "${(if config.networking.hostName == "kang-stay-gmk" then "enp3s0" else "end0")}";
     };
 
     linkConfig = {
       MTUBytes = "1500";
+      RequiredForOnline = "routable";
+      RequiredFamilyForOnline = "ipv4";
     };
   };
+
+  systemd.network.networks."40-${(if config.networking.hostName == "kang-stay-gmk" then "enp3s0" else "end0")}".linkConfig.RequiredForOnline = "no";
 
   networking.bridges.br0 = {
     interfaces = [
@@ -225,9 +230,9 @@ STATE=$3
 
 case $STATE in
     "MASTER")
-        ${drbd}/bin/drbdadm attach k3s_server_node
-        ${drbd}/bin/drbdadm attach k3s_nfs
+        ${drbd}/bin/drbdadm attach all
         ${drbd}/bin/drbdadm up all
+        ${drbd}/bin/drbdadm attach all
         ${drbd}/bin/drbdadm connect --discard-my-data k3s_server_node
         ${drbd}/bin/drbdadm connect --discard-my-data k3s_nfs
         sleep 60
@@ -247,9 +252,9 @@ case $STATE in
         ${systemd}/bin/systemctl start zerotierone.service
         ;;
     "BACKUP"|"FAULT"|"STOP")
-        ${drbd}/bin/drbdadm attach k3s_server_node
-        ${drbd}/bin/drbdadm attach k3s_nfs
+        ${drbd}/bin/drbdadm attach all
         ${drbd}/bin/drbdadm up all
+        ${drbd}/bin/drbdadm attach all
         kill $(${procps}/bin/ps -ef | ${gnugrep}/bin/grep MASTER | ${gawk}/bin/awk '{ print $2 }')
         # Stop K3s server
         ${systemd}/bin/systemctl stop nfs-server.service
