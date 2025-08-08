@@ -6,7 +6,6 @@
     };
     nixpkgs_unstable = {
       url = "github:nixos/nixpkgs/nixpkgs-unstable";
-      inputs.flake-utils.follows = "flake-utils";
     };
     nixos = {
       url = "github:nixos/nixpkgs/nixos-25.05";
@@ -40,31 +39,10 @@
     };
   };
 
-  outputs = { self, flake-utils, darwin, home-manager, nixpkgs, nixpkgs_unstable, nixos, nixos-hardware, sops-nix, ... }@inputs: 
-    let
-      customNixPkgs = flake-utils.lib.eachDefaultSystem (system:
-        let
-          config = {
-            allowUnfree = true;
-          };
-          unstable-pkgs = (import nixpkgs_unstable { inherit system; inherit config; });
-          packages-overlay = final: prev: {
-            claude-code = unstable-pkgs.claude-code;
-          }; 
-          in
-          {
-            pkgs = import nixpkgs {
-              inherit system;
-              overlays = [ packages-overlay ];
-              config = {
-                allowUnfree = true; # for claude-code
-              };
-            };
-          });
-  in {
+  outputs = { self, darwin, home-manager, nixpkgs, nixos, nixos-hardware, sops-nix, ... }@inputs: 
+  {
     darwinConfigurations = {
       "kang-macbook-air" = darwin.lib.darwinSystem {
-        pkgs = customNixPkgs.pkgs.aarch64-darwin;
         system = "aarch64-darwin";
         modules = [
           home-manager.darwinModules.home-manager
@@ -80,21 +58,16 @@
             "KakaoTalk" = 869223134;
             "Blackmagic Disk Speed Test" = 425264550;
           };
-          additionalPackages =
-            let
-              pkgs = customNixPkgs.pkgs.aarch64-darwin;
-              in with pkgs; [
-                mitmproxy
-              ];
+          additionalPackages = with nixpkgs.legacyPackages."aarch64-darwin"; [
+            mitmproxy
+          ];
           sops-nix = sops-nix.homeManagerModules.sops;
         };
       };
     };
 
     # use in wsl
-    homeConfigurations.kang = let pkgs = customNixPkgs.pkgs.x86_64-linux; in home-manager.lib.homeManagerConfiguration {
-      pkgs = pkgs;
-
+    homeConfigurations.kang = let pkgs = nixpkgs.legacyPackages.x86_64-linux; in home-manager.lib.homeManagerConfiguration {
       modules = [
         ./standalone
         ./hosts/wsl
@@ -103,8 +76,7 @@
     };
 
     # use in raspberry pi 4
-    homeConfigurations.pi = let pkgs = customNixPkgs.pkgs.aarch64-linux; in home-manager.lib.homeManagerConfiguration {
-      pkgs = pkgs;
+    homeConfigurations.pi = let pkgs = nixpkgs.legacyPackages.aarch64-linux; in home-manager.lib.homeManagerConfiguration {
 
       modules = [
         sops-nix.homeManagerModules.sops
@@ -124,9 +96,7 @@
 
     nixosConfigurations.kang-stay-nixos =
       let system = "x86_64-linux";
-          pkgs = customNixPkgs.pkgs."${system}";
       in nixpkgs.lib.nixosSystem {
-        pkgs = pkgs;
         inherit system;
         specialArgs = { inputs = inputs; additionalPackages = [ ]; isDesktop = true; };
         modules = [
@@ -139,9 +109,7 @@
 
     nixosConfigurations.kang-stay-gmk =
       let system = "x86_64-linux";
-          pkgs = import nixpkgs { system = system; };
       in nixpkgs.lib.nixosSystem {
-        pkgs = pkgs;
         inherit system;
         specialArgs = { inputs = inputs; additionalPackages = [ ]; isDesktop = false; };
         modules = [
@@ -154,7 +122,6 @@
 
     nixosConfigurations.kang-home-nixos = nixpkgs.lib.nixosSystem {
       system = "x86_64-linux";
-      pkgs = customNixPkgs.pkgs.x86_64-linux;
       specialArgs = { inputs = inputs; additionalPackages = []; isDesktop = true; };
       modules = [
         home-manager.nixosModules.home-manager
@@ -166,7 +133,6 @@
 
     nixosConfigurations.kang-soyo = nixpkgs.lib.nixosSystem {
       system = "x86_64-linux";
-      pkgs = customNixPkgs.pkgs.x86_64-linux;
       specialArgs = { inputs = inputs; additionalPackages = []; isDesktop = true; };
       modules = [
         home-manager.nixosModules.home-manager
@@ -178,7 +144,6 @@
 
     nixosConfigurations.kang-virtualbox = nixos.lib.nixosSystem {
       system = "x86_64-linux";
-      pkgs = customNixPkgs.pkgs.x86_64-linux;
       specialArgs = { inputs = inputs; additionalPackages = with (import nixos { system = "x86_64-linux"; }); [ wlr-randr ]; isDesktop = true; };
       modules = [
         home-manager.nixosModules.home-manager
@@ -190,7 +155,6 @@
 
     nixosConfigurations.kang-rpi4 = nixos.lib.nixosSystem {
       system = "aarch64-linux";
-      pkgs = customNixPkgs.pkgs.aarch64-linux;
       specialArgs = { inputs = inputs; additionalPackages = []; isDesktop = false; };
       modules = [
         home-manager.nixosModules.home-manager
