@@ -225,9 +225,9 @@ STATE=$3
 
 case $STATE in
     "MASTER")
-        ${drbd}/bin/drbdadm up all
         ${drbd}/bin/drbdadm attach k3s_server_node
         ${drbd}/bin/drbdadm attach k3s_nfs
+        ${drbd}/bin/drbdadm up all
         ${drbd}/bin/drbdadm connect --discard-my-data k3s_server_node
         ${drbd}/bin/drbdadm connect --discard-my-data k3s_nfs
         sleep 60
@@ -247,9 +247,9 @@ case $STATE in
         ${systemd}/bin/systemctl start zerotierone.service
         ;;
     "BACKUP"|"FAULT"|"STOP")
-        ${drbd}/bin/drbdadm up all
         ${drbd}/bin/drbdadm attach k3s_server_node
         ${drbd}/bin/drbdadm attach k3s_nfs
+        ${drbd}/bin/drbdadm up all
         kill $(${procps}/bin/ps -ef | ${gnugrep}/bin/grep MASTER | ${gawk}/bin/awk '{ print $2 }')
         # Stop K3s server
         ${systemd}/bin/systemctl stop nfs-server.service
