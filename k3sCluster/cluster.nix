@@ -124,6 +124,7 @@ let VIP = "192.168.219.150"; in {
         iptables = "${pkgs.iptables}/bin/iptables";
         in ''
         ${ip} route add table 200 default via 192.168.219.1 dev br0
+        ${ip} route add table 200 192.168.128.0/24 dev wg-vxlan
         ${ip} rule add fwmark 0x1 table 200
 
         ${iptables} -t mangle -A OUTPUT -p tcp --dport 50443 -j MARK --set-mark 1
