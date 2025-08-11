@@ -10,7 +10,9 @@
           inherit (final) system;
         });
       in {
+        codex = unstablePkgs.codex;
         claude-code = unstablePkgs.claude-code;
+        uv = unstablePkgs.uv;
       })
     ];
   };

@@ -147,6 +147,9 @@ let
 \          'ruff',
 \          'ruff_format',
 \        ],
+\        'go': [
+\          'gofmt',
+\        ],
 \      }
 
       let g:ale_fix_on_save = 1

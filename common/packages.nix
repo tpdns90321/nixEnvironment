@@ -1,6 +1,7 @@
 { pkgs, inputs, lib, additionalPackages ? [ ] }:
 
 (with pkgs; [
+  codex
   claude-code
   curlHTTP3
   direnv
@@ -14,6 +15,7 @@
   mosh
   screen
   tmux
+  uv
   wget
   zsh
 

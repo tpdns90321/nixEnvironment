@@ -5,7 +5,7 @@
       url = "github:nixos/nixpkgs/release-25.05";
     };
     nixpkgs_unstable = {
-      url = "github:nixos/nixpkgs/nixpkgs-unstable";
+      url = "github:nixos/nixpkgs/master";
     };
     nixos = {
       url = "github:nixos/nixpkgs/nixos-25.05";
@@ -53,7 +53,7 @@
         specialArgs = {
           inherit inputs;
           user = "kang";
-          additionalCasks = [ "android-studio" "claude" "discord" "parallels@19" "raspberry-pi-imager" "steam" "lm-studio" "ollama-app" "obs" "iterm2" "moonlight" "wireshark-app" ];
+          additionalCasks = [ "android-studio" "claude" "discord" "parallels@19" "raspberry-pi-imager" "steam" "lm-studio" "ollama-app" "obs" "iterm2" "moonlight" "wireshark-app" "thebrowsercompany-dia" ];
           additionalAppStore = {
             "KakaoTalk" = 869223134;
             "Blackmagic Disk Speed Test" = 425264550;
