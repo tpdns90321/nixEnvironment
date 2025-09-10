@@ -1,13 +1,12 @@
 { pkgs, inputs, lib, additionalPackages ? [ ] }:
 
 (with pkgs; [
-  codex
-  claude-code
   curlHTTP3
   direnv
   fnm
   git
   gh
+  go
   home-manager
   jc
   jq

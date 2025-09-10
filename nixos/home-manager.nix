@@ -1,6 +1,6 @@
 { config, pkgs, inputs, home-manager, lib, isDesktop, ... }:
 
-let common-programs = import ../common/home-manager.nix { inherit config pkgs inputs isDesktop; }; in
+let common-programs = import ../common/home-manager.nix { inherit config pkgs lib inputs isDesktop; }; in
 {
   home-manager = {
     useGlobalPkgs = true;

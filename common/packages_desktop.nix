@@ -15,6 +15,11 @@ let
   (import ./packages.nix { inherit pkgs inputs lib additionalPackages; }) ++ (if isDesktop then (with pkgs; [
   my-helm
   my-helmfile
+
+  # AI Code Assistant
+  codex
+  claude-code
+
   # GUI Application for work
   alacritty
   gimp
@@ -38,4 +43,9 @@ let
       ]);
     }
   )
+
+  # Local llms
+  (if pkgs.stdenv.hostPlatform.isLinux then 
+    lmstudio
+  else emptyDirectory)
 ]) else [])

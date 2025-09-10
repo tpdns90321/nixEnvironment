@@ -1,4 +1,4 @@
-{ config, pkgs, inputs, isDesktop ? false, ... }:
+{ config, pkgs, lib, inputs, isDesktop ? false, ... }:
 
 let
   userName = "tpdns90321";
@@ -10,7 +10,7 @@ let
     theme = "robbyrussell";
   };
 
-  zsh.initExtraFirst = ''
+  zsh.initContent = lib.mkBefore (''
     # nix
     export NIXPKGS_ALLOW_UNFREE=1
 
@@ -50,7 +50,15 @@ let
 
     # connect nix-profile's mosh-server
     alias nix-mosh="mosh --server='~/.nix-profile/bin/mosh-server'"
-  '';
+  '' + (if pkgs.stdenv.hostPlatform.isDarwin then ''
+# Added by LM Studio CLI tool (lms)
+if [ -f "$HOME/.lmstudio-home-pointer" ]; then
+    LMSTUDIO_HOME="$(cat "$HOME/.lmstudio-home-pointer")"
+else
+    LMSTUDIO_HOME="$HOME/.lmstudio"
+fi
+export PATH="$PATH:$LMSTUDIO_HOME/bin"
+'' else ""));
 
   tmux = {
     enable = true;
