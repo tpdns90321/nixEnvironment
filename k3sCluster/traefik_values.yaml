@@ -17,6 +17,13 @@ ports:
     proxyProtocol:
       trustedIPs:
         - 10.0.0.0/8
+    http3:
+      enabled: true
+      advertisedPort: 443
+
+ingressRoute:
+  dashboard:
+    enabled: true
 
 service:
   single: false
@@ -27,3 +34,7 @@ service:
     - 192.168.219.150
   spec:
     externalTrafficPolicy: Local
+
+logs:
+  access:
+    enabled: true

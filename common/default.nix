@@ -10,10 +10,12 @@
           inherit (final) system;
         });
       in {
+        vscode-with-extensions = unstablePkgs.vscode-with-extensions;
         codex = unstablePkgs.codex;
         claude-code = unstablePkgs.claude-code;
         uv = unstablePkgs.uv;
       })
+      inputs.nix-vscode-extensions.overlays.default
     ];
   };
 
