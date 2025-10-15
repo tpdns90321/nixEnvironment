@@ -11,6 +11,9 @@ repositories:
   url: https://emberstack.github.io/helm-charts
 - name: blue-atlas
   url: https://charts.blue-atlas.de
+- name: bitnami
+  url: https://charts.bitnami.com/bitnami
+
 
 releases:
 - name: traefik
@@ -113,3 +116,26 @@ releases:
     - ./charts/cookie-based-routing-index/values.yaml
   needs:
     - traefik/traefik
+- name: postgres-for-n8n
+  namespace: n8n
+  chart: bitnami/postgresql
+  values:
+    - ./charts/n8n/values_postgres.yaml
+  secrets:
+    - ./charts/n8n/secrets.yaml
+- name: n8n
+  namespace: n8n
+  chart: oci://8gears.container-registry.com/library/n8n
+  version: 1.0.15
+  values:
+    - ./charts/n8n/values.yaml
+  secrets:
+    - ./charts/n8n/secrets.yaml
+  needs:
+    - traefik/traefik
+    - postgres-for-n8n
+- name: n8n-config
+  namespace: n8n
+  chart: ./charts/n8n
+  needs:
+    - n8n

@@ -1,0 +1,16 @@
+main:
+  config:
+    db:
+      type: postgresdb
+      postgresdb:
+        host: postgres-for-n8n-postgresql
+    node:
+      function_allow_builtin: "*"
+
+  persistence:
+    enabled: true
+    type: dynamic
+    storageClass: "nfs-client"
+
+valkey:
+  enabled: false

@@ -5,6 +5,17 @@ secret:
       <html lang="en">
       <head>
           <meta charset="UTF-8">
+          <title>Redirecting...</title>
+      </head>
+      <body>
+        <h1>Hello, World!</h1>
+      </body>
+      </html>
+    set-route.html: |
+      <!DOCTYPE html>
+      <html lang="en">
+      <head>
+          <meta charset="UTF-8">
           <title>Set Route Cookie</title>
           <meta name="viewport" content="width=device-width, initial-scale=1.0">
           <style>
@@ -36,6 +47,7 @@ secret:
       </head>
       <body class="set-route">
           <button onclick="setCookie('app_route', 'librechat', 300)">Go to LibreChat</button>
+          <button onclick="setCookie('app_route', 'n8n', 300)">Go to n8n</button>
           <button onclick="setCookie('app_route', 'other')">Go to Other</button>
           <script>
           function setCookie(name, value, days) {
