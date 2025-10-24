@@ -142,6 +142,17 @@
       ];
     };
 
+    nixosConfigurations.kang-oddesey = nixpkgs.lib.nixosSystem {
+      system = "x86_64-linux";
+      specialArgs = { inputs = inputs; additionalPackages = []; isDesktop = false; };
+      modules = [
+        home-manager.nixosModules.home-manager
+        sops-nix.nixosModules.sops
+        ./nixos
+        ./hosts/kang_oddesey
+      ];
+    };
+
     nixosConfigurations.kang-virtualbox = nixos.lib.nixosSystem {
       system = "x86_64-linux";
       specialArgs = { inputs = inputs; additionalPackages = with (import nixos { system = "x86_64-linux"; }); [ wlr-randr ]; isDesktop = true; };

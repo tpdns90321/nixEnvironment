@@ -5,6 +5,7 @@ keys:
   - &stay_nixos age1eyjyp4n5ke066nkgcxkqmkzl50nlwkdufsm2qzz5rfvc7peelc5qlnufz7
   - &stay_gmk age1wjnx0ggpvkk9aufyu2juzc7fvlgcefxx5ngn5hsae5n5vl47fcaqzstuf5
   - &kang_rpi age10vsknp7hlnnw6hndrqhzv5wd3u2ucp888du5lmykamext6lzn3jqmjgstu
+  - &kang_oddesey age1j9gx54ya0y9d0erh8u2rpgckwlvcxdjcsa6xkddnsyq7gaam5p7sq87p7n
 creation_rules:
   - path_regex: stay_secrets.yaml$
     key_groups:
@@ -61,6 +62,10 @@ creation_rules:
       - age:
         - *kang_macbook_air
         - *stay_raspberrypi
+  - path_regex: hosts/kang_oddesey/wpa_supplicant_secret
+    key_groups:
+      - age:
+        - *kang_oddesey
   - path_regex: smb_credential.txt$
     key_groups:
       - age:
