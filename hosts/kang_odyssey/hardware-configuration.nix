@@ -15,6 +15,7 @@
   boot.loader.grub = {
     efiSupport = true;
     useOSProber = true;
+    efiInstallAsRemovable = false;
     device = "nodev";
   };
   boot.loader.efi = {
@@ -33,7 +34,7 @@
     };
 
   fileSystems."/boot/efi" =
-    { device = "/dev/disk/by-uuid/AD71-C105";
+    { device = "/dev/disk/by-uuid/0EB4-B494";
       fsType = "vfat";
       options = [ "fmask=0022" "dmask=0022" ];
     };
@@ -50,7 +51,7 @@
   # networking.interfaces.enp3s0.useDHCP = lib.mkDefault true;
   # networking.interfaces.wlo2.useDHCP = lib.mkDefault true;
 
-  networking.hostName = "kang-oddesey";
+  networking.hostName = "kang-odyssey";
 
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
   hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
