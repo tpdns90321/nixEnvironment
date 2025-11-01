@@ -8,4 +8,6 @@
     };
   };
   ids.gids.nixbld = 350;
+
+  networking.hostName = "kang-macbook-air";
 }
