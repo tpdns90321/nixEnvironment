@@ -1,4 +1,4 @@
-{ config, pkgs, inputs, home-manager, lib, sops-nix, user, additionalCasks, additionalAppStore ? {}, additionalPackages ? [], ... }:
+{ config, pkgs, inputs, home-manager, lib, sops-nix, user, additionalCasks, additionalBrews, additionalAppStore ? {}, additionalPackages ? [], ... }:
 
 let
   common-programs = import ../common/home-manager.nix { inherit config pkgs lib inputs; isDesktop = true; }; in
@@ -33,6 +33,7 @@ let
   ];
 
   homebrew.enable = true;
+  homebrew.brews = additionalBrews;
   homebrew.onActivation = {
     autoUpdate = true;
     cleanup = "zap";

@@ -48,8 +48,17 @@ let
       done
     fi
 
-    # connect nix-profile's mosh-server
-    alias nix-mosh="mosh --server='~/.nix-profile/bin/mosh-server'"
+    function fscrypt-mosh() {
+      host=$1
+      shift
+      ip=${"$"+"{host#*@}"}
+      echo -n "Password: "
+      read -s password
+      export SSHPASS=$password
+      PATH=$PATH:${pkgs.sshpass}/bin/ 
+      pgrep -f "^ssh -Nf $ip$" || sshpass -e ssh -Nf $ip && mosh --ssh="sshpass -e ssh" $ip && pgrep -f "mosh-client .*$ip" || pkill -f "^ssh -Nf $ip$"
+      unset SSHPASS
+    }
   '' + (if pkgs.stdenv.hostPlatform.isDarwin then ''
 # Added by LM Studio CLI tool (lms)
 if [ -f "$HOME/.lmstudio-home-pointer" ]; then
@@ -58,6 +67,14 @@ else
     LMSTUDIO_HOME="$HOME/.lmstudio"
 fi
 export PATH="$PATH:$LMSTUDIO_HOME/bin"
+
+function minikube() {
+  PATH="$PATH:/opt/homebrew/bin/" KUBECONFIG=~/.kube/minikube-config command minikube "$@"
+}
+
+function minikube-kubectl() {
+  PATH="$PATH:/opt/homebrew/bin/" KUBECONFIG=~/.kube/minikube-config command minikube kubectl -- "$@"
+}
 '' else ""));
 
   tmux = {

@@ -37,9 +37,13 @@
       url = "github:nix-community/nix-vscode-extensions";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    nixos-generators = {
+      url = "github:nix-community/nixos-generators";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
-  outputs = { self, darwin, home-manager, nixpkgs, nixos, nixos-hardware, sops-nix, ... }@inputs: 
+  outputs = { self, darwin, home-manager, nixpkgs, nixos, nixos-hardware, sops-nix, nixos-generators, ... }@inputs: 
   {
     darwinConfigurations = {
       "kang-macbook-air" = darwin.lib.darwinSystem {
@@ -53,7 +57,8 @@
         specialArgs = {
           inherit inputs;
           user = "kang";
-          additionalCasks = [ "android-studio" "claude" "discord" "parallels@19" "raspberry-pi-imager" "steam" "iterm2" "moonlight" "wireshark-app" "virtualbox" "zen" ];
+          additionalBrews = [ "minikube" "vfkit" ];
+          additionalCasks = [ "android-studio" "claude" "discord" "parallels@19" "raspberry-pi-imager" "steam" "iterm2" "moonlight" "wireshark-app" "virtualbox" "zen" "zoom" "obs" "zap" ];
           additionalAppStore = {
             "KakaoTalk" = 869223134;
             "Blackmagic Disk Speed Test" = 425264550;
@@ -161,6 +166,7 @@
         sops-nix.nixosModules.sops
         ./nixos
         ./hosts/kang_virtualbox
+        ./hosts/kang_virtualbox/hardware-configuration.nix
       ];
     };
 
@@ -175,5 +181,27 @@
         ./hosts/kang_rpi4
       ];
     };
+
+  packages =
+    let
+      allSystems = [ "x86_64-linux" "aarch64-linux" ];
+      in
+      nixpkgs.lib.genAttrs allSystems (system: {
+        tui-only = nixos-generators.nixosGenerate {
+          inherit system;
+          specialArgs = { inputs = inputs; additionalPackages = [ ]; isDesktop = false;  };
+          modules = [
+            home-manager.nixosModules.home-manager
+            ./nixos
+            ./hosts/kang_virtualbox
+            {
+              nix.registry.nixpkgs.flake = nixpkgs;
+              users.users.kang.password = "";
+              virtualisation.diskSize = 1024 * 20;
+            }
+          ];
+          format = "qcow";
+        };
+      });
   };
 }
