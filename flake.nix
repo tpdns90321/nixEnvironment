@@ -116,7 +116,7 @@
       let system = "x86_64-linux";
       in nixpkgs.lib.nixosSystem {
         inherit system;
-        specialArgs = { inputs = inputs; additionalPackages = [ ]; isDesktop = false; };
+        specialArgs = { inputs = inputs; additionalPackages = [ "nfs-utils" ]; isDesktop = false; };
         modules = [
           home-manager.nixosModules.home-manager
           sops-nix.nixosModules.sops
@@ -182,7 +182,7 @@
 
     nixosConfigurations.kang-rpi4 = nixos.lib.nixosSystem {
       system = "aarch64-linux";
-      specialArgs = { inputs = inputs; additionalPackages = []; isDesktop = false; };
+      specialArgs = { inputs = inputs; additionalPackages = [ "nfs-utils" ]; isDesktop = false; };
       modules = [
         home-manager.nixosModules.home-manager
         sops-nix.nixosModules.sops
