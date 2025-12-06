@@ -1,6 +1,9 @@
 
 deployment:
-  kind: DaemonSet
+  kind: Deployment
+
+nodeSelector:
+  current-mode: primary
 
 ports:
   web:
