@@ -62,19 +62,7 @@
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
-  environment.systemPackages = (with pkgs; [
-    # vnc client
-    wayvnc
-
-    # fileSystem
-    cifs-utils
-
-    # cryptography disk
-    cryptsetup
-
-    # wireshark
-    wireshark
-  ]) ++ (import ../common/packages_desktop.nix { inherit pkgs inputs lib additionalPackages isDesktop; });
+  environment.systemPackages = (import ../common/packages_desktop.nix { inherit pkgs inputs lib additionalPackages isDesktop; });
 
   environment.variables = {
     EDITOR = "nvim";
@@ -131,11 +119,6 @@
 
   # List services that you want to enable:
 
-  # podman
-  virtualisation.podman = {
-    enable = isDesktop;
-    dockerCompat = true;
-  };
   # Enable the OpenSSH daemon.
   # services.openssh.enable = true;
 

@@ -16,18 +16,13 @@ let
 
     # editor
     export EDITOR=nvim
-    export PATH=$PATH:${pkgs.nodePackages_latest."@astrojs/language-server".outPath}/bin
-
-    # react-native android
-    export ANDROID_HOME=$HOME/Library/Android/sdk
-    export PATH=$PATH:$ANDROID_HOME/emulator
-    export PATH=$PATH:$ANDROID_HOME/platform-tools
-
+    '' + (if isDesktop then ''
     # direnv
     eval "$(direnv hook zsh)"
 
     # fnm node version manager
     eval "$(fnm env --use-on-cd)"
+    '' else "") + ''
 
     # if exist '.env' in home, export exists environment variable.
     if [ -f ~/.env ]; then
@@ -60,6 +55,11 @@ let
       unset SSHPASS
     }
   '' + (if pkgs.stdenv.hostPlatform.isDarwin then ''
+# react-native android
+export ANDROID_HOME=$HOME/Library/Android/sdk
+export PATH=$PATH:$ANDROID_HOME/emulator
+export PATH=$PATH:$ANDROID_HOME/platform-tools
+
 # Added by LM Studio CLI tool (lms)
 if [ -f "$HOME/.lmstudio-home-pointer" ]; then
     LMSTUDIO_HOME="$(cat "$HOME/.lmstudio-home-pointer")"
@@ -102,34 +102,34 @@ function minikube-kubectl() {
     vimAlias = true;
 
     plugins = (with pkgs.vimPlugins; [
-      ale
       lsp-zero-nvim
       nvim-cmp
       nvim-lspconfig
       nvim-treesitter
-      nvim-treesitter-parsers.astro
       nvim-treesitter-parsers.html
       cmp-buffer
       cmp-path
       luasnip
       cmp_luasnip
       cmp-nvim-lsp
+    ] ++ (if isDesktop then ([
       direnv-vim
-    ]) ++ (pkgs.callPackage (import ./customVimPlugins.nix inputs) {});
+      ale
+    ] ++ (pkgs.callPackage (import ./customVimPlugins.nix inputs) {})) else []));
 
     extraPackages = with pkgs; [
       # lspconfig
+      nixd
+    ] ++ (if isDesktop then [
       gopls
       rust-analyzer
       ruff
-      nixd
       nodePackages_latest.vscode-langservers-extracted
       nodePackages_latest.typescript-language-server
-      nodePackages_latest."@astrojs/language-server"
       nodePackages_latest."@tailwindcss/language-server"
       pyright
       typescript
-    ];
+    ] else []);
 
     extraConfig = ''
       " white space
@@ -148,7 +148,6 @@ function minikube-kubectl() {
       syntax on
       filetype plugin indent on
       autocmd FileType python setlocal tabstop=4
-      autocmd BufRead,BufEnter *.astro set filetype=astro
 
       " linting
       let g:ale_fixers = {
@@ -205,13 +204,11 @@ function minikube-kubectl() {
         },
       })
 
-      require('lspconfig').astro.setup({})
-
+      require('lspconfig').nixd.setup({})
+      '' + (if isDesktop then ''
       require('lspconfig').gopls.setup({})
 
       require('lspconfig').pyright.setup({})
-
-      require('lspconfig').nixd.setup({})
 
       require('lspconfig').tailwindcss.setup({})
 
@@ -226,6 +223,7 @@ function minikube-kubectl() {
       })
 
       require('lspconfig').ruff.setup({})
+      '' else "") + ''
 
       lsp.setup()
 

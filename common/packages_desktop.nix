@@ -15,6 +15,9 @@ let
   my-helm
   my-helmfile
 
+  # direnv
+  direnv
+
   # AI Code Assistant
   codex
   claude-code
@@ -22,6 +25,29 @@ let
   # GUI Application for work
   alacritty
   gimp
+
+  # Kubernetes development
+  kubectl
+
+  # js development
+  fnm
+  nodejs_22
+  nodePackages_latest.npm
+  nodePackages_latest.pnpm
+  nodePackages_latest.yarn
+
+  # golang development
+  go
+
+  # react-native development
+  # jdk11 in linux
+
+  # python development
+  python311
+  uv
+
+  # rust development
+  rustup
   
   # VSCode
   (
@@ -39,8 +65,14 @@ let
     }
   )
 
-  # Local llms
+] ++
   (if pkgs.stdenv.hostPlatform.isLinux then 
-    lmstudio
-  else emptyDirectory)
-]) else [])
+    [
+      # vnc client
+      wayvnc
+
+      # wireshark
+      wireshark
+    ]
+  else [])
+) else [])
