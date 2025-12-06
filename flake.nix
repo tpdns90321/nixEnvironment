@@ -63,8 +63,8 @@
             "KakaoTalk" = 869223134;
             "Blackmagic Disk Speed Test" = 425264550;
           };
-          additionalPackages = with nixpkgs.legacyPackages."aarch64-darwin"; [
-            mitmproxy
+          additionalPackages = [
+            "mitmproxy"
           ];
           sops-nix = sops-nix.homeManagerModules.sops;
         };
@@ -92,9 +92,9 @@
         inputs = inputs;
         user = "pi";
         isDesktop = false;
-        additionalPackages = with pkgs; [
-          wakeonlan
-          caddy
+        additionalPackages = [
+          "wakeonlan"
+          "caddy"
         ];
       };
     };
@@ -158,9 +158,19 @@
       ];
     };
 
+    nixosConfigurations.kang-ryzen = nixpkgs.lib.nixosSystem {
+      system = "x86_64-linux";
+      specialArgs = { inputs = inputs; additionalPackages = ["virt-manager"]; isDesktop = true; };
+      modules = [
+        home-manager.nixosModules.home-manager
+        ./nixos
+        ./hosts/kang_ryzen
+      ];
+    };
+
     nixosConfigurations.kang-virtualbox = nixos.lib.nixosSystem {
       system = "x86_64-linux";
-      specialArgs = { inputs = inputs; additionalPackages = with (import nixos { system = "x86_64-linux"; }); [ wlr-randr ]; isDesktop = true; };
+      specialArgs = { inputs = inputs; additionalPackages = [ "wlr-randr" ]; isDesktop = true; };
       modules = [
         home-manager.nixosModules.home-manager
         sops-nix.nixosModules.sops

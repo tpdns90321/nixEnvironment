@@ -18,4 +18,4 @@
   age
   ssh-to-age
   sops
-]) ++ additionalPackages
+]) ++ (builtins.map (name: pkgs.${name}) additionalPackages)

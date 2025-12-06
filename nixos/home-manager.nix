@@ -57,7 +57,7 @@ let common-programs = import ../common/home-manager.nix { inherit config pkgs li
           enable = isDesktop;
         };
       };
-      wayland.windowManager.sway = let modifier = "Mod4"; in {
+      wayland.windowManager.sway = let modifier = "Mod1"; in {
         enable = isDesktop;
         config = {
           defaultWorkspace = "workspace number 1";
@@ -91,7 +91,7 @@ let common-programs = import ../common/home-manager.nix { inherit config pkgs li
           };
           window.commands = [
             {
-              command = "border pixel 2";
+              command = "border pixel 3";
               criteria = {
                 app_id = "zen";
               };
