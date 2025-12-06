@@ -14,12 +14,6 @@
   # networking.proxy.default = "http://user:password@proxy:port/";
   # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
 
-  # Network NameServers
-  networking.nameservers = [
-    "192.168.219.150"
-    "1.1.1.1"
-  ];
-
   # Set your time zone.
   time.timeZone = "Asia/Seoul";
 

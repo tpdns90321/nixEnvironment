@@ -16,10 +16,59 @@
   services.openssh.enable = true;
   services.openssh.settings.KbdInteractiveAuthentication = false;
 
+  services.resolved.extraConfig = ''
+[Resolve]
+DNSStubListenerExtra=192.168.172.1
+'';
+
   programs.mosh.enable = true;
 
+  boot.kernel.sysctl = {
+    "net.ipv4.ip_forward" = true;
+  };
+
+  networking.useNetworkd = true;
+  networking.useDHCP = false;
+  networking.hostName = "kang-odyssey";
+
+  networking.wireless.enable = true;
   networking.wireless.secretsFile = config.sops.secrets.wpa_supplicant_secrets.path;
   networking.wireless.networks = {
     kang_5G.pskRaw = "ext:psk_kang";
+  };
+
+  systemd.network.networks."20-wlo" = {
+    enable = true;
+
+    matchConfig = {
+      Name = "wlo2";
+    };
+
+    networkConfig = {
+      DHCP = true;
+      IPv4Forwarding = true;
+    };
+  };
+
+  systemd.network.networks."20-enp" = {
+    enable = true;
+
+    matchConfig = {
+      Name = "enp*";
+    };
+
+    networkConfig = {
+      Address = "192.168.172.1/24";
+      DHCPServer = true;
+      IPv4Forwarding = true;
+    };
+
+    dhcpServerConfig = {
+      DNS = "192.168.172.1";
+    };
+  };
+
+  networking.firewall = {
+    allowedUDPPorts = [ 67 68 53 ];
   };
 }
