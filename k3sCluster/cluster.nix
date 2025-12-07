@@ -166,7 +166,7 @@ let VIP = "192.168.219.150"; in {
       }
       {
         publicKey = "KArAH+HTHzmp3AAez6G2wOcBRV1Tl728gLtu/b2k2mA=";
-        allowedIPs = [ "192.168.128.5/32" ];
+        allowedIPs = [ "192.168.128.5/32" "192.168.172.0/24" ];
       }
     ];
     extraOptions = {
