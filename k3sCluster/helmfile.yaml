@@ -35,6 +35,12 @@ releases:
     value: 192.168.219.150
   - name: nfs.path
     value: /nfs
+  - name: nfs.mountOptions[0]
+    value: nolock
+  - name: nfs.mountOptions[1]
+    value: noacl
+  - name: storageClass.accessModes
+    value: ReadWriteMany
   - name: nodeSelector.current-mode
     value: primary
 - name: cert-manager

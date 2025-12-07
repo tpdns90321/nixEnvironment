@@ -149,7 +149,7 @@
 
     nixosConfigurations.kang-odyssey = nixpkgs.lib.nixosSystem {
       system = "x86_64-linux";
-      specialArgs = { inputs = inputs; additionalPackages = []; isDesktop = false; };
+      specialArgs = { inputs = inputs; additionalPackages = [ "wakeonlan" ]; isDesktop = false; };
       modules = [
         home-manager.nixosModules.home-manager
         sops-nix.nixosModules.sops
