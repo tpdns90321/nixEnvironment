@@ -23,3 +23,13 @@ spec:
             - secretRef:
                 name: duckdns-environment
           restartPolicy: OnFailure
+          affinity:
+            nodeAffinity:
+              requiredDuringSchedulingIgnoredDuringExecution:
+                nodeSelectorTerms:
+                - matchExpressions:
+                  - key: kubernetes.io/hostname
+                    operator: In
+                    values:
+                      - kang-stay-gmk
+                      - kang-rpi4

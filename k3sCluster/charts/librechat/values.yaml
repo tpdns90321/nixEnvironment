@@ -26,6 +26,17 @@ image:
   pullPolicy: Always
   tag: latest
 
+affinity:
+  nodeAffinity:
+    requiredDuringSchedulingIgnoredDuringExecution:
+      nodeSelectorTerms:
+        - matchExpressions:
+            - key: kubernetes.io/hostname
+              operator: In
+              values:
+                - kang-stay-gmk
+                - kang-rpi4
+
 mcp_servers:
   mcp-youtube-transcript:
     command: "apk add --no-interactive uv python3 git && uvx --from git+https://github.com/jkawamoto/mcp-youtube-transcript mcp-youtube-transcript"
@@ -60,3 +71,4 @@ mcp_servers:
       "--port=8000"
     ]
     notHaveHealthEndpoint: true
+    notSetAffinity: true

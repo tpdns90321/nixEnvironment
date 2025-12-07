@@ -1,3 +1,4 @@
+{{- $root := . -}}
 {{- range $name, $value := .Values.mcp_servers }}
 apiVersion: apps/v1
 kind: Deployment
@@ -44,6 +45,10 @@ spec:
         {{- range $key, $val := $value.nodeSelector }}
         {{ $key }}: {{ $val }}
         {{- end }}
+      {{- end }}
+      {{- if not $value.notSetAffinity }}
+      affinity:
+        {{- toYaml $root.Values.affinity | nindent 8 }}
       {{- end }}
 ---
 apiVersion: v1
