@@ -21,7 +21,7 @@ spec:
   entryPoints:
     - web
   routes:
-    - match: (ClientIP(`192.168.219.0/24`) || ClientIP(`192.168.128.0/24`)) && PathPrefix(`/transmission`) && HostRegexp(`.*`) && HeaderRegexp(`Cookie`, `.*`)
+    - match: (ClientIP(`192.168.0.0/16`)) && PathPrefix(`/transmission`) && HostRegexp(`.*`) && HeaderRegexp(`Cookie`, `.*`)
       kind: Rule
       services:
         - name: transmission
@@ -35,7 +35,7 @@ spec:
   entryPoints:
     - websecure
   routes:
-    - match: (ClientIP(`192.168.219.0/24`) || ClientIP(`192.168.128.0/24`)) && PathPrefix(`/transmission`) && HostRegexp(`.*`) && HeaderRegexp(`Cookie`, `.*`)
+    - match: (ClientIP(`192.168.0.0/16`)) && PathPrefix(`/transmission`) && HostRegexp(`.*`) && HeaderRegexp(`Cookie`, `.*`)
       kind: Rule
       services:
         - name: transmission

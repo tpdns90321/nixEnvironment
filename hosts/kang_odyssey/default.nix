@@ -34,6 +34,7 @@ DNSStubListenerExtra=192.168.172.1
   networking.useNetworkd = true;
   networking.useDHCP = false;
   networking.hostName = "kang-odyssey";
+  networking.nameservers = [ "192.168.219.150" ];
 
   networking.wireless.enable = true;
   networking.wireless.secretsFile = config.sops.secrets.wpa_supplicant_secret.path;

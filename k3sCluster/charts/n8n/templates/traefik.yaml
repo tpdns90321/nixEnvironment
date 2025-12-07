@@ -6,7 +6,7 @@ spec:
   entryPoints:
     - web
   routes:
-    - match: (ClientIP(`192.168.219.0/24`) || ClientIP(`192.168.128.0/24`)) && HeaderRegexp(`Cookie`, `app_route=n8n`)
+    - match: (ClientIP(`192.168.0.0/16`)) && HeaderRegexp(`Cookie`, `app_route=n8n`)
       kind: Rule
       services:
         - name: n8n
@@ -20,7 +20,7 @@ spec:
   entryPoints:
     - websecure
   routes:
-    - match: (ClientIP(`192.168.219.0/24`) || ClientIP(`192.168.128.0/24`)) && HeaderRegexp(`Cookie`, `app_route=n8n`)
+    - match: (ClientIP(`192.168.0.0/16`)) && HeaderRegexp(`Cookie`, `app_route=n8n`)
       kind: Rule
       services:
         - name: n8n
