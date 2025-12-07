@@ -7,8 +7,12 @@
 
   sops.age.keyFile = "/etc/sops/age/keys.txt";
 
-  sops.secrets.wpa_supplicant_secrets = {
-    sopsFile = ./wpa_supplicant_secrets;
+  sops.secrets.wpa_supplicant_secret = {
+    sopsFile = ./wpa_supplicant_secret;
+    format = "binary";
+  };
+  sops.secrets.wg_conf_secret = {
+    sopsFile = ./wg_conf_secret;
     format = "binary";
   };
 
@@ -32,9 +36,13 @@ DNSStubListenerExtra=192.168.172.1
   networking.hostName = "kang-odyssey";
 
   networking.wireless.enable = true;
-  networking.wireless.secretsFile = config.sops.secrets.wpa_supplicant_secrets.path;
+  networking.wireless.secretsFile = config.sops.secrets.wpa_supplicant_secret.path;
   networking.wireless.networks = {
     kang_5G.pskRaw = "ext:psk_kang";
+  };
+
+  networking.wg-quick.interfaces.wg-vxlan = {
+    configFile = config.sops.secrets.wg_conf_secret.path;
   };
 
   systemd.network.networks."20-wlo" = {

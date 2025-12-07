@@ -164,6 +164,10 @@ let VIP = "192.168.219.150"; in {
         publicKey = "On0wg+yUObyosZfnanz0T5BawVpQVp1lZPwZQtE97xc=";
         allowedIPs = [ "192.168.128.4/32" ];
       }
+      {
+        publicKey = "KArAH+HTHzmp3AAez6G2wOcBRV1Tl728gLtu/b2k2mA=";
+        allowedIPs = [ "192.168.128.5/32" ];
+      }
     ];
     extraOptions = {
       FwMark = "0x1";

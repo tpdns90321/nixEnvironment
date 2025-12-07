@@ -62,7 +62,7 @@ creation_rules:
       - age:
         - *kang_macbook_air
         - *stay_raspberrypi
-  - path_regex: hosts/kang_odyssey/wpa_supplicant_secret
+  - path_regex: hosts/kang_odyssey/.*_secret$
     key_groups:
       - age:
         - *kang_odyssey
