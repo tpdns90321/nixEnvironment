@@ -129,8 +129,8 @@ let VIP = "192.168.219.150"; in {
 
         ${iptables} -t mangle -A OUTPUT -p tcp --dport 50443 -j MARK --set-mark 1
         ${iptables} -t mangle -A PREROUTING -p tcp --dport 50443 -j MARK --set-mark 1
-        ${iptables} -t mangle -A PREROUTING -m conntrack --ctorigdst 192.168.219.150 -i cni0 -p tcp --sport 8000 ! -d 192.168.219.0/24 -j MARK --set-mark 0x1
-        ${iptables} -t mangle -A PREROUTING -m conntrack --ctorigdst 192.168.219.150 -i cni0 -p tcp --sport 8443 ! -d 192.168.219.0/24 -j MARK --set-mark 0x1
+        ${iptables} -t mangle -A PREROUTING -m conntrack --ctorigdst 192.168.219.150 -i cni0 -p tcp --sport 8000 ! -d 192.168.0.0/16 -j MARK --set-mark 0x1
+        ${iptables} -t mangle -A PREROUTING -m conntrack --ctorigdst 192.168.219.150 -i cni0 -p tcp --sport 8443 ! -d 192.168.0.0/16 -j MARK --set-mark 0x1
         '';
     postDown = with pkgs;
       let
@@ -142,8 +142,8 @@ let VIP = "192.168.219.150"; in {
 
         ${iptables} -t mangle -D OUTPUT -p tcp --dport 50443 -j MARK --set-mark 1
         ${iptables} -t mangle -D PREROUTING -p tcp --dport 50443 -j MARK --set-mark 1
-        ${iptables} -t mangle -D PREROUTING -m conntrack --ctorigdst 192.168.219.150 -i cni0 -p tcp --sport 8000 ! -d 192.168.219.0/24 -j MARK --set-mark 0x1
-        ${iptables} -t mangle -D PREROUTING -m conntrack --ctorigdst 192.168.219.150 -i cni0 -p tcp --sport 8443 ! -d 192.168.219.0/24 -j MARK --set-mark 0x1
+        ${iptables} -t mangle -D PREROUTING -m conntrack --ctorigdst 192.168.219.150 -i cni0 -p tcp --sport 8000 ! -d 192.168.0.0/16 -j MARK --set-mark 0x1
+        ${iptables} -t mangle -D PREROUTING -m conntrack --ctorigdst 192.168.219.150 -i cni0 -p tcp --sport 8443 ! -d 192.168.0.0/16 -j MARK --set-mark 0x1
       '';
   };
 
