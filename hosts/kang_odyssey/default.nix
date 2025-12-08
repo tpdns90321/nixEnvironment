@@ -21,8 +21,8 @@
   services.openssh.settings.KbdInteractiveAuthentication = false;
 
   services.resolved.extraConfig = ''
-[Resolve]
 DNSStubListenerExtra=192.168.172.1
+fallbackDNS=
 '';
 
   programs.mosh.enable = true;
