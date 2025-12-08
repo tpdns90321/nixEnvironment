@@ -15,14 +15,22 @@
     sopsFile = ./wg_conf_secret;
     format = "binary";
   };
+  sops.secrets.k3s_token_secret = {
+    sopsFile = ./k3s_token_secret;
+    format = "binary";
+  };
 
   security.pam.enableFscrypt = true;
   services.openssh.enable = true;
   services.openssh.settings.KbdInteractiveAuthentication = false;
-
   services.resolved.extraConfig = ''
 DNSStubListenerExtra=192.168.172.1
 '';
+  services.k3s = {
+    enable = true;
+    tokenFile = config.sops.secrets.k3s_token_secret.path;
+    role = "agent";
+  };
 
   programs.mosh.enable = true;
 
