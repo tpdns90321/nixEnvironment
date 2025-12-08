@@ -11,9 +11,6 @@
   security.pam.enableFscrypt = true;
   services.openssh.enable = true;
   services.openssh.settings.KbdInteractiveAuthentication = false;
-  services.resolved.extraConfig = ''
-FallbackDNS=
-'';
 
   programs.mosh.enable = true;
 

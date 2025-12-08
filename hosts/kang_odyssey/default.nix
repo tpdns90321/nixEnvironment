@@ -22,7 +22,6 @@
 
   services.resolved.extraConfig = ''
 DNSStubListenerExtra=192.168.172.1
-FallbackDNS=
 '';
 
   programs.mosh.enable = true;
@@ -54,9 +53,13 @@ FallbackDNS=
     };
 
     networkConfig = {
-      DHCP = true;
+      DHCP = "ipv4";
       IPv4Forwarding = true;
+      DNSDefaultRoute = false;
     };
+
+    dhcpV4Config = { UseDNS = false;  };
+    dhcpV6Config = { UseDNS = false;  };
   };
 
   systemd.network.networks."20-enp" = {
@@ -74,6 +77,10 @@ FallbackDNS=
 
     dhcpServerConfig = {
       DNS = "192.168.172.1";
+    };
+
+    linkConfig = {
+      RequiredForOnline = "no";
     };
   };
 
