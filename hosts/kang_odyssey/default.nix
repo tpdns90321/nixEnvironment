@@ -30,6 +30,7 @@ DNSStubListenerExtra=192.168.172.1
     enable = true;
     tokenFile = config.sops.secrets.k3s_token_secret.path;
     role = "agent";
+    serverAddr = "https://192.168.219.150:6443";
   };
 
   programs.mosh.enable = true;
