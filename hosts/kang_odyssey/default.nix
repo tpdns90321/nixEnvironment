@@ -22,7 +22,7 @@
 
   services.resolved.extraConfig = ''
 DNSStubListenerExtra=192.168.172.1
-fallbackDNS=
+FallbackDNS=
 '';
 
   programs.mosh.enable = true;

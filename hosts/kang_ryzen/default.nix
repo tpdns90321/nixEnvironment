@@ -12,7 +12,7 @@
   services.openssh.enable = true;
   services.openssh.settings.KbdInteractiveAuthentication = false;
   services.resolved.extraConfig = ''
-fallbackDNS=
+FallbackDNS=
 '';
 
   programs.mosh.enable = true;
