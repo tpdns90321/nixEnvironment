@@ -9,6 +9,7 @@
   boot.kernel.sysctl."mm.ksm.sleep_millisecs" = 5;
 
   security.pam.enableFscrypt = true;
+
   services.openssh.enable = true;
   services.openssh.settings.KbdInteractiveAuthentication = false;
 
