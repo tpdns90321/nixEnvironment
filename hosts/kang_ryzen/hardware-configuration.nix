@@ -44,6 +44,11 @@
       fsType = "exfat";
     };
 
+  fileSystems."/lab2" =
+    { device = "/dev/nixos/lab2";
+      fsType = "xfs";
+    };
+
   swapDevices = [ {
     device = "/dev/nixos/swap";
     randomEncryption.enable = true;

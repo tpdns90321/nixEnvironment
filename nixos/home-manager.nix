@@ -7,7 +7,8 @@ let common-programs = import ../common/home-manager.nix { inherit config pkgs li
     users.kang = {
       home.enableNixpkgsReleaseCheck = true;
       # home.packages = (import ../common/packages_desktop.nix { inherit pkgs inputs lib isDesktop; });
-      programs = common-programs // { waybar = {
+      programs = common-programs // {
+        waybar = {
           enable = isDesktop;
           settings = [
             {
@@ -42,8 +43,18 @@ let common-programs = import ../common/home-manager.nix { inherit config pkgs li
                 icon-size = 20;
                 spacing = 10;
               };
+
+              pulseaudio = {
+                on-click = "${pkgs.pavucontrol}/bin/pavucontrol";
+              };
             }
           ];
+        };
+        swaylock = {
+          enable = true;
+          settings = {
+            color = "00000000";
+          };
         };
         chromium = {
           enable = isDesktop;
@@ -94,6 +105,12 @@ let common-programs = import ../common/home-manager.nix { inherit config pkgs li
               command = "border pixel 3";
               criteria = {
                 app_id = "zen";
+              };
+            }
+            {
+              command = "floating enable";
+              criteria = {
+                app_id = "pavucontrol";
               };
             }
           ];
