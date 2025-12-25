@@ -11,9 +11,6 @@
   security.pam.enableFscrypt = true;
   services.openssh.enable = true;
   services.openssh.settings.KbdInteractiveAuthentication = false;
-  services.zerotierone = {
-    enable = true;
-  };
 
   programs.mosh.enable = true;
 
@@ -30,17 +27,6 @@
 
     networkConfig = {
       DHCP = true;
-    };
-  };
-
-  systemd.network.networks."20-zt" = {
-    matchConfig = {
-      Name = "ztfp6i26fp";
-    };
-
-    networkConfig = {
-      DHCP = false;
-      Address = "192.168.219.57";
     };
   };
 

@@ -1,4 +1,4 @@
-{ config, ... }:
+{ config, pkgs, ... }:
 
 {
   imports = [
@@ -96,5 +96,15 @@ DNSStubListenerExtra=192.168.172.1
 
   networking.firewall = {
     allowedUDPPorts = [ 67 68 53 ];
+    extraCommands = with pkgs; let ip = "${iproute2}/bin/ip"; in ''
+      ${ip} route add table 200 192.168.219.150/32 dev wg-vxlan || true
+      ${ip} rule add fwmark 0x1 table 200
+      iptables -t mangle -A OUTPUT -d 192.168.219.150 -p tcp --dport 80 -j MARK --set-mark 0x1
+      iptables -t mangle -A OUTPUT -d 192.168.219.150 -p tcp --dport 443 -j MARK --set-mark 0x1
+      iptables -t mangle -A OUTPUT -d 192.168.219.150 -p udp --dport 443 -j MARK --set-mark 0x1
+      iptables -t mangle -A PREROUTING -d 192.168.219.150 -p tcp --dport 80 -j MARK --set-mark 0x1
+      iptables -t mangle -A PREROUTING -d 192.168.219.150 -p tcp --dport 443 -j MARK --set-mark 0x1
+      iptables -t mangle -A PREROUTING -d 192.168.219.150 -p udp --dport 443 -j MARK --set-mark 0x1
+    '';
   };
 }
