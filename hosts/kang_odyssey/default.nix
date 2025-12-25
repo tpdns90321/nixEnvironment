@@ -31,6 +31,7 @@ DNSStubListenerExtra=192.168.172.1
     tokenFile = config.sops.secrets.k3s_token_secret.path;
     role = "agent";
     serverAddr = "https://192.168.219.150:6443";
+    extraFlags = "--node-external-ip=192.168.1.123";
   };
 
   programs.mosh.enable = true;
