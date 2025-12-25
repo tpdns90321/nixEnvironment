@@ -30,17 +30,6 @@
     };
   };
 
-  networking.firewall = {
-    extraCommands = with pkgs; let ip = "${iproute2}/bin/ip"; in ''
-      ${ip} route flush table 200
-      ${ip} route add table 200 192.168.219.150/32 dev ztfp6i26fp
-      ${ip} rule add fwmark 0x1 table 200
-      iptables -t mangle -A OUTPUT -d 192.168.219.150 -p tcp --dport 80 -j MARK --set-mark 0x1
-      iptables -t mangle -A OUTPUT -d 192.168.219.150 -p tcp --dport 443 -j MARK --set-mark 0x1
-      iptables -t mangle -A OUTPUT -d 192.168.219.150 -p udp --dport 443 -j MARK --set-mark 0x1
-    '';
-  };
-
   users.users.kang.extraGroups = [ "libvirtd" "docker" ];
 
   virtualisation.waydroid.enable = true;
