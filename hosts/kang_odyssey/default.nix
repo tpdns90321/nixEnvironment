@@ -1,4 +1,4 @@
-{ config, ... }:
+{ config, pkgs, ... }:
 
 {
   imports = [
@@ -44,6 +44,7 @@ DNSStubListenerExtra=192.168.172.1
   networking.useDHCP = false;
   networking.hostName = "kang-odyssey";
   networking.nameservers = [ "192.168.219.150" ];
+  networking.bridges.br-internal.interfaces = [ "enp2s0" "enp3s0" ];
 
   networking.wireless.enable = true;
   networking.wireless.secretsFile = config.sops.secrets.wpa_supplicant_secret.path;
@@ -72,11 +73,11 @@ DNSStubListenerExtra=192.168.172.1
     dhcpV6Config = { UseDNS = false;  };
   };
 
-  systemd.network.networks."20-enp" = {
+  systemd.network.networks."20-br-internal" = {
     enable = true;
 
     matchConfig = {
-      Name = "enp*";
+      Name = "br-internal";
     };
 
     networkConfig = {
@@ -92,6 +93,22 @@ DNSStubListenerExtra=192.168.172.1
     linkConfig = {
       RequiredForOnline = "no";
     };
+  };
+
+  systemd.services.k3s-exclude-routing = {
+    description = "Disable some PREROUTING chain in k3s";
+    after = [
+      "k3s.service"
+    ];
+
+    serviceConfig = {
+      Type = "oneshot";
+      Environment = "PATH=${pkgs.iptables}/bin/";
+      ExecStart = ''${pkgs.busybox}/bin/sh -c "sleep 60 && \
+      iptables -t nat -I PREROUTING 1 -i br-internal -j RETURN && \
+      iptables -I FORWARD 1 -i br-internal -j RETURN"'';
+    };
+    wantedBy = [ "multi-user.target" ];
   };
 
   networking.firewall = {
