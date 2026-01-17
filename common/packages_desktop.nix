@@ -21,6 +21,7 @@ let
   # AI Code Assistant
   codex
   claude-code
+  opencode
 
   # GUI Application for work
   alacritty
@@ -30,6 +31,7 @@ let
   kubectl
 
   # js development
+  bun
   fnm
   nodejs_22
   nodePackages_latest.npm

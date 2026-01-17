@@ -13,6 +13,7 @@
         vscode-with-extensions = unstablePkgs.vscode-with-extensions;
         codex = unstablePkgs.codex;
         claude-code = unstablePkgs.claude-code;
+        opencode = unstablePkgs.opencode;
         uv = unstablePkgs.uv;
       })
       inputs.nix-vscode-extensions.overlays.default

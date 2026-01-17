@@ -64,6 +64,7 @@
             "Blackmagic Disk Speed Test" = 425264550;
           };
           additionalPackages = [
+            "podman"
             "mitmproxy"
           ];
           sops-nix = sops-nix.homeManagerModules.sops;

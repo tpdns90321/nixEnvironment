@@ -48,6 +48,8 @@ releases:
 - name: descheduler
   namespace: kube-system
   chart: descheduler/descheduler
+  values:
+    - ./descheduler_values.yaml
 - name: cert-manager
   namespace: cert-manager
   chart: jetstack/cert-manager

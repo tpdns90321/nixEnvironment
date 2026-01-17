@@ -42,21 +42,21 @@ mcp_servers:
     command: "apk add --no-interactive uv python3 git && uvx --from git+https://github.com/jkawamoto/mcp-youtube-transcript mcp-youtube-transcript"
   brave-search:
     command: "npx -y @modelcontextprotocol/server-brave-search"
-  puppeteer:
-    image: mcp/puppeteer:latest
-    command: ["npx"]
-    args: [
-      "-y",
-      "supergateway",
-      "--stdio",
-      "node dist/index.js",
-      "--port",
-      "8000",
-      "--healthEndpoint",
-      "/healthz",
-    ]
-    secrets:
-      DOCKER_CONTAINER: "true"
+#  puppeteer:
+#    image: mcp/puppeteer:latest
+#    command: ["npx"]
+#    args: [
+#      "-y",
+#      "supergateway",
+#      "--stdio",
+#      "node dist/index.js",
+#      "--port",
+#      "8000",
+#      "--healthEndpoint",
+#      "/healthz",
+#    ]
+#    secrets:
+#      DOCKER_CONTAINER: "true"
   run-python:
     image: denoland/deno:latest
     command: ["deno"]
