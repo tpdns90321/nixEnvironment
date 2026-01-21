@@ -65,6 +65,7 @@
           };
           additionalPackages = [
             "podman"
+            "podman-compose"
             "mitmproxy"
           ];
           sops-nix = sops-nix.homeManagerModules.sops;
