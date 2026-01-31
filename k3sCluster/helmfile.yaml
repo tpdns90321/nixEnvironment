@@ -1,6 +1,4 @@
 repositories:
-- name: kubernetes-dashboard
-  url: https://kubernetes.github.io/dashboard
 - name: nfs-subdir-external-provisioner
   url: https://kubernetes-sigs.github.io/nfs-subdir-external-provisioner
 - name: descheduler
@@ -23,12 +21,6 @@ releases:
   chart: traefik/traefik
   values:
   - ./traefik_values.yaml
-- name: kubernetes-dashboard
-  namespace: kubernetes-dashboard
-  chart: kubernetes-dashboard/kubernetes-dashboard
-- name: kubernetes-dashboard-config
-  namespace: kubernetes-dashboard
-  chart: ./charts/kubernetes-dashboard-config
 - name: nfs-subdir-external-provisioner
   namespace: nfs-subdir-external-provisioner
   chart: nfs-subdir-external-provisioner/nfs-subdir-external-provisioner
@@ -129,26 +121,26 @@ releases:
     - ./charts/cookie-based-routing-index/values.yaml
   needs:
     - traefik/traefik
-- name: postgres-for-n8n
-  namespace: n8n
-  chart: bitnami/postgresql
-  values:
-    - ./charts/n8n/values_postgres.yaml
-  secrets:
-    - ./charts/n8n/secrets.yaml
-- name: n8n
-  namespace: n8n
-  chart: oci://8gears.container-registry.com/library/n8n
-  version: 1.0.15
-  values:
-    - ./charts/n8n/values.yaml
-  secrets:
-    - ./charts/n8n/secrets.yaml
-  needs:
-    - traefik/traefik
-    - postgres-for-n8n
-- name: n8n-config
-  namespace: n8n
-  chart: ./charts/n8n
-  needs:
-    - n8n
+#- name: postgres-for-n8n
+#  namespace: n8n
+#  chart: bitnami/postgresql
+#  values:
+#    - ./charts/n8n/values_postgres.yaml
+#  secrets:
+#    - ./charts/n8n/secrets.yaml
+#- name: n8n
+#  namespace: n8n
+#  chart: oci://8gears.container-registry.com/library/n8n
+#  version: 2.0.1
+#  values:
+#    - ./charts/n8n/values.yaml
+#  secrets:
+#    - ./charts/n8n/secrets.yaml
+#  needs:
+#    - traefik/traefik
+#    - postgres-for-n8n
+#- name: n8n-config
+#  namespace: n8n
+#  chart: ./charts/n8n
+#  needs:
+#    - n8n
