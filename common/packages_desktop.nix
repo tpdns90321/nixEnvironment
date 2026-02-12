@@ -25,7 +25,6 @@ let
 
   # GUI Application for work
   alacritty
-  gimp
 
   # Kubernetes development
   kubectl
@@ -33,10 +32,9 @@ let
   # js development
   bun
   fnm
-  nodejs_22
-  nodePackages_latest.npm
-  nodePackages_latest.pnpm
-  nodePackages_latest.yarn
+  nodePackages.npm
+  nodePackages.pnpm
+  nodePackages.yarn
 
   # golang development
   go
@@ -70,6 +68,8 @@ let
 ] ++
   (if pkgs.stdenv.hostPlatform.isLinux then 
     [
+      # temporary painter
+      gimp
       # vnc client
       wayvnc
 

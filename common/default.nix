@@ -15,19 +15,11 @@
         claude-code = unstablePkgs.claude-code;
         opencode = unstablePkgs.opencode;
         uv = unstablePkgs.uv;
+        nodePackages = unstablePkgs.nodePackages;
+        inetutils = unstablePkgs.inetutils;
+        alacritty = unstablePkgs.alacritty;
       })
       inputs.nix-vscode-extensions.overlays.default
     ];
-  };
-
-  home-manager = {
-    users.kang = {
-      home.file.".env.nvim" = {
-        enable = true;
-        text = ''
-          ESLINT_USE_FLAT_CONFIG=false
-        '';
-      };
-    };
   };
 }

@@ -90,14 +90,14 @@
   };
 
   fonts = {
-    packages = with pkgs; [
+    packages = if isDesktop then (with pkgs; [
       noto-fonts
       noto-fonts-cjk-sans
-      noto-fonts-emoji
+      noto-fonts-color-emoji
       font-awesome
       nanum
       nanum-gothic-coding
-    ];
+    ]) else [];
 
     fontconfig.defaultFonts = {
       serif = [ "NanumMyeongjo" "Noto Serif" ];

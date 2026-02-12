@@ -1,4 +1,4 @@
-{ config, pkgs, lib, inputs, isDesktop ? false, ... }:
+{ config, pkgs, inputs, isDesktop ? false, ... }:
 
 let
   userName = "tpdns90321";
@@ -10,12 +10,13 @@ let
     theme = "robbyrussell";
   };
 
-  zsh.initContent = lib.mkBefore (''
+  zsh.initContent = pkgs.lib.mkBefore (''
     # nix
     export NIXPKGS_ALLOW_UNFREE=1
 
     # editor
     export EDITOR=nvim
+    export ESLINT_USE_FLAT_CONFIG=false
     '' + (if isDesktop then ''
     # direnv
     eval "$(direnv hook zsh)"
@@ -33,15 +34,13 @@ let
       set +a
     fi
 
-    if [ -f ~/.env.* ]; then
-      for file in ~/.env.*; do
-        set -a
-        if [ -f $file ]; then
-          . $file
-        fi
-        set +a
-      done
-    fi
+    for file in $(ls ~/.env.*); do
+      set -a
+      if [ -f $file ]; then
+        . $file
+      fi
+      set +a
+    done
 
     function fscrypt-mosh() {
       host=$1
@@ -194,25 +193,27 @@ function minikube-kubectl() {
       end)
 
       -- language servers
-      require('lspconfig').ts_ls.setup({})
+      vim.lsp.enable('ts_ls')
 
-      require('lspconfig').eslint.setup({
+      vim.lsp.enable('eslint')
+      vim.lsp.config['eslint'] = {
         settings = {
           experimental = {
             useFlatConfig = nil,
           },
         },
-      })
+      }
 
-      require('lspconfig').nixd.setup({})
+      vim.lsp.enable('nixd')
       '' + (if isDesktop then ''
-      require('lspconfig').gopls.setup({})
+      vim.lsp.enable('gopls')
 
-      require('lspconfig').pyright.setup({})
+      vim.lsp.enable('pyright')
 
-      require('lspconfig').tailwindcss.setup({})
+      vim.lsp.enable('tailwindcss')
 
-      require('lspconfig').rust_analyzer.setup({
+      vim.lsp.enable('rust_analyzer')
+      vim.lsp.config['rust_analyzer'] = {
         settings = {
           ["rust-analyzer"] = {
             files = {
@@ -220,9 +221,9 @@ function minikube-kubectl() {
             },
           }
         }
-      })
+      }
 
-      require('lspconfig').ruff.setup({})
+      vim.lsp.enable('ruff')
       '' else "") + ''
 
       lsp.setup()
@@ -312,5 +313,6 @@ function minikube-kubectl() {
   alacritty = {
     enable = isDesktop;
     settings.font.size = 13;
+    settings.terminal.shell = "${pkgs.zsh}/bin/zsh";
   };
 }

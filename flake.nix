@@ -2,23 +2,23 @@
   description = "A nix environment for me";
   inputs = {
     nixpkgs = {
-      url = "github:nixos/nixpkgs/release-25.05";
+      url = "github:nixos/nixpkgs/release-25.11";
     };
     nixpkgs_unstable = {
       url = "github:nixos/nixpkgs/master";
     };
     nixos = {
-      url = "github:nixos/nixpkgs/nixos-25.05";
+      url = "github:nixos/nixpkgs/nixos-25.11";
     };
     nixos-hardware = {
       url = "github:nixos/nixos-hardware/master";
     };
     home-manager = {
-      url = "github:nix-community/home-manager/release-25.05";
+      url = "github:nix-community/home-manager/release-25.11";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     darwin = {
-      url = "github:LnL7/nix-darwin/nix-darwin-25.05";
+      url = "github:LnL7/nix-darwin/nix-darwin-25.11";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     copilot-vim = {
@@ -37,13 +37,9 @@
       url = "github:nix-community/nix-vscode-extensions";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    nixos-generators = {
-      url = "github:nix-community/nixos-generators";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
   };
 
-  outputs = { self, darwin, home-manager, nixpkgs, nixos, nixos-hardware, sops-nix, nixos-generators, ... }@inputs: 
+  outputs = { self, darwin, home-manager, nixpkgs, nixos, nixos-hardware, sops-nix, ... }@inputs: 
   {
     darwinConfigurations = {
       "kang-macbook-air" = darwin.lib.darwinSystem {
@@ -58,7 +54,7 @@
           inherit inputs;
           user = "kang";
           additionalBrews = [ "minikube" "vfkit" ];
-          additionalCasks = [ "android-studio" "claude" "discord" "parallels@19" "raspberry-pi-imager" "steam" "iterm2" "moonlight" "wireshark-app" "virtualbox" "zen" "zoom" "obs" "zap" ];
+          additionalCasks = [ "android-studio" "claude" "discord" "parallels@19" "raspberry-pi-imager" "steam" "iterm2" "moonlight" "wireshark-app" "virtualbox" "zoom" "obs" "zap" ];
           additionalAppStore = {
             "KakaoTalk" = 869223134;
             "Blackmagic Disk Speed Test" = 425264550;
@@ -67,6 +63,7 @@
             "podman"
             "podman-compose"
             "mitmproxy"
+            "realvnc-vnc-viewer"
           ];
           sops-nix = sops-nix.homeManagerModules.sops;
         };
@@ -74,32 +71,17 @@
     };
 
     # use in wsl
-    homeConfigurations.kang = let pkgs = nixpkgs.legacyPackages.x86_64-linux; in home-manager.lib.homeManagerConfiguration {
-      modules = [
-        ./standalone
-        ./hosts/wsl
-      ];
-      extraSpecialArgs = { inputs = inputs; user = "kang"; isDesktop = true; additionalPackages = []; };
-    };
-
-    # use in raspberry pi 4
-    homeConfigurations.pi = let pkgs = nixpkgs.legacyPackages.aarch64-linux; in home-manager.lib.homeManagerConfiguration {
-
-      modules = [
-        sops-nix.homeManagerModules.sops
-        ./standalone
-        ./hosts/rpi4
-      ];
-      extraSpecialArgs = {
-        inputs = inputs;
-        user = "pi";
-        isDesktop = false;
-        additionalPackages = [
-          "wakeonlan"
-          "caddy"
-        ];
-      };
-    };
+    homeConfigurations = builtins.listToAttrs (map (architecture:
+      let pkgs = nixpkgs.legacyPackages.${architecture}; in {
+        name = "kang-${architecture}";
+        value = home-manager.lib.homeManagerConfiguration {
+          inherit pkgs;
+          modules = [
+            ./standalone
+          ];
+          extraSpecialArgs = { inputs = inputs; user = "kang"; isDesktop = true; additionalPackages = []; };
+        };
+      }) [ "x86_64-linux" "aarch64-linux" ]);
 
     nixosConfigurations.kang-stay-nixos =
       let system = "x86_64-linux";
@@ -199,21 +181,27 @@
       allSystems = [ "x86_64-linux" "aarch64-linux" ];
       in
       nixpkgs.lib.genAttrs allSystems (system: {
-        tui-only = nixos-generators.nixosGenerate {
+        tui-only = (nixos.lib.nixosSystem {
           inherit system;
           specialArgs = { inputs = inputs; additionalPackages = [ ]; isDesktop = false;  };
           modules = [
             home-manager.nixosModules.home-manager
             ./nixos
-            ./hosts/kang_virtualbox
             {
-              nix.registry.nixpkgs.flake = nixpkgs;
               users.users.kang.password = "";
-              virtualisation.diskSize = 1024 * 20;
+              virtualisation.diskSizeAutoSupported = true;
+              services.openssh.enable = true;
             }
           ];
-          format = "qcow";
-        };
+        }).config.system.build.images;
+
+        kang-homemanager = (home-manager.lib.homeManagerConfiguration {
+          pkgs = nixpkgs.legacyPackages.${system};
+          modules = [
+            ./standalone
+          ];
+          extraSpecialArgs = { inputs = inputs; user = "kang"; isDesktop = true; additionalPackages = ["iconv"]; };
+        }).activationPackage;
       });
   };
 }

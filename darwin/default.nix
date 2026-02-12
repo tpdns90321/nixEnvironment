@@ -5,12 +5,10 @@
   imports = [
     ../common
     # alfred or spotlight support. import from https://github.com/landakram/nix-config/ , thanks @landakram
-    ./link-apps
     ./home-manager.nix
   ];
 
   nix = {
-    package = pkgs.lix;
     extraOptions = ''
       experimental-features = nix-command flakes
     '';
@@ -30,12 +28,6 @@
     paths = config.environment.systemPackages ++ config.home-manager.users.${user}.home.packages;
     pathsToLink = "/Applications/";
   });
-
-  services.link-apps = {
-    enable = true;
-    userName = "${user}";
-    userHome = "/Users/${user}";
-  };
 
   system = {
     primaryUser = user;

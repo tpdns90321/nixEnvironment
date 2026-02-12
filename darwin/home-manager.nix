@@ -17,9 +17,9 @@ let
 
   local.dock.enable = true;
   local.dock.entries = [
-    { path = "/System/Applications/Launchpad.app/"; }
-    { path = "/Applications/Arc.app/"; }
-    { path = "${pkgs.alacritty}/Applications/Alacritty.app"; }
+    { path = "/System/Applications/Apps.app/"; }
+    { path = "/Applications/Zen.app/"; }
+    { path = "/Applications/Nix Apps/Alacritty.app"; }
     { path = "/System/Applications/Mail.app/"; }
     { path = "/System/Applications/Calendar.app/"; }
     { path = "/System/Applications/Notes.app/"; }
@@ -48,7 +48,7 @@ let
   homebrew.casks = [
     "alfred"
     "adguard"
-    "arc"
+    "zen" 
     "coconutbattery"
     "firefox"
     "google-chrome"

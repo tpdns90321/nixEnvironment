@@ -1,4 +1,4 @@
-{ pkgs, inputs, lib, additionalPackages ? [ ] }:
+{ pkgs, lib, inputs, additionalPackages ? [ ] }:
 
 (with pkgs; [
   curlHTTP3
