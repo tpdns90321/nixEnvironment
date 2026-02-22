@@ -62,7 +62,7 @@
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
-  environment.systemPackages = (import ../common/packages_desktop.nix { inherit pkgs inputs lib additionalPackages isDesktop; });
+  environment.systemPackages = (import ../common/packages_desktop.nix { inherit pkgs inputs lib additionalPackages isDesktop; }) ++ (with pkgs; [exfatprogs]);
 
   environment.variables = {
     EDITOR = "nvim";

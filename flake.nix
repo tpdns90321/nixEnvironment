@@ -152,6 +152,16 @@
       ];
     };
 
+    nixosConfigurations.kang-ryzen-pve = nixpkgs.lib.nixosSystem {
+      system = "x86_64-linux";
+      specialArgs = { inputs = inputs; additionalPackages = []; isDesktop = true; };
+      modules = [
+        home-manager.nixosModules.home-manager
+        ./nixos
+        ./hosts/kang_ryzen_pve
+      ];
+    };
+
     nixosConfigurations.kang-virtualbox = nixos.lib.nixosSystem {
       system = "x86_64-linux";
       specialArgs = { inputs = inputs; additionalPackages = [ "wlr-randr" ]; isDesktop = true; };
