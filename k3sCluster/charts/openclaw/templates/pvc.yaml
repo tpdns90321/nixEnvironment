@@ -1,0 +1,25 @@
+{{- if .Values.persistence.enabled }}
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: openclaw-config-pvc
+spec:
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: {{ .Values.persistence.config.size }}
+  storageClassName: {{ .Values.persistence.storageClass }}
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: openclaw-workspace-pvc
+spec:
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: {{ .Values.persistence.workspace.size }}
+  storageClassName: {{ .Values.persistence.storageClass }}
+{{- end }}

@@ -1,0 +1,160 @@
+{{- if .Values.subscriptions }}
+{{- range $subscription := .Values.subscriptions }}
+{{- $subTier := ($subscription.tier | default $subscription.name) }}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: litellm-sub-{{ $subscription.name }}
+  labels:
+    app: litellm
+    component: subscription-proxy
+    subscription: {{ $subscription.name | quote }}
+    tier: {{ $subTier | quote }}
+spec:
+  clusterIP: None
+  selector:
+    app: litellm-sub-{{ $subscription.name }}
+  ports:
+    - port: {{ default $.Values.service.port $.Values.subscriptionProxy.service.port }}
+      targetPort: {{ default $.Values.service.targetPort $.Values.subscriptionProxy.service.targetPort }}
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: litellm-sub-{{ $subscription.name }}-config
+  labels:
+    app: litellm
+    component: subscription-proxy
+    subscription: {{ $subscription.name | quote }}
+data:
+  config.yaml: |
+    model_list:
+    {{- range $model := $.Values.chatgptModels }}
+    {{- $modelTiers := default (list) $model.tiers }}
+    {{- $allowedForSubscription := false }}
+    {{- if eq (len $modelTiers) 0 }}
+    {{- $allowedForSubscription = true }}
+    {{- else if has $subTier $modelTiers }}
+    {{- $allowedForSubscription = true }}
+    {{- end }}
+    {{- if $allowedForSubscription }}
+      - model_name: {{ $model.modelName | quote }}
+        {{- if $model.mode }}
+        model_info:
+          mode: {{ $model.mode | quote }}
+        {{- end }}
+        litellm_params:
+          model: {{ $model.chatgptModel | quote }}
+    {{- end }}
+    {{- end }}
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: litellm-sub-{{ $subscription.name }}
+  labels:
+    app: litellm
+    component: subscription-proxy
+    subscription: {{ $subscription.name | quote }}
+spec:
+  serviceName: litellm-sub-{{ $subscription.name }}
+  replicas: {{ default 1 $.Values.subscriptionProxy.replicaCount }}
+  selector:
+    matchLabels:
+      app: litellm-sub-{{ $subscription.name }}
+  template:
+    metadata:
+      labels:
+        app: litellm-sub-{{ $subscription.name }}
+        component: subscription-proxy
+        subscription: {{ $subscription.name | quote }}
+    spec:
+      {{- if $.Values.subscriptionProxy.affinity }}
+      affinity:
+{{ toYaml $.Values.subscriptionProxy.affinity | indent 8 }}
+      {{- else if $.Values.affinity }}
+      affinity:
+{{ toYaml $.Values.affinity | indent 8 }}
+      {{- end }}
+      {{- if $.Values.subscriptionProxy.nodeSelector }}
+      nodeSelector:
+{{ toYaml $.Values.subscriptionProxy.nodeSelector | indent 8 }}
+      {{- else if $.Values.nodeSelector }}
+      nodeSelector:
+{{ toYaml $.Values.nodeSelector | indent 8 }}
+      {{- end }}
+      containers:
+        - name: litellm
+          image: "{{ default $.Values.image.repository $.Values.subscriptionProxy.image.repository }}:{{ default $.Values.image.tag $.Values.subscriptionProxy.image.tag }}"
+          imagePullPolicy: {{ default $.Values.image.pullPolicy $.Values.subscriptionProxy.image.pullPolicy }}
+          args:
+            - "--config"
+            - "/app/proxy_server_config.yaml"
+          ports:
+            - containerPort: {{ default $.Values.service.targetPort $.Values.subscriptionProxy.service.targetPort }}
+          env:
+            - name: CHATGPT_DEFAULT_INSTRUCTIONS
+              value: " "
+            - name: CHATGPT_TOKEN_DIR
+              value: {{ $.Values.subscriptionProxy.persistence.mountPath | quote }}
+            - name: LITELLM_SUBSCRIPTION_NAME
+              value: {{ $subscription.name | quote }}
+            - name: LITELLM_SUBSCRIPTION_TIER
+              value: {{ $subTier | quote }}
+            {{- range $key, $value := $.Values.env }}
+            - name: {{ $key }}
+              value: {{ $value | quote }}
+            {{- end }}
+            {{- range $key, $value := $.Values.subscriptionProxy.env }}
+            - name: {{ $key }}
+              value: {{ $value | quote }}
+            {{- end }}
+          {{- if $.Values.subscriptionProxy.resources }}
+          resources:
+{{ toYaml $.Values.subscriptionProxy.resources | indent 12 }}
+          {{- else if $.Values.resources }}
+          resources:
+{{ toYaml $.Values.resources | indent 12 }}
+          {{- end }}
+          volumeMounts:
+            - name: config
+              mountPath: /app/proxy_server_config.yaml
+              subPath: config.yaml
+              readOnly: true
+            - name: chatgpt-token
+              mountPath: {{ $.Values.subscriptionProxy.persistence.mountPath | quote }}
+          livenessProbe:
+            httpGet:
+              path: /health/liveliness
+              port: {{ default $.Values.service.targetPort $.Values.subscriptionProxy.service.targetPort }}
+            initialDelaySeconds: 120
+            periodSeconds: 15
+            successThreshold: 1
+            failureThreshold: 3
+            timeoutSeconds: 10
+          readinessProbe:
+            httpGet:
+              path: /health/readiness
+              port: {{ default $.Values.service.targetPort $.Values.subscriptionProxy.service.targetPort }}
+            initialDelaySeconds: 120
+            periodSeconds: 15
+            successThreshold: 1
+            failureThreshold: 3
+            timeoutSeconds: 10
+      volumes:
+        - name: config
+          configMap:
+            name: litellm-sub-{{ $subscription.name }}-config
+  volumeClaimTemplates:
+    - metadata:
+        name: chatgpt-token
+      spec:
+        accessModes:
+{{ toYaml $.Values.subscriptionProxy.persistence.accessModes | indent 10 }}
+        resources:
+          requests:
+            storage: {{ $.Values.subscriptionProxy.persistence.size }}
+        storageClassName: {{ $.Values.subscriptionProxy.persistence.storageClass }}
+{{- end }}
+{{- end }}

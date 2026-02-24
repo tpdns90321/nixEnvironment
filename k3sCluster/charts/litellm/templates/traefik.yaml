@@ -1,0 +1,63 @@
+{{- if .Values.ingress.enabled }}
+apiVersion: traefik.io/v1alpha1
+kind: Middleware
+metadata:
+  name: litellm-force-https
+spec:
+  redirectScheme:
+    scheme: https
+    permanent: true
+---
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: litellm
+spec:
+  entryPoints:
+    - websecure
+    - web
+  middlewares:
+    - name: litellm-force-https
+      namespace: {{ .Release.Namespace }}
+  routes:
+    - match: (ClientIP(`{{ .Values.ingress.allowCIDR }}`)) && Host(`{{ .Values.secrets.hostname }}`)
+      kind: Rule
+      services:
+        - name: litellm
+          port: {{ .Values.service.port }}
+  tls:
+    secretName: {{ .Values.ingress.tlsSecretName }}
+{{- end }}
+
+{{- if .Values.cookieBasedRouting.enabled }}
+---
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: litellm-http-cookie-route
+spec:
+  entryPoints:
+    - web
+  routes:
+    - match: (ClientIP(`{{ .Values.cookieBasedRouting.allowCIDR }}`)) && HeaderRegexp(`Cookie`, `{{ .Values.cookieBasedRouting.cookieName }}={{ .Values.cookieBasedRouting.cookieValue }}`)
+      kind: Rule
+      services:
+        - name: litellm
+          port: {{ .Values.service.port }}
+---
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: litellm-https-cookie-route
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - match: (ClientIP(`{{ .Values.cookieBasedRouting.allowCIDR }}`)) && HeaderRegexp(`Cookie`, `{{ .Values.cookieBasedRouting.cookieName }}={{ .Values.cookieBasedRouting.cookieValue }}`)
+      kind: Rule
+      services:
+        - name: litellm
+          port: {{ .Values.service.port }}
+  tls:
+    secretName: generic-certificate
+{{- end }}

@@ -1,0 +1,6 @@
+global:
+  defaultStorageClass: "nfs-client"
+
+auth:
+  username: "litellm"
+  database: "litellm"

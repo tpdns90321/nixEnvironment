@@ -112,6 +112,33 @@ releases:
     - ./charts/librechat/secrets.yaml
   needs:
     - librechat-config
+- name: postgres-for-litellm
+  namespace: litellm
+  chart: bitnami/postgresql
+  values:
+    - ./charts/litellm/values_postgres.yaml
+  secrets:
+    - ./charts/litellm/secrets.yaml
+- name: litellm
+  namespace: litellm
+  chart: ./charts/litellm
+  values:
+    - ./charts/litellm/values.yaml
+    - ./charts/litellm/values.gotmpl
+  secrets:
+    - ./charts/litellm/secrets.yaml
+  needs:
+    - traefik/traefik
+    - litellm/postgres-for-litellm
+- name: openclaw
+  namespace: openclaw
+  chart: ./charts/openclaw
+  values:
+    - ./charts/openclaw/values.yaml
+  secrets:
+    - ./charts/openclaw/secrets.yaml
+  needs:
+    - litellm/litellm
 - name: cookie-based-routing-index
   namespace: cookie-based-routing-index
   chart: ./charts/cookie-based-routing-index/

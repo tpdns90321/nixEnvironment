@@ -1,0 +1,103 @@
+replicaCount: 1
+
+image:
+  repository: docker.litellm.ai/berriai/litellm
+  tag: main-stable
+  pullPolicy: IfNotPresent
+
+service:
+  type: ClusterIP
+  port: 4000
+  targetPort: 4000
+
+nodeSelector: {}
+
+resources: {}
+
+affinity:
+  nodeAffinity:
+    requiredDuringSchedulingIgnoredDuringExecution:
+      nodeSelectorTerms:
+        - matchExpressions:
+            - key: kubernetes.io/hostname
+              operator: In
+              values:
+                - kang-stay-gmk
+                - kang-rpi4
+
+env:
+  LITELLM_LOG: INFO
+
+secrets:
+  env: {}
+  # LITELLM_MASTER_KEY: sk-change-me
+  # DATABASE_URL: postgresql://user:pass@db:5432/litellm
+
+# Subscription proxies are deployed as StatefulSets.
+# Each subscription gets its own PVC mounted to CHATGPT_TOKEN_DIR.
+subscriptions:
+  - name: pro
+    tier: pro
+  - name: plus
+    tier: plus
+
+chatgptModels:
+  - modelName: gpt-5.2
+    chatgptModel: chatgpt/gpt-5.2
+    mode: responses
+  - modelName: gpt-5.3-codex
+    chatgptModel: chatgpt/gpt-5.3-codex
+    mode: responses
+  - modelName: gpt-5.3-codex-spark
+    chatgptModel: chatgpt/gpt-5.3-codex-spark
+    mode: responses
+    tiers: [pro]
+
+  # Optional per-model tier control:
+  # - modelName: openai/gpt-5.2-pro
+  #   chatgptModel: chatgpt/gpt-5.2-pro
+  #   mode: responses
+  #
+  # Optional fields on each model:
+  # - tiers: [pro, plus]                  # default: all tiers
+
+subscriptionProxy:
+  replicaCount: 1
+  image: {}
+  service:
+    type: ClusterIP
+    port: 4000
+    targetPort: 4000
+  nodeSelector: {}
+  resources: {}
+  affinity: {}
+  env: {}
+  persistence:
+    storageClass: nfs-client
+    accessModes:
+      - ReadWriteMany
+    size: 2Gi
+    mountPath: /var/lib/chatgpt-token
+
+# Fallback content when values.gotmpl is not used.
+#proxyConfig:
+#  content: |
+#    model_list:
+#      - model_name: openai/gpt-5.2
+#        litellm_params:
+#          model: openai/gpt-5.2
+#          api_key: os.environ/OPENAI_API_KEY
+#
+#    general_settings:
+#      master_key: os.environ/LITELLM_MASTER_KEY
+
+ingress:
+  enabled: false
+  tlsSecretName: litellm-certificate
+  allowCIDR: 192.168.0.0/16
+
+cookieBasedRouting:
+  enabled: true
+  allowCIDR: 192.168.0.0/16
+  cookieName: app_route
+  cookieValue: litellm

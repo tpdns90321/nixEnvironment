@@ -1,0 +1,11 @@
+{{- if .Values.gatewayConfig.enabled }}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: openclaw-config
+  labels:
+    app: openclaw
+data:
+  openclaw.json: |
+{{ .Values.gatewayConfig.content | indent 4 }}
+{{- end }}

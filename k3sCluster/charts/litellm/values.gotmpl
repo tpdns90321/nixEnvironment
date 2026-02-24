@@ -1,0 +1,51 @@
+{{ $values := readFile "./values.yaml" | fromYaml }}
+{{ $subscriptions := $values.subscriptions }}
+{{ $chatgptModels := $values.chatgptModels }}
+{{ $namespace := .Release.Namespace | default "litellm" }}
+
+{{- if and (gt (len $subscriptions) 0) (gt (len $chatgptModels) 0) }}
+proxyConfig:
+  content: |
+    model_list:
+{{- range $model := $chatgptModels }}
+{{- $modelName := index $model "modelName" }}
+{{- $modelMode := index $model "mode" }}
+{{- $modelTiers := default (list) (index $model "tiers") }}
+{{- $order := 0 }}
+{{- range $subscription := $subscriptions }}
+{{- $subscriptionName := index $subscription "name" }}
+{{- $subTier := default $subscriptionName (index $subscription "tier") }}
+{{- $allowedForSubscription := false }}
+{{- if eq (len $modelTiers) 0 }}
+{{- $allowedForSubscription = true }}
+{{- else if has $subTier $modelTiers }}
+{{- $allowedForSubscription = true }}
+{{- end }}
+{{- if $allowedForSubscription }}
+{{- $order = add $order 1 }}
+      - model_name: {{ $modelName }}
+{{- if $modelMode }}
+        model_info:
+          mode: {{ $modelMode | quote }}
+{{- end }}
+        litellm_params:
+          model: openai/{{ $modelName }}
+          api_base: {{ printf "http://litellm-sub-%s.%s.svc.cluster.local:%v/v1" $subscriptionName $namespace $values.subscriptionProxy.service.port | quote }}
+          api_key: "not-used"
+          order: {{ $order }}
+{{- end }}
+{{- end }}
+{{- end }}
+
+    router_settings:
+      enable_pre_call_checks: true
+
+    general_settings:
+      master_key: os.environ/LITELLM_MASTER_KEY
+      store_model_in_db: true
+      store_prompts_in_spend_logs: true
+{{- else }}
+proxyConfig:
+  content: |
+{{ $values.proxyConfig.content | indent 4 }}
+{{- end }}

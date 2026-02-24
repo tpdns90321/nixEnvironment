@@ -47,6 +47,7 @@ secret:
       </head>
       <body class="set-route">
           <button onclick="setCookie('app_route', 'librechat', 300)">Go to LibreChat</button>
+          <button onclick="setCookie('app_route', 'litellm', 300)">Go to LiteLLM</button>
           <button onclick="setCookie('app_route', 'n8n', 300)">Go to n8n</button>
           <button onclick="setCookie('app_route', 'other')">Go to Other</button>
           <script>

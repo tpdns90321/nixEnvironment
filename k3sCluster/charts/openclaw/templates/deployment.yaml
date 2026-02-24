@@ -1,0 +1,77 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: openclaw
+  labels:
+    app: openclaw
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: openclaw
+  template:
+    metadata:
+      labels:
+        app: openclaw
+    spec:
+      {{- if .Values.affinity }}
+      affinity:
+{{ toYaml .Values.affinity | indent 8 }}
+      {{- end }}
+      {{- if .Values.nodeSelector }}
+      nodeSelector:
+{{ toYaml .Values.nodeSelector | indent 8 }}
+      {{- end }}
+      containers:
+        - name: openclaw
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          command: ["node", "dist/index.js", "gateway"]
+          args: ["--bind", "$(OPENCLAW_GATEWAY_BIND)", "--port", "$(OPENCLAW_GATEWAY_PORT)", "--allow-unconfigured"]
+          ports:
+            - name: http
+              containerPort: {{ .Values.service.targetPort }}
+            {{- if .Values.extraPorts.canvas.enabled }}
+            - name: canvas
+              containerPort: {{ .Values.extraPorts.canvas.targetPort }}
+            {{- end }}
+          env:
+            {{- range $key, $value := .Values.env }}
+            - name: {{ $key }}
+              value: {{ $value | quote }}
+            {{- end }}
+          {{- if .Values.secrets.env }}
+          envFrom:
+            - secretRef:
+                name: openclaw-env
+          {{- end }}
+          {{- if .Values.resources }}
+          resources:
+{{ toYaml .Values.resources | indent 12 }}
+          {{- end }}
+          volumeMounts:
+            {{- if .Values.persistence.enabled }}
+            - name: config
+              mountPath: /home/node/.openclaw
+            - name: workspace
+              mountPath: /home/node/.openclaw/workspace
+            {{- end }}
+            {{- if .Values.gatewayConfig.enabled }}
+            - name: openclaw-config
+              mountPath: {{ .Values.gatewayConfig.mountPath }}
+              subPath: openclaw.json
+            {{- end }}
+      volumes:
+        {{- if .Values.persistence.enabled }}
+        - name: config
+          persistentVolumeClaim:
+            claimName: openclaw-config-pvc
+        - name: workspace
+          persistentVolumeClaim:
+            claimName: openclaw-workspace-pvc
+        {{- end }}
+        {{- if .Values.gatewayConfig.enabled }}
+        - configMap:
+            name: openclaw-config
+          name: openclaw-config
+        {{- end }}

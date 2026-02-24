@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: openclaw
+  labels:
+    app: openclaw
+spec:
+  type: {{ .Values.service.type }}
+  selector:
+    app: openclaw
+  ports:
+    - name: http
+      port: {{ .Values.service.port }}
+      targetPort: {{ .Values.service.targetPort }}
+    {{- if .Values.extraPorts.canvas.enabled }}
+    - name: canvas
+      port: {{ .Values.extraPorts.canvas.port }}
+      targetPort: {{ .Values.extraPorts.canvas.targetPort }}
+    {{- end }}
