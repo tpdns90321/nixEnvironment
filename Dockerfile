@@ -29,5 +29,6 @@ ENV PATH $PATH:/home/kang/.nix-profile/bin
 ENV SHELL /home/kang/.nix-profile/bin/zsh
 ENV XDG_RUNTIME_DIR /tmp/dbus-1-session
 ENV LANG=en_US.UTF-8
+ENV LC_ALL=en_US.UTF-8
 
 CMD [ "sh", "-c", "./nixEnvironment/result/activate && dbus-run-session -- sh -c 'dbus-launch > .env.dbus && ./swayvnc.sh'" ]

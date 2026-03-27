@@ -14,6 +14,9 @@
         codex = unstablePkgs.codex;
         claude-code = unstablePkgs.claude-code;
         opencode = unstablePkgs.opencode;
+        gemini-cli = unstablePkgs.gemini-cli;
+        gemini-cli-bin = unstablePkgs.gemini-cli-bin;
+        antigravity = unstablePkgs.antigravity;
         uv = unstablePkgs.uv;
         nodePackages = unstablePkgs.nodePackages;
         inetutils = unstablePkgs.inetutils;

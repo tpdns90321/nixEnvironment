@@ -53,6 +53,10 @@ let
       pgrep -f "^ssh -Nf $ip$" || sshpass -e ssh -Nf $ip && mosh --ssh="sshpass -e ssh" $ip && pgrep -f "mosh-client .*$ip" || pkill -f "^ssh -Nf $ip$"
       unset SSHPASS
     }
+
+    function git-worktree() {
+      git worktree add ../$(basename $(pwd))-$1 $1
+    }
   '' + (if pkgs.stdenv.hostPlatform.isDarwin then ''
 # react-native android
 export ANDROID_HOME=$HOME/Library/Android/sdk
@@ -73,6 +77,11 @@ function minikube() {
 
 function minikube-kubectl() {
   PATH="$PATH:/opt/homebrew/bin/" KUBECONFIG=~/.kube/minikube-config command minikube kubectl -- "$@"
+}
+
+# codex
+function codex() {
+  PATH="$PATH:/opt/homebrew/bin/" command codex "$@"
 }
 '' else ""));
 
@@ -224,6 +233,8 @@ function minikube-kubectl() {
       }
 
       vim.lsp.enable('ruff')
+
+      vim.lsp.enable('denols')
       '' else "") + ''
 
       lsp.setup()

@@ -19,9 +19,10 @@ let
   direnv
 
   # AI Code Assistant
-  codex
   claude-code
   opencode
+  gemini-cli
+  antigravity
 
   # GUI Application for work
   alacritty
@@ -75,6 +76,9 @@ let
 
       # wireshark
       wireshark
+
+      # AI Code Assistant
+      codex
     ]
   else [])
 ) else [])

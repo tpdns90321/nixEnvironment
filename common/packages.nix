@@ -1,7 +1,8 @@
 { pkgs, lib, inputs, additionalPackages ? [ ] }:
 
 (with pkgs; [
-  curlHTTP3
+  curl
+  deno
   git
   gh
   home-manager
