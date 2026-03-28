@@ -79,6 +79,6 @@ let
 
       # AI Code Assistant
       codex
-    ]
+    ] ++ (if isDesktop then [guile guix] else [])
   else [])
 ) else [])

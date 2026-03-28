@@ -128,7 +128,7 @@ function codex() {
     extraPackages = with pkgs; [
       # lspconfig
       nixd
-    ] ++ (if isDesktop then [
+    ] ++ (if isDesktop then ([
       gopls
       rust-analyzer
       ruff
@@ -137,7 +137,7 @@ function codex() {
       nodePackages_latest."@tailwindcss/language-server"
       pyright
       typescript
-    ] else []);
+    ] ++ (if stdenv.hostPlatform.isLinux then [guile-lsp-server] else [])) else []);
 
     extraConfig = ''
       " white space
@@ -235,7 +235,11 @@ function codex() {
       vim.lsp.enable('ruff')
 
       vim.lsp.enable('denols')
-      '' else "") + ''
+      '' else "") +
+      (if pkgs.stdenv.hostPlatform.isLinux && isDesktop then ''
+      vim.lsp.enable('guile_ls')
+      '' else "")
+      + ''
 
       lsp.setup()
 
