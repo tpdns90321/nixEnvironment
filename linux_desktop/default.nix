@@ -1,4 +1,4 @@
-{ pkgs, isDesktop, ... }: {
+{ config, pkgs, isDesktop, ... }:  {
   programs = {
     waybar = {
       enable = isDesktop;
@@ -59,13 +59,21 @@
     firefox = {
       enable = isDesktop;
     };
+    foot = {
+      enable = true;
+      settings = {
+        main = {
+          font = "monospace:size=13";
+        };
+      };
+    };
   };
   wayland.windowManager.sway = let modifier = "Mod1"; in {
     enable = isDesktop;
     config = {
       defaultWorkspace = "workspace number 1";
       modifier = modifier;
-      terminal = "${pkgs.foot}/bin/foot";
+      terminal = if ((builtins.hasAttr "networking" config) && ((builtins.substring 0 4 config.networking.hostName) == "kang")) then "${pkgs.alacritty}/bin/alacritty" else "${pkgs.foot}/bin/foot";
       startup = [
         { command = "${pkgs.mako}/bin/mako"; }
         { command = "${pkgs.kime}/bin/kime -D"; }
@@ -104,6 +112,12 @@
         {
           command = "floating enable";
           criteria = {
+            title = "화면 속 화면";
+          };
+        }
+        {
+          command = "floating enable";
+          criteria = {
             app_id = "pavucontrol";
           };
         }
@@ -113,4 +127,5 @@
   home.file."swayvnc.sh" = {
     source = ./swayvnc.sh;
   };
+  home.stateVersion = "25.11";
 }

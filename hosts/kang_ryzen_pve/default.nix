@@ -19,4 +19,5 @@
   systemd.services.home-manager-kang.wantedBy = lib.mkForce [];
 
   services.qemuGuest.enable = true;
+  zramSwap.enable = true;
 }

@@ -20,7 +20,7 @@ let
 
   # AI Code Assistant
   claude-code
-  opencode
+  # opencode
   gemini-cli
   antigravity
 

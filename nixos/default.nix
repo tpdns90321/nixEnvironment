@@ -32,7 +32,7 @@
     LC_TIME = "ko_KR.UTF-8";
   };
   i18n.inputMethod = {
-    enable = true;
+    enable = isDesktop;
     type = "kime";
   };
 
@@ -41,6 +41,7 @@
   xdg.portal.enable = isDesktop;
 
   # Configure keymap in X11
+  services.xserver.enable = isDesktop;
   services.xserver.xkb = {
     layout = "kr";
     variant = "kr104";
@@ -108,6 +109,9 @@
   programs.zsh.enable = true;
 
   programs.wireshark.enable = isDesktop;
+
+  hardware.graphics.enable = isDesktop;
+  hardware.graphics.enable32Bit = isDesktop;
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.

@@ -2,7 +2,7 @@
 
 let
   common-programs = import ../common/home-manager.nix { inherit config pkgs inputs; }; 
-  linux-desktop = (import ../linux_desktop {inherit pkgs isDesktop;}); in
+  linux-desktop = (import ../linux_desktop {inherit config pkgs isDesktop;}); in
 (lib.attrsets.recursiveUpdate {
   home.username = user;
   home.homeDirectory = "/home/${user}";
