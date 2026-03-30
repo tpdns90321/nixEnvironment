@@ -81,4 +81,4 @@ let
       codex
     ] ++ (if isDesktop then [guile guix] else [])
   else [])
-) else [])
+) else with pkgs; [ qemu-utils ])

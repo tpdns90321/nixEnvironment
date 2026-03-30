@@ -33,7 +33,7 @@ let VIP = "192.168.219.150"; in {
       LimitNPROC = "infinity";
       LimitCORE = "infinity";
       TasksMax = "infinity";
-      ExecStart = "${pkgs.k3s}/bin/k3s server --disable traefik --disable servicelb --tls-san ${VIP} --flannel-backend=wireguard-native --node-external-ip=${VIP} --flannel-external-ip --token-file ${config.sops.secrets.k3s_tokenfile.path}";
+      ExecStart = "${pkgs.k3s}/bin/k3s server --disable traefik --disable servicelb --tls-san ${VIP} --flannel-backend=wireguard-native --node-external-ip=${VIP} --token-file ${config.sops.secrets.k3s_tokenfile.path}";
     };
   };
 
@@ -124,12 +124,16 @@ let VIP = "192.168.219.150"; in {
         in ''
         ${ip} route add table 200 default via 192.168.219.1 dev br0
         ${ip} route add table 200 192.168.128.0/24 dev wg-vxlan
+        ${ip} route add table 200 192.168.172.0/24 dev wg-vxlan
+        ${ip} route add table 200 192.168.1.0/24 dev wg-vxlan
         ${ip} rule add fwmark 0x1 table 200
 
         ${iptables} -t mangle -A OUTPUT -p tcp --dport 50443 -j MARK --set-mark 1
         ${iptables} -t mangle -A PREROUTING -p tcp --dport 50443 -j MARK --set-mark 1
-        ${iptables} -t mangle -A PREROUTING -m conntrack --ctorigdst ${VIP} -i cni0 -p tcp --sport 8000 ! -d 192.168.0.0/16 -j MARK --set-mark 0x1
-        ${iptables} -t mangle -A PREROUTING -m conntrack --ctorigdst ${VIP} -i cni0 -p tcp --sport 8443 ! -d 192.168.0.0/16 -j MARK --set-mark 0x1
+        ${iptables} -t mangle -A PREROUTING -m conntrack --ctorigdst ${VIP} -i cni0 -p tcp --sport 8000 ! -d 192.168.219.0/24 -j MARK --set-mark 0x1
+        ${iptables} -t mangle -A PREROUTING -m conntrack --ctorigdst ${VIP} -i cni0 -p tcp --sport 8443 ! -d 192.168.219.0/24 -j MARK --set-mark 0x1
+        ${iptables} -t mangle -A PREROUTING -m conntrack --ctorigdst 192.168.128.0/24 -i cni0 -p tcp --sport 8000 ! -d 192.168.219.0/24 -j MARK --set-mark 0x1
+        ${iptables} -t mangle -A PREROUTING -m conntrack --ctorigdst 192.168.128.0/24 -i cni0 -p tcp --sport 8443 ! -d 192.168.219.0/24 -j MARK --set-mark 0x1
         '';
     postDown = with pkgs;
       let
@@ -141,8 +145,10 @@ let VIP = "192.168.219.150"; in {
 
         ${iptables} -t mangle -D OUTPUT -p tcp --dport 50443 -j MARK --set-mark 1
         ${iptables} -t mangle -D PREROUTING -p tcp --dport 50443 -j MARK --set-mark 1
-        ${iptables} -t mangle -D PREROUTING -m conntrack --ctorigdst ${VIP} -i cni0 -p tcp --sport 8000 ! -d 192.168.0.0/16 -j MARK --set-mark 0x1
-        ${iptables} -t mangle -D PREROUTING -m conntrack --ctorigdst ${VIP} -i cni0 -p tcp --sport 8443 ! -d 192.168.0.0/16 -j MARK --set-mark 0x1
+        ${iptables} -t mangle -D PREROUTING -m conntrack --ctorigdst ${VIP} -i cni0 -p tcp --sport 8000 ! -d 192.168.219.0/24 -j MARK --set-mark 0x1
+        ${iptables} -t mangle -D PREROUTING -m conntrack --ctorigdst ${VIP} -i cni0 -p tcp --sport 8443 ! -d 192.168.219.0/24 -j MARK --set-mark 0x1
+        ${iptables} -t mangle -D PREROUTING -m conntrack --ctorigdst 192.168.128.0/24 -i cni0 -p tcp --sport 8000 ! -d 192.168.219.0/24 -j MARK --set-mark 0x1
+        ${iptables} -t mangle -D PREROUTING -m conntrack --ctorigdst 192.168.128.0/24 -i cni0 -p tcp --sport 8443 ! -d 192.168.219.0/24 -j MARK --set-mark 0x1
       '';
   };
 
