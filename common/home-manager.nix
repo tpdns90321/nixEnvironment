@@ -93,6 +93,7 @@ function codex() {
 
       # for pi-coding-agent's modifier shortcuts
       set -g extended-keys on
+      set -g extended-keys-format csi-u
 
       # https://blog.sanctum.geek.nz/vi-mode-in-tmux/
       bind -T copy-mode-vi v send -X begin-selection
