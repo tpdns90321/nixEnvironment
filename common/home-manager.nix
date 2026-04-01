@@ -91,6 +91,9 @@ function codex() {
     extraConfig = ''
       set -g default-command "$SHELL"
 
+      # for pi-coding-agent's modifier shortcuts
+      set -g extended-keys on
+
       # https://blog.sanctum.geek.nz/vi-mode-in-tmux/
       bind -T copy-mode-vi v send -X begin-selection
       bind -T copy-mode-vi y send-keys -X copy-pipe-and-cancel "pbcopy"

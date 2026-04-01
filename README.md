@@ -90,6 +90,17 @@ nix flake check
 nix flake show
 ```
 
+### Updating `pi-coding-agent`
+```bash
+# Update to the latest npm release
+./update-pi-coding-agent.sh
+
+# Update to a specific version
+./update-pi-coding-agent.sh 0.64.0
+```
+
+This refreshes `common/pi-coding-agent.json`, regenerates `common/pi-coding-agent-package-lock.json`, rebuilds the package, and checks `pi --version`.
+
 ### System Management
 ```bash
 # macOS: Apply configuration changes

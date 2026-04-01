@@ -17,6 +17,7 @@
         gemini-cli = unstablePkgs.gemini-cli;
         gemini-cli-bin = unstablePkgs.gemini-cli-bin;
         antigravity = unstablePkgs.antigravity;
+        pi-coding-agent = final.callPackage ./pi-coding-agent.nix { };
         uv = unstablePkgs.uv;
         nodePackages = unstablePkgs.nodePackages;
         inetutils = unstablePkgs.inetutils;

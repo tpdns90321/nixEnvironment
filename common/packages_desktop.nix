@@ -23,6 +23,7 @@ let
   # opencode
   gemini-cli
   antigravity
+  pi-coding-agent
 
   # GUI Application for work
   alacritty
