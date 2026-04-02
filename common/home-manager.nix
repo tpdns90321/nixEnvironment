@@ -241,6 +241,9 @@ function codex() {
       vim.lsp.enable('denols')
       '' else "") +
       (if pkgs.stdenv.hostPlatform.isLinux && isDesktop then ''
+      vim.lsp.config['guile_ls'] = {
+        filetypes = { "scheme" },
+      }
       vim.lsp.enable('guile_ls')
       '' else "")
       + ''
