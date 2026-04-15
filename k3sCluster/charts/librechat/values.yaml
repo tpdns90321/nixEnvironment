@@ -4,6 +4,8 @@ mongodb:
     storageClass: "nfs-client"
   nodeSelector:
     kubernetes.io/arch: amd64
+  image:
+    registry: public.ecr.aws
 
 meilisearch:
   enabled: true

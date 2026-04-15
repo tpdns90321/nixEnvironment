@@ -129,19 +129,19 @@ function codex() {
       ale
     ] ++ (pkgs.callPackage (import ./customVimPlugins.nix inputs) {})) else []));
 
-    extraPackages = with pkgs; [
-      # lspconfig
-      nixd
-    ] ++ (if isDesktop then ([
-      gopls
-      rust-analyzer
-      ruff
-      nodePackages_latest.vscode-langservers-extracted
-      nodePackages_latest.typescript-language-server
-      nodePackages_latest."@tailwindcss/language-server"
-      pyright
-      typescript
-    ] ++ (if stdenv.hostPlatform.isLinux then [guile-lsp-server] else [])) else []);
+#    extraPackages = with pkgs; [
+#      # lspconfig
+#      nixd
+#    ] ++ (if isDesktop then ([
+#      gopls
+#      rust-analyzer
+#      ruff
+#      nodePackages_latest.vscode-langservers-extracted
+#      nodePackages_latest.typescript-language-server
+#      nodePackages_latest."@tailwindcss/language-server"
+#      pyright
+#      typescript
+#    ] ++ (if stdenv.hostPlatform.isLinux then [guile-lsp-server] else [])) else []);
 
     extraConfig = ''
       " white space

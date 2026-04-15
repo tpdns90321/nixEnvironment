@@ -59,7 +59,7 @@ This is a comprehensive Nix flake-based environment configuration supporting mul
 
 **Home Manager Standalone:**
 - `kang` - WSL configuration
-- `pi` - Raspberry Pi user configuration
+~- `pi` - Raspberry Pi user configuration~
 
 ### Package Management Strategy
 - **Base packages** in `common/packages.nix` - Essential CLI tools, development utilities
@@ -83,7 +83,7 @@ This is a comprehensive Nix flake-based environment configuration supporting mul
 ### Infrastructure Components
 The k3sCluster directory contains a complete Kubernetes cluster setup with:
 - Traefik ingress controller configuration
-- Self-hosted services (AdGuard, Vaultwarden, LibreChat, Open WebUI)
+- Self-hosted services (AdGuard, Vaultwarden, LibreChat)
 - Storage solutions with NFS and DRBD
 - Certificate management with cert-manager
 - Monitoring and networking configurations

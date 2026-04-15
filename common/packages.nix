@@ -19,4 +19,7 @@
   age
   ssh-to-age
   sops
+
+  # lspconfig
+  nixd
 ]) ++ (builtins.map (name: pkgs.${name}) additionalPackages)

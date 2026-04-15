@@ -67,6 +67,16 @@ let
     }
   )
 
+  # lspconfig
+  gopls
+  rust-analyzer
+  ruff
+  nodePackages_latest.vscode-langservers-extracted
+  nodePackages_latest.typescript-language-server
+  nodePackages_latest."@tailwindcss/language-server"
+  pyright
+  typescript
+
 ] ++
   (if pkgs.stdenv.hostPlatform.isLinux then 
     [
@@ -80,6 +90,9 @@ let
 
       # AI Code Assistant
       codex
+
+      # lspconfig
+      guile-lsp-server
     ] ++ (if isDesktop then [guile guix] else [])
   else [])
 ) else with pkgs; [ qemu-utils ])
