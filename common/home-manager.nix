@@ -311,9 +311,11 @@ function codex() {
   git = {
     enable = true;
     ignores = [ "*.swp" ];
-    userName = userName;
-    userEmail = userEmail;
-    extraConfig = {
+    settings = {
+      user = {
+        name = userName;
+        email = userEmail;
+      };
       core = {
         editor = "nvim";
       };

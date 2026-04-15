@@ -7,7 +7,7 @@
       (final: prev: let
         unstablePkgs = (import inputs.nixpkgs_unstable {
           inherit config;
-          inherit (final) system;
+          system = final.stdenv.hostPlatform.system;
         });
       in {
         vscode-with-extensions = unstablePkgs.vscode-with-extensions;
