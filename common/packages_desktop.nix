@@ -25,6 +25,9 @@ let
   antigravity
   pi-coding-agent
 
+  # AI Code Assistant's dependencies
+  ripgrep
+
   # GUI Application for work
   alacritty
 
