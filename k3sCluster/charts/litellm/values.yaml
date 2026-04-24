@@ -1,8 +1,8 @@
 replicaCount: 1
 
 image:
-  repository: docker.litellm.ai/berriai/litellm
-  tag: main-stable
+  repository: ghcr.io/berriai/litellm
+  tag: main-v1.83.3-stable.opus-4.7
   pullPolicy: IfNotPresent
 
 service:
@@ -38,8 +38,6 @@ secrets:
 subscriptions:
   - name: pro
     tier: pro
-  - name: plus
-    tier: plus
 
 chatgptModels:
   - modelName: gpt-5.2
@@ -52,6 +50,12 @@ chatgptModels:
     chatgptModel: chatgpt/gpt-5.3-codex-spark
     mode: responses
     tiers: [pro]
+  - modelName: gpt-5.4-mini
+    chatgptModel: chatgpt/gpt-5.4
+    mode: responses
+  - modelName: gpt-5.4
+    chatgptModel: chatgpt/gpt-5.4
+    mode: responses
 
   # Optional per-model tier control:
   # - modelName: openai/gpt-5.2-pro

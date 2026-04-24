@@ -48,6 +48,8 @@ data:
           model: {{ $model.chatgptModel | quote }}
     {{- end }}
     {{- end }}
+    litellm_settings:
+      drop_params: true
 ---
 apiVersion: apps/v1
 kind: StatefulSet

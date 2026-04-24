@@ -11,3 +11,16 @@ librechat:
         url: "http://mcp-server-{{ $name }}:8000/sse"
         {{- end }}
       {{- end }}
+    mcpSettings:
+      allowedDomains:
+      {{- range $name, $value := $mcpServers }}
+        - "http://mcp-server-{{ $name }}:8000"
+      {{- end }}
+    endpoints:
+      custom:
+      - name: "LiteLLM"
+        apiKey: "${LITELLM_API_KEY}"
+        baseURL: "http://litellm.litellm:4000/v1/"
+        models:
+          fetch: true
+          default: ["gpt-5.4", "gpt-5.4-mini", "gpt-5.3-codex-spark"]
