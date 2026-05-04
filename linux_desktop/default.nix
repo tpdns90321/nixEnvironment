@@ -124,8 +124,10 @@
       ];
     };
   };
-  home.file."swayvnc.sh" = {
+  home.file = (if isDesktop then {
+    "swayvnc.sh" = {
     source = ./swayvnc.sh;
-  };
+    };
+  } else {});
   home.stateVersion = "25.11";
 }
