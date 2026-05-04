@@ -19,7 +19,6 @@
         antigravity = unstablePkgs.antigravity;
         pi-coding-agent = final.callPackage ./pi-coding-agent.nix { };
         uv = unstablePkgs.uv;
-        nodePackages = unstablePkgs.nodePackages;
         inetutils = unstablePkgs.inetutils;
         alacritty = unstablePkgs.alacritty;
       })
