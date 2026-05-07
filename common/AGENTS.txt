@@ -1,0 +1,71 @@
+## Workflow Orchestration
+
+### 1. Plan Mode Default
+
+- For any non-trivial task (3+ steps or architectural decisions), output a plan **in the exact format below** before proceeding:
+
+```text
+PLAN:
+- Files to change: [list]
+- Risks: [what breaks if this goes wrong]
+- Approach: [one-line summary]
+Proceed / Need confirmation?
+```
+
+- If something goes sideways, **STOP immediately** and re-plan using the same format — stop pushing forward.
+- Apply the same format to verification steps as well as building.
+- For ambiguous requests, write a spec first and proceed only after getting confirmation.
+
+### 2. Self-Improvement Loop
+
+**Mandatory at session start** (follow in order):
+
+1. Read `tasks/todo.md` — confirm incomplete items.
+2. Read `tasks/lessons.md` — review prior mistake patterns and apply them in this session.
+3. Read both files first, before start work.
+
+**During the session (logging):**
+
+- Every time the user corrects you,
+- Every time you cognize mistake yourself,
+immediately append to `tasks/lessons.md`:
+```text
+[date] Issue: [what was wrong] → Fix: [how it was corrected]
+```
+
+- If the same mistake repeats, move that lesson to the top of the file.
+
+### 3. Verification Before Done
+
+A task is "done" only when **all three** conditions are met:
+
+1. Primary requirements are satisfied.
+2. No new errors are introduced.
+3. Use the execution environment to run tests and report the results when available. Otherwise, describe the expected behavior clearly.
+
+- If all three conditions are met, mark the task complete. Prioritize completion once the criteria are satisfied.
+- If behavior differs before vs. after, explicitly state the differences.
+- Verification is determined only by this checklist. Follow it as the complete verification standard.
+
+### 4. Complexity Check
+
+- After completing the work, do exactly one check: **"Did I add unnecessary complexity?"**
+  - If **Yes**: simplify.
+  - If **No**: finish immediately.
+- This check is one shot and ends after a single pass with the current implementation.
+- Skip this step for simple, obvious tasks.
+
+### 5. Autonomous Bug Fixing
+
+- Fix order: **check logs → identify root cause → minimal-scope fix → state results**.
+- Identify the cause first, then apply a cause based fix.
+- If CI tests are failing, fix them proactively as part of the task.
+
+## Task Management
+
+1. **Plan first**: Write a checkable plan in `tasks/todo.md`.
+2. **Verify the plan**: Check in before starting implementation.
+3. **Track progress**: Mark items complete as you go.
+4. **Explain changes**: Provide a high-level summary at each step.
+5. **Document results**: Add a review section to `tasks/todo.md`.
+6. **Capture lessons**: Update `tasks/lessons.md` after corrections.

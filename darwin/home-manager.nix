@@ -84,6 +84,9 @@ let
       programs = common-programs // {};
 
       home.stateVersion = "23.05";
+      home.file = {
+        ".pi/agent/AGENTS.md" = { source = ../common/AGENTS.txt; };
+      };
 
       manual.manpages.enable = false;
     };
