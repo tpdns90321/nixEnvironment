@@ -201,9 +201,34 @@
               users.users.kang.password = "";
               virtualisation.diskSizeAutoSupported = true;
               services.openssh.enable = true;
+
+              systemd.services."serial-getty@ttyS0" = {
+                enable = true;
+                wantedBy = [ "getty.target" ];
+                serviceConfig.Restart = "always";
+              };
             }
           ];
         }).config.system.build.images;
+
+        microvm-nixos = let
+          pkgs = import nixpkgs { inherit system; };
+          eval = nixos.lib.nixosSystem {
+          inherit system;
+          specialArgs = { inputs = inputs; additionalPackages = [ ]; isDesktop = false;  };
+          modules = [
+            home-manager.nixosModules.home-manager
+            ./nixos
+            ./nixos/microvm.nix
+          ];
+        }; in pkgs.callPackage "${nixpkgs}/nixos/lib/make-ext4-fs.nix" {
+          storePaths = [ eval.config.system.build.toplevel ];
+          volumeLabel = "NIXROOT";
+          populateImageCommands = ''
+          mkdir -p ./files/sbin/
+          ln -sf ${eval.config.system.build.toplevel}/init ./files/sbin/init
+          '';
+        };
 
         kang-homemanager = (home-manager.lib.homeManagerConfiguration {
           pkgs = nixpkgs.legacyPackages.${system};
