@@ -83,7 +83,10 @@ function minikube-kubectl() {
 function codex() {
   PATH="$PATH:/opt/homebrew/bin/" command codex "$@"
 }
-'' else ""));
+'' else (if isDesktop then ''
+export PATH=$PATH:~/.npm-global/bin
+export NODE_PATH=~/.npm-global/lib/node_modules
+'' else "")));
 
   tmux = {
     enable = true;
