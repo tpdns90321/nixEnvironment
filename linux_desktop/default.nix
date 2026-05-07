@@ -126,7 +126,11 @@
   };
   home.file = (if isDesktop then {
     "swayvnc.sh" = {
-    source = ./swayvnc.sh;
+      source = ./swayvnc.sh;
+    };
+    ".pi/agent/AGENTS.md" = {
+      enable = true;
+      source = ../common/AGENTS.txt;
     };
   } else {});
   home.stateVersion = "25.11";
