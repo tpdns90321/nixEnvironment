@@ -13,6 +13,7 @@
         vscode-with-extensions = unstablePkgs.vscode-with-extensions;
         codex = unstablePkgs.codex;
         claude-code = unstablePkgs.claude-code;
+        direnv = unstablePkgs.direnv;
         opencode = unstablePkgs.opencode;
         gemini-cli = unstablePkgs.gemini-cli;
         gemini-cli-bin = unstablePkgs.gemini-cli-bin;
