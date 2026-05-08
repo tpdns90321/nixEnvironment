@@ -132,6 +132,9 @@
       enable = true;
       source = ../common/AGENTS.txt;
     };
+    ".pi/agent/sandbox.json" = {
+      text = pkgs.callPackage ../common/pi-sandbox-json.nix { inherit pkgs; };
+    };
   } else {});
   home.stateVersion = "25.11";
 }

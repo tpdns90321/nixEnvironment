@@ -86,6 +86,9 @@ let
       home.stateVersion = "23.05";
       home.file = {
         ".pi/agent/AGENTS.md" = { source = ../common/AGENTS.txt; };
+        ".pi/agent/sandbox.json" = {
+          text = pkgs.callPackage ../common/pi-sandbox-json.nix { inherit pkgs; };
+        };
       };
 
       manual.manpages.enable = false;
