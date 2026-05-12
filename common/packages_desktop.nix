@@ -96,6 +96,10 @@ let
 
       # lspconfig
       guile-lsp-server
+
+      # pi-coding-agent
+      bubblewrap
+      socat
     ] ++ (if isDesktop then [guile guix] else [])
   else [])
 ) else with pkgs; [ qemu-utils ])
