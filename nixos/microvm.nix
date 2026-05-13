@@ -15,6 +15,7 @@
   networking.useDHCP = lib.mkForce true;
   networking.dhcpcd.enable = true;
   networking.useNetworkd = lib.mkForce false;
+  networking.firewall.enable = false;
 
   # from nixpkgs/nixos/modules/virtualisation/proxmox-lxc.nix
   systemd.services.register-nix-paths = {
