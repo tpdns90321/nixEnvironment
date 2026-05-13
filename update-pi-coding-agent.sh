@@ -2,8 +2,8 @@
 set -euo pipefail
 
 repo_root="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-package_name='@mariozechner/pi-coding-agent'
-registry_url='https://registry.npmjs.org/%40mariozechner%2Fpi-coding-agent'
+package_name='@earendil-works/pi-coding-agent'
+registry_url='https://registry.npmjs.org/%40earendil-works%2Fpi-coding-agent'
 metadata_file="$repo_root/common/pi-coding-agent.json"
 lockfile_file="$repo_root/common/pi-coding-agent-package-lock.json"
 

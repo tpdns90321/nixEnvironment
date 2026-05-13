@@ -13,7 +13,7 @@ buildNpmPackage rec {
   version = packageMeta.version;
 
   src = fetchurl {
-    url = "https://registry.npmjs.org/@mariozechner/pi-coding-agent/-/pi-coding-agent-${version}.tgz";
+    url = "https://registry.npmjs.org/@earendil-works/pi-coding-agent/-/pi-coding-agent-${version}.tgz";
     hash = packageMeta.srcHash;
   };
 
