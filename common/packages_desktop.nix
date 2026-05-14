@@ -80,6 +80,8 @@ let
   pyright
   typescript
 
+  # test
+  python3Packages.coverage
 ] ++
   (if pkgs.stdenv.hostPlatform.isLinux then 
     [

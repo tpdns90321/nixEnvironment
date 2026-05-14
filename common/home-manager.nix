@@ -49,8 +49,7 @@ let
       echo -n "Password: "
       read -s password
       export SSHPASS=$password
-      PATH=$PATH:${pkgs.sshpass}/bin/ 
-      pgrep -f "^ssh -Nf $ip$" || sshpass -e ssh -Nf $ip && mosh --ssh="sshpass -e ssh" $ip && pgrep -f "mosh-client .*$ip" || pkill -f "^ssh -Nf $ip$"
+      pgrep -f "^ssh -Nf $ip$" || ${pkgs.sshpass}/bin/sshpass -e ssh -Nf $ip && mosh --ssh="sshpass -e ssh" $ip && pgrep -f "mosh-client .*$ip" || pkill -f "^ssh -Nf $ip$"
       unset SSHPASS
     }
 
