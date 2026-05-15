@@ -1,8 +1,7 @@
 { config, pkgs, inputs, home-manager, lib, sops-nix, user, additionalCasks, additionalBrews, additionalAppStore ? {}, additionalPackages ? [], ... }:
 
 let
-  common-programs = import ../common/home-manager.nix { inherit config pkgs lib inputs; isDesktop = true; }; in
-{
+  common-programs = import ../common/home-manager.nix { inherit config pkgs lib inputs; isDesktop = true; }; in {
   imports = [
     # import from https://github.com/dustinlyons/nixos-config/ . thanks @dustinlyons
     ./dock
@@ -62,6 +61,10 @@ let
     # react-native android development in macos
     "android-studio"
     "liberica-jdk17"
+
+    # coding agent
+    "codex"
+    "codex-app"
   ] ++ additionalCasks;
   homebrew.masApps = {
     "Xcode" = 497799835;

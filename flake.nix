@@ -54,7 +54,7 @@
           inherit inputs;
           user = "kang";
           additionalBrews = [ "minikube" "vfkit" ];
-          additionalCasks = [ "android-studio" "claude" "discord" "parallels@19" "raspberry-pi-imager" "steam" "iterm2" "moonlight" "wireshark-app" "virtualbox" "zoom" "obs" "zap" "codex" "codex-app" ];
+          additionalCasks = [ "android-studio" "claude" "discord" "parallels@19" "raspberry-pi-imager" "steam" "iterm2" "moonlight" "wireshark-app" "virtualbox" "zoom" "obs" "zap" ];
           additionalAppStore = {
             "KakaoTalk" = 869223134;
             "Blackmagic Disk Speed Test" = 425264550;
