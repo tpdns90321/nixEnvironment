@@ -110,7 +110,7 @@
 
   programs.wireshark.enable = isDesktop;
 
-  hardware.graphics.enable = isDesktop;
+  hardware.graphics.enable = lib.mkDefault isDesktop;
   hardware.graphics.enable32Bit = isDesktop;
 
   # Some programs need SUID wrappers, can be configured further or are
