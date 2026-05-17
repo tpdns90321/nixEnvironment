@@ -32,12 +32,13 @@ ingressRoute:
 
 service:
   single: false
-  type: NodePort
-  externalIPs:
-    - 192.168.219.104
-    - 192.168.219.114
-    - 192.168.219.150
   spec:
+    type: NodePort
+    externalIPs:
+      - 192.168.219.104
+      - 192.168.219.114
+      - 192.168.219.150
+      - 192.168.128.1
     externalTrafficPolicy: Local
 
 logs:
