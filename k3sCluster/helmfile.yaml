@@ -148,6 +148,13 @@ releases:
     - ./charts/cookie-based-routing-index/values.yaml
   needs:
     - traefik/traefik
+- name: hermes-agent
+  namespace: hermes-agent
+  chart: ./charts/hermes-agent/chart/
+  values:
+    - ./charts/hermes-agent/values.yaml
+  secrets:
+    - ./charts/hermes-agent/secrets.yaml
 #- name: postgres-for-n8n
 #  namespace: n8n
 #  chart: bitnami/postgresql

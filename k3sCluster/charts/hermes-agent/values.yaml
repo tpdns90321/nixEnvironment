@@ -1,0 +1,14 @@
+image:
+  tag: main
+
+persistence:
+  storageClass: "nfs-client"
+
+config:
+  values:
+    model:
+      provider: custom
+      default: "gpt-5.5"
+      base_url: http://litellm.litellm.svc:4000
+      api_key_env: OPENAI_API_KEY
+
