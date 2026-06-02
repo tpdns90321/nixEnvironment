@@ -1,14 +1,35 @@
 image:
-  tag: main
+  tag: sha-bec2250d2c8349fc85201bcd1aa39bcaa766a555
 
 persistence:
   storageClass: "nfs-client"
 
+webhook:
+  enabled: true
+
+service:
+  enabled: true
+
 config:
   values:
     model:
-      provider: custom
-      default: "gpt-5.5"
+      default: gpt-5.5
       base_url: http://litellm.litellm.svc:4000
-      api_key_env: OPENAI_API_KEY
-
+      provider: "custom"
+      api_key_env: LITELLM_API_KEY
+    platforms:
+      webhook:
+        enabled: true
+      telegram:
+        extra:
+          exclusive_bot_mentions: false
+          require_mention: true
+          observe_unmentioned_group_messages: false
+    mcp_servers:
+      n8n:
+        type: http
+        url: "http://n8n.n8n.svc:80/mcp-server/http"
+        headers:
+          Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI4MGFhMTM4ZS1mMDAwLTQ2MzAtYjk4Zi1lOTgyNDI1ZmE3YWIiLCJpc3MiOiJuOG4iLCJhdWQiOiJtY3Atc2VydmVyLWFwaSIsImp0aSI6ImUzOWY1M2FkLTM5OTMtNGFmOC1iZWMyLWY4OWVkMDcxZTY4MSIsImlhdCI6MTc3OTU4Mjc4Mn0.EydLWK-9gTZ6pc2PmGx8kY8mOe336weP5LLmf4XanEk
+    streaming:
+      enabled: true

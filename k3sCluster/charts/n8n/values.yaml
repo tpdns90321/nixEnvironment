@@ -1,9 +1,9 @@
+image:
+  pullPolicy: Always
+  tag: latest
+
 main:
   config:
-    db:
-      type: postgresdb
-      postgresdb:
-        host: postgres-for-n8n-postgresql
     node:
       function_allow_builtin: "*"
 
@@ -11,9 +11,19 @@ main:
     enabled: true
     type: dynamic
     storageClass: "nfs-client"
+  service:
+    type: ClusterIP
+    port: 80
 
-valkey:
-  enabled: false
+  extraEnv:
+    N8N_SSRF_PROTECTION_ENABLED:
+      value: "true"
+    N8N_SSRF_ALLOWED_IP_RANGES:
+      value: "10.0.0.0/8"
+    N8N_PORT:
+      value: "5678"
+    N8N_HOST:
+      value: "0.0.0.0"
 
 affinity:
   nodeAffinity:

@@ -75,6 +75,7 @@ let
     "BetterSnapTool" = 417375580;
     "Bitwarden" = 1352778147;
     "Amphetamine" = 937984704;
+    "Telegram" = 747648890;
   } // additionalAppStore;
 
 
