@@ -43,6 +43,9 @@ let
     {
       name = "bell-sw/liberica";
     }
+    {
+      name = "silver-flight-group/tap";
+    }
   ];
   homebrew.casks = [
     "alfred"

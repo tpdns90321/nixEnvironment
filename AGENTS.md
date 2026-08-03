@@ -1,91 +1,93 @@
-# AGENTS.md
+# PROJECT KNOWLEDGE BASE
 
-This file provides guidance to AI Coding Agents when working with code in this repository.
+**Generated:** 2026-06-14
+**Commit:** ea142cc
+**Branch:** main
 
-## Common Development Commands
+## OVERVIEW
 
-### Nix Flake Operations
-- `nix flake update` - Update all flake inputs to latest versions
-- `nix flake update <input>` - Update specific input (e.g., nixpkgs)
-- `nix flake check` - Verify flake evaluation and build checks
-- `nix flake show` - Display flake outputs and available packages
+Personal Nix flake for macOS, NixOS, WSL, Raspberry Pi, containers, and a k3s self-hosting cluster. Core stack: Nix flakes, nix-darwin, Home Manager, sops-nix, Helmfile, and local Helm charts.
 
-### System Management
+## STRUCTURE
 
-#### macOS (nix-darwin)
-- `./install_mac.sh` - Initial setup and installation of Nix and darwin-rebuild
-- `./setup_mac.sh` - Build and switch to new configuration (uses hostname detection)
-- `nix --extra-experimental-features 'nix-command flakes' build .#darwinConfigurations.<hostname>.system` - Build specific system configuration
-- `./result/sw/bin/darwin-rebuild switch --flake .` - Apply configuration changes
+```
+nixEnvironment/
+|-- flake.nix                  # all darwin, nixos, and home-manager outputs
+|-- common/                    # shared packages and Home Manager programs
+|-- hosts/                     # machine-specific modules and hardware files
+|-- darwin/                    # nix-darwin system and Homebrew/App Store glue
+|-- nixos/                     # shared NixOS desktop/server baseline
+|-- standalone/                # Home Manager for WSL and non-NixOS users
+|-- containers/                # Podman and compose service helpers
+|-- k3sCluster/                # k3s, DRBD/NFS, Helmfile, and service charts
+\-- tasks/                     # agent lessons
+```
 
-#### NixOS Systems
-- `nixos-rebuild switch --flake .#<hostname>` - Build and switch to new configuration
-- `nixos-rebuild test --flake .#<hostname>` - Test configuration without making it default
+## WHERE TO LOOK
 
-#### Home Manager (Standalone)
-- `home-manager switch --flake .#<user>` - Apply home-manager configuration
-- Available configurations: `kang` (WSL), `pi` (Raspberry Pi 4)
+| Task | Location | Notes |
+| --- | --- | --- |
+| Add or rename a flake output | `flake.nix` | Keep host names aligned with `hosts/<name>/` modules. |
+| Add shared CLI tools | `common/packages.nix` | Base package set; receives `additionalPackages` by attribute name. |
+| Add desktop GUI tools | `common/packages_desktop.nix` | Desktop-only layer gated by `isDesktop`. |
+| Change common shell/editor config | `common/home-manager.nix` | Imported by Darwin, NixOS, and standalone flows. |
+| Add macOS system behavior | `darwin/` | Homebrew casks/brews/App Store values come through flake special args. |
+| Add NixOS baseline behavior | `nixos/` | Shared OS services, Sway, PipeWire, packages, users. |
+| Add a host | `hosts/<host>/`, `flake.nix` | Pair `default.nix` with hardware config when NixOS. |
+| Work on k3s services | `k3sCluster/` | Read its child AGENTS.md first. |
+| Update pi coding agent package | `update-pi-coding-agent.sh`, `common/pi-coding-agent.*` | Script refreshes JSON lock and checks `pi --version`. |
+| Record durable corrections | `tasks/lessons.md` | Only record concrete repeat-prone lessons. |
 
-### Container and Kubernetes Management
-- `kubectl` - Kubernetes cluster management (included in base packages)
-- `helmfile` - Located in k3sCluster/ for Helm chart deployments
-- Configuration files in `k3sCluster/charts/` for various services
+## CODE MAP
 
-## High-Level Architecture
+| Symbol / File | Type | Location | Role |
+| --- | --- | --- | --- |
+| `darwinConfigurations.kang-macbook-air` | flake output | `flake.nix` | Apple Silicon nix-darwin system. |
+| `homeConfigurations` | flake output | `flake.nix` | Architecture-mapped standalone Home Manager outputs. |
+| `nixosConfigurations.kang-*` | flake outputs | `flake.nix` | x86_64 and aarch64 NixOS hosts. |
+| `common/packages.nix` | package list | `common/` | Shared CLI/dev/admin tools. |
+| `common/packages_desktop.nix` | package list | `common/` | Desktop apps plus base packages. |
+| `common/home-manager.nix` | module data | `common/` | Shared programs imported across platforms. |
+| `k3sCluster/helmfile.yaml` | deployment graph | `k3sCluster/` | Chart releases, values, secrets, and dependencies. |
+| `k3sCluster/cluster.nix` | NixOS module | `k3sCluster/` | k3s server/agent, WireGuard, DRBD orchestration. |
 
-### Flake Structure
-This is a comprehensive Nix flake-based environment configuration supporting multiple platforms and deployment scenarios:
+## CONVENTIONS
 
-**Core Components:**
-- `flake.nix` - Main flake definition with inputs and system configurations
-- `common/` - Shared packages and configurations across all systems
-- `hosts/` - Host-specific configurations for different machines
-- `darwin/` - macOS-specific nix-darwin configurations  
-- `nixos/` - NixOS system configurations
-- `standalone/` - Home Manager configurations for non-NixOS systems
+- This repo passes host-specific knobs through flake `specialArgs` / `extraSpecialArgs`: `inputs`, `additionalPackages`, `isDesktop`, `user`, and platform-specific app lists.
+- Package additions are strings only when they flow through `additionalPackages` and are resolved as `pkgs.${name}`; direct package expressions belong in the package list file.
+- Host directories are named with underscores, while flake output names use hyphenated host IDs.
+- `CLAUDE.md` delegates to `AGENTS.md`; keep root guidance complete enough for Claude-compatible agents.
+- Secret-like files exist in-tree. Do not print, normalize, or replace secret contents while doing unrelated work.
 
-### System Configurations
+## ANTI-PATTERNS (THIS PROJECT)
 
-**Darwin (macOS) Systems:**
-- `kang-macbook-air` - Primary macOS configuration with development tools, GUI applications, and productivity software
+- Do not move host-specific settings into `common/` unless every consuming platform should inherit them.
+- Do not add desktop packages to the base package layer; keep GUI-heavy packages behind `isDesktop`.
+- Do not hand-edit generated package-lock JSON for `pi-coding-agent`; use the updater script.
+- Do not remove sops-nix wiring when touching hosts or k3s modules.
+- Do not flatten `k3sCluster/charts/` values/secrets into `helmfile.yaml`; release-local files are intentional.
 
-**NixOS Systems:**
-- `kang-stay-nixos` - Desktop NixOS system
-- `kang-stay-gmk` - Server/headless NixOS system  
-- `kang-home-nixos` - Home NixOS desktop
-- `kang-soyo` - Additional NixOS desktop
-- `kang-virtualbox` - VirtualBox NixOS instance
-- `kang-rpi4` - Raspberry Pi 4 ARM64 NixOS
+## UNIQUE STYLES
 
-**Home Manager Standalone:**
-- `kang` - WSL configuration
-~- `pi` - Raspberry Pi user configuration~
+- Nix modules are small and import-oriented; `flake.nix` is the composition hub.
+- Infrastructure is personal but multi-platform: prefer explicit host entries over clever discovery.
+- Kubernetes services are managed as local Helm charts with per-service `values.yaml` and `secrets.yaml`.
+- Lessons are dated one-line issue-to-fix entries.
 
-### Package Management Strategy
-- **Base packages** in `common/packages.nix` - Essential CLI tools, development utilities
-- **Desktop packages** in `common/packages_desktop.nix` - GUI applications and desktop tools
-- **Custom packages** for Python and Vim plugins in respective `.nix` files
-- **Platform-specific additions** through `additionalPackages` parameter
+## COMMANDS
 
-### Key Features
-- **Secrets Management**: sops-nix integration with age encryption
-- **Container Support**: Podman with docker-compose compatibility
-- **Development Tools**: claude-code, git, gh, kubectl, development environments
-- **Multi-Architecture**: Support for x86_64 and aarch64 (Apple Silicon, Raspberry Pi)
-- **Kubernetes Cluster**: k3s cluster configuration with Helm charts for self-hosted services
+```bash
+nix flake check
+nix flake show
+./setup_mac.sh
+sudo nixos-rebuild switch --flake .#<hostname>
+home-manager switch --flake .#<user>
+./update-pi-coding-agent.sh
+cd k3sCluster && helmfile sync
+```
 
-### Directory Organization
-- Host configurations follow naming pattern `<user>_<hostname>` or `<hostname>`
-- Each host has `default.nix` and optional `hardware-configuration.nix`
-- Environment files (`env`) contain host-specific environment variables
-- Shared functionality imported through `../common` and platform directories
+## NOTES
 
-### Infrastructure Components
-The k3sCluster directory contains a complete Kubernetes cluster setup with:
-- Traefik ingress controller configuration
-- Self-hosted services (AdGuard, Vaultwarden, LibreChat)
-- Storage solutions with NFS and DRBD
-- Certificate management with cert-manager
-- Monitoring and networking configurations
-
-This architecture enables consistent development environments across macOS, NixOS, and containerized deployments while maintaining security through encrypted secrets and modular configuration management.
+- Current branch was `main` when generated; working tree already had user changes in flake/common files.
+- LSP was not available in this session; code map is file/output based.
+- The Hermes chart under `k3sCluster/charts/hermes-agent/chart` is also a nested Git boundary.

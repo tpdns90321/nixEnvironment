@@ -20,9 +20,6 @@ let
 
   # AI Code Assistant
   claude-code
-  # opencode
-  gemini-cli
-  antigravity
   pi-coding-agent
 
   # AI Code Assistant's dependencies
@@ -37,7 +34,7 @@ let
   # js development
   bun
   fnm
-  nodePackages.npm
+  nodejs
   nodePackages.pnpm
   nodePackages.yarn
 
@@ -74,9 +71,9 @@ let
   gopls
   rust-analyzer
   ruff
-  nodePackages_latest.vscode-langservers-extracted
-  nodePackages_latest.typescript-language-server
-  nodePackages_latest."@tailwindcss/language-server"
+  nodePackages.vscode-langservers-extracted
+  nodePackages.typescript-language-server
+  nodePackages."@tailwindcss/language-server"
   pyright
   typescript
 
