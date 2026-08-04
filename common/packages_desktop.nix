@@ -19,8 +19,8 @@ let
   direnv
 
   # AI Code Assistant
-  claude-code
-  pi-coding-agent
+  # claude-code
+  # pi-coding-agent
 
   # AI Code Assistant's dependencies
   ripgrep
@@ -35,8 +35,8 @@ let
   bun
   fnm
   nodejs
-  nodePackages.pnpm
-  nodePackages.yarn
+  pnpm
+  yarn
 
   # golang development
   go
@@ -71,9 +71,9 @@ let
   gopls
   rust-analyzer
   ruff
-  nodePackages.vscode-langservers-extracted
-  nodePackages.typescript-language-server
-  nodePackages."@tailwindcss/language-server"
+  vscode-langservers-extracted
+  typescript-language-server
+  tailwindcss-language-server
   pyright
   typescript
 
@@ -91,7 +91,7 @@ let
       wireshark
 
       # AI Code Assistant
-      codex
+      # codex
 
       # lspconfig
       guile-lsp-server

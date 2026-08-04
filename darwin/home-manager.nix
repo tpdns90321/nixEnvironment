@@ -38,13 +38,14 @@ let
     cleanup = "zap";
     upgrade = true;
   };
-  homebrew.brewPrefix = "/opt/homebrew/bin";
   homebrew.taps = [
     {
       name = "bell-sw/liberica";
+      trusted = true;
     }
     {
       name = "silver-flight-group/tap";
+      trusted = true;
     }
   ];
   homebrew.casks = [

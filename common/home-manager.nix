@@ -1,4 +1,4 @@
-{ config, pkgs, inputs, isDesktop ? false, ... }:
+{ config, lib, pkgs, inputs, isDesktop ? false, ... }:
 
 let
   userName = "tpdns90321";
@@ -193,7 +193,7 @@ export NODE_PATH=~/.npm-global/lib/node_modules
       let g:ale_fix_on_save = 1
     '';
 
-    extraLuaConfig = ''
+    initLua = ''
       -- treesitter setup
       require'nvim-treesitter.configs'.setup {
         highlight = {
@@ -240,7 +240,6 @@ export NODE_PATH=~/.npm-global/lib/node_modules
 
       vim.lsp.enable('ruff')
 
-      vim.lsp.enable('denols')
       '' else "") +
       (if pkgs.stdenv.hostPlatform.isLinux && isDesktop then ''
       vim.lsp.config['guile_ls'] = {

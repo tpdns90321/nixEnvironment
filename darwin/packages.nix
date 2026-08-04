@@ -4,7 +4,6 @@ with pkgs;
 let common_pkgs = import ../common/packages_desktop.nix { inherit pkgs inputs lib additionalPackages; isDesktop = true; }; in common_pkgs ++ [
   # react-native ios development
   ruby
-  watchman
 
   # podman machin in darwin
   qemu

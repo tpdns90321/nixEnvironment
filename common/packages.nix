@@ -2,13 +2,12 @@
 
 (with pkgs; [
   curl
-  deno
   git
   gh
   home-manager
   jc
   jq
-  neofetch
+  fastfetch
   mosh
   screen
   tmux

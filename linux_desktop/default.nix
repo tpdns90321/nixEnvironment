@@ -136,5 +136,5 @@
       text = pkgs.callPackage ../common/pi-sandbox-json.nix { inherit pkgs; };
     };
   } else {});
-  home.stateVersion = "25.11";
+  home.stateVersion = "26.05";
 }

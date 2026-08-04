@@ -11,8 +11,8 @@
         });
       in {
         vscode-with-extensions = unstablePkgs.vscode-with-extensions;
-        codex = unstablePkgs.codex;
-        claude-code = unstablePkgs.claude-code;
+        # codex = unstablePkgs.codex;
+        # claude-code = unstablePkgs.claude-code;
         pi-coding-agent = final.callPackage ./pi-coding-agent.nix { };
         uv = unstablePkgs.uv;
         alacritty = unstablePkgs.alacritty;
