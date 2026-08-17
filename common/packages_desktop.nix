@@ -20,7 +20,7 @@ let
 
   # AI Code Assistant
   # claude-code
-  # pi-coding-agent
+  pi-coding-agent
 
   # AI Code Assistant's dependencies
   ripgrep
@@ -91,7 +91,7 @@ let
       wireshark
 
       # AI Code Assistant
-      # codex
+      codex
 
       # lspconfig
       guile-lsp-server

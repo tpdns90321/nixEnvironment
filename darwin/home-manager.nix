@@ -32,7 +32,7 @@ let
   ];
 
   homebrew.enable = true;
-  homebrew.brews = additionalBrews;
+  homebrew.brews = additionalBrews ++ [ "cocoapods" ];
   homebrew.onActivation = {
     autoUpdate = true;
     cleanup = "zap";
@@ -69,6 +69,9 @@ let
     # coding agent
     "codex"
     "codex-app"
+    "claude"
+    "claude-code"
+    "paseo"
   ] ++ additionalCasks;
   homebrew.masApps = {
     "Xcode" = 497799835;
@@ -80,6 +83,8 @@ let
     "Bitwarden" = 1352778147;
     "Amphetamine" = 937984704;
     "Telegram" = 747648890;
+    "Wireguard" = 1451685025;
+    "DaisyDisk" = 411643860;
   } // additionalAppStore;
 
 

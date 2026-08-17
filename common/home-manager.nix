@@ -49,7 +49,7 @@ let
       echo -n "Password: "
       read -s password
       export SSHPASS=$password
-      pgrep -f "^ssh -Nf $ip$" || ${pkgs.sshpass}/bin/sshpass -e ssh -Nf $ip && mosh --ssh="sshpass -e ssh" $ip && pgrep -f "mosh-client .*$ip" || pkill -f "^ssh -Nf $ip$"
+      pgrep -f "^ssh -Nf $ip$" || ${pkgs.sshpass}/bin/sshpass -e ssh -Nf $ip && mosh --ssh="${pkgs.sshpass}/bin/sshpass -e ssh" $ip && pgrep -f "mosh-client .*$ip" || pkill -f "^ssh -Nf $ip$"
       unset SSHPASS
     }
 
@@ -78,10 +78,8 @@ function minikube-kubectl() {
   PATH="$PATH:/opt/homebrew/bin/" KUBECONFIG=~/.kube/minikube-config command minikube kubectl -- "$@"
 }
 
-# codex
-function codex() {
-  PATH="$PATH:/opt/homebrew/bin/" command codex "$@"
-}
+# homebrew
+export PATH=$PATH:/opt/homebrew/bin
 '' else (if isDesktop then ''
 export PATH=$PATH:~/.npm-global/bin
 export NODE_PATH=~/.npm-global/lib/node_modules
@@ -119,8 +117,6 @@ export NODE_PATH=~/.npm-global/lib/node_modules
       lsp-zero-nvim
       nvim-cmp
       nvim-lspconfig
-      nvim-treesitter
-      nvim-treesitter-parsers.html
       cmp-buffer
       cmp-path
       luasnip
@@ -194,14 +190,8 @@ export NODE_PATH=~/.npm-global/lib/node_modules
     '';
 
     initLua = ''
-      -- treesitter setup
-      require'nvim-treesitter.configs'.setup {
-        highlight = {
-          enable = true,
-        },
-      }
       -- lsp setup
-      local lsp = require('lsp-zero').preset({})
+      local lsp = require('lsp-zero')
 
       lsp.on_attach(function(client, bufnr)
         lsp.default_keymaps({buffer = bufnr})
