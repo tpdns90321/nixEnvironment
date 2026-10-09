@@ -1,7 +1,7 @@
 { config, pkgs, lib, inputs, user, isDesktop ? false, additionalPackages ? [], ... }:
 
 let
-  common-programs = import ../common/home-manager.nix { inherit config pkgs inputs; }; 
+  common-programs = import ../common/home-manager.nix { inherit config pkgs lib inputs isDesktop; };
   linux-desktop = (import ../linux_desktop {inherit config pkgs isDesktop;}); in
 (lib.attrsets.recursiveUpdate {
   home.username = user;

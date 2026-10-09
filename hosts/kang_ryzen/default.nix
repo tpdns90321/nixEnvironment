@@ -37,15 +37,8 @@
     enable = true;
     qemu = {
       package = pkgs.qemu_kvm;
-      ovmf = {
-        enable = true;
-        packages = [
-          (pkgs.OVMF.override {
-            secureBoot = true;
-            tpmSupport = true;
-          }).fd
-        ];
-      };
+      # QEMU now supplies its OVMF firmware images; the ovmf submodule was removed.
+      # Verify existing guests' firmware/NVRAM paths before switching this host.
     };
   };
   virtualisation.docker.enable = true;

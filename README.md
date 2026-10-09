@@ -18,10 +18,10 @@ A comprehensive Nix flake-based configuration for managing development environme
 #### macOS
 ```bash
 # Install Nix, nix-darwin, and Homebrew
-./install_mac.sh
+./setup_mac.sh
 
 # Build and apply configuration (automatically detects hostname)
-./setup_mac.sh
+./install_mac.sh
 ```
 
 #### NixOS
@@ -29,14 +29,14 @@ A comprehensive Nix flake-based configuration for managing development environme
 # Build and switch to configuration
 sudo nixos-rebuild switch --flake .#<hostname>
 
-# Available hostnames: kang-stay-nixos, kang-stay-gmk, kang-home-nixos, kang-soyo, kang-virtualbox, kang-rpi4
+# Available hostnames: see "NixOS Systems" below
 ```
 
 #### Home Manager (WSL/Standalone)
 ```bash
 # Apply home-manager configuration
-home-manager switch --flake .#kang  # For WSL
-home-manager switch --flake .#pi    # For Raspberry Pi
+home-manager switch --flake .#kang-x86_64-linux   # x86_64 Linux / WSL
+home-manager switch --flake .#kang-aarch64-linux  # ARM64 Linux
 ```
 
 ## System Configurations
@@ -49,12 +49,17 @@ home-manager switch --flake .#pi    # For Raspberry Pi
 - **kang-stay-gmk**: Server/headless NixOS system
 - **kang-home-nixos**: Home NixOS desktop
 - **kang-soyo**: Additional NixOS desktop
+- **kang-odyssey**: Server/headless NixOS system
+- **kang-ryzen**: Ryzen NixOS desktop
+- **kang-ryzen-pve**: Ryzen Proxmox NixOS guest
 - **kang-virtualbox**: VirtualBox NixOS instance
 - **kang-rpi4**: Raspberry Pi 4 ARM64 NixOS
 
 ### Home Manager Configurations
-- **kang**: WSL configuration
-- **pi**: Raspberry Pi user configuration
+- **kang-x86_64-linux**: Standalone Home Manager for user `kang` on x86_64 Linux / WSL
+- **kang-aarch64-linux**: Standalone Home Manager for user `kang` on ARM64 Linux
+
+Both standalone outputs currently enable the desktop profile. There is no `pi` Home Manager output; `kang-rpi4` is a NixOS system output.
 
 ## Directory Structure
 
@@ -90,6 +95,27 @@ nix flake check
 nix flake show
 ```
 
+### Safe Dependency Updates
+
+The stable Nixpkgs, Home Manager, and nix-darwin inputs track 26.05. Refresh their pinned revisions together before considering a release upgrade:
+
+```bash
+nix flake update nixpkgs nixos home-manager darwin
+git diff -- flake.lock
+nix flake check --no-update-lock-file
+
+# Build the output for the machine you intend to update, without activating it
+nix build --no-link --no-update-lock-file .#homeConfigurations.kang-x86_64-linux.activationPackage
+# NixOS example (use your actual host)
+nix build --no-link --no-update-lock-file .#nixosConfigurations.kang-stay-nixos.config.system.build.toplevel
+# macOS example (run on an Apple Silicon Mac)
+nix build --no-link --no-update-lock-file .#darwinConfigurations.kang-macbook-air.system
+```
+
+Run only the applicable platform builds. Review the lock diff and test the target configuration before switching. Updating the lock does not require raising `home.stateVersion` or `system.stateVersion`; preserve those compatibility settings unless deliberately migrating state.
+
+Note: standalone declares `home.stateVersion = "25.05"`, but its current merge with `linux_desktop` makes the effective value `"26.05"`. Check the installation's existing state before changing either value.
+
 ### Updating `pi-coding-agent`
 ```bash
 # Update to the latest npm release
@@ -99,18 +125,18 @@ nix flake show
 ./update-pi-coding-agent.sh 0.64.0
 ```
 
-This refreshes `common/pi-coding-agent.json`, regenerates `common/pi-coding-agent-package-lock.json`, rebuilds the package, and checks `pi --version`.
+This refreshes `common/pi-coding-agent.json`, regenerates `common/pi-coding-agent-package-lock.json`, rebuilds the package with the stable `nixpkgs` input used by the shared overlay, and checks `pi --version`.
 
 ### System Management
 ```bash
 # macOS: Apply configuration changes
-./setup_mac.sh
+./install_mac.sh
 
 # NixOS: Switch to new configuration
 sudo nixos-rebuild switch --flake .#<hostname>
 
 # Home Manager: Apply user configuration
-home-manager switch --flake .#<user>
+home-manager switch --flake .#kang-<architecture>-linux
 ```
 
 ## Included Software
@@ -174,14 +200,14 @@ To add a new host:
 1. Create `hosts/<hostname>/default.nix`
 2. Add hardware configuration if needed
 3. Update `flake.nix` with new system configuration
-4. Build and test: `nix build .#nixosConfigurations.<hostname>.system`
+4. Build and test without activating: `nix build --no-link .#nixosConfigurations.<hostname>.config.system.build.toplevel`
 
 ## Troubleshooting
 
 ### Common Issues
 
 - **Flake evaluation errors**: Run `nix flake check` to identify issues
-- **Build failures**: Check if all inputs are up to date with `nix flake update`
+- **Build failures**: Inspect the first error and the target output before changing dependencies. If an update caused the failure, restore the previous reviewed lock file and rebuild.
 - **Permission issues**: Ensure proper user permissions for Nix store
 
 ### Getting Help
