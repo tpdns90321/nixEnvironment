@@ -110,8 +110,9 @@
 
   programs.wireshark.enable = isDesktop;
 
-  hardware.graphics.enable = isDesktop;
-  hardware.graphics.enable32Bit = isDesktop;
+  # Headless hosts may still need GPU acceleration (for example, video transcoding).
+  hardware.graphics.enable = lib.mkDefault isDesktop;
+  hardware.graphics.enable32Bit = lib.mkDefault isDesktop;
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.

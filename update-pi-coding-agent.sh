@@ -122,7 +122,8 @@ install -m 0644 "$tmp_lockfile" "$lockfile_file"
 install -m 0644 "$tmp_metadata" "$metadata_file"
 
 cd "$repo_root"
-build_expr='let flake = builtins.getFlake ("path:" + toString ./.); pkgs = import flake.inputs.nixpkgs_unstable { system = builtins.currentSystem; config.allowUnfree = true; }; in pkgs.callPackage ./common/pi-coding-agent.nix {}'
+# Match the stable package set used by common/default.nix's pi-coding-agent overlay.
+build_expr='let flake = builtins.getFlake ("path:" + toString ./.); pkgs = import flake.inputs.nixpkgs { system = builtins.currentSystem; config.allowUnfree = true; }; in pkgs.callPackage ./common/pi-coding-agent.nix {}'
 
 set +e
 nix build --impure --no-link --expr "$build_expr" > /dev/null 2> "$tmp_build_log"

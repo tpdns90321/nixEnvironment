@@ -23,9 +23,7 @@
   security.pam.enableFscrypt = true;
   services.openssh.enable = true;
   services.openssh.settings.KbdInteractiveAuthentication = false;
-  services.resolved.extraConfig = ''
-DNSStubListenerExtra=192.168.172.1
-'';
+  services.resolved.settings.Resolve.DNSStubListenerExtra = "192.168.172.1";
   services.k3s = {
     enable = true;
     tokenFile = config.sops.secrets.k3s_token_secret.path;
